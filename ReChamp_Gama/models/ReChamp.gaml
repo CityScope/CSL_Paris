@@ -197,6 +197,11 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 	float t_re_init <- machine_time;	
 	float time_between_clean <- 2 * (60.0 * 60 * 1000);
 	
+	//Use to store value in a json
+	float saveLocationInterval<-step;
+	int totalTimeInSec<-86400; //24hx60minx60sec 1step is 10#sec
+	bool saveToJson<-true;
+	
 	init {
 		
 		//------------------ STATIC AGENT ----------------------------------- //
@@ -608,6 +613,52 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 		}
 	}
 	
+	reflex save_results when: (cycle mod 10 = 0 and cycle>1)  {		
+		do savetoJSon;
+	}
+	
+	action savetoJSon{
+		string t;
+		map<string, unknown> test;
+		save "[" to: "result.json";
+		ask pedestrian {
+			test <+ "mode"::1;
+			test<+"path"::locs;
+			test<+locs;
+			t <- "{\n\"mode\": ["+ 1 + ","+type+    "],\n\"path\": [";
+			int curLoc<-0;
+			loop l over: locs {
+				point loc<-CRS_transform(location, "EPSG:4326").location;
+				if(curLoc<length(locs)-1){
+				t <- t + "[" + loc.x + ", " + loc.y + "],\n";	
+				}else{
+				t <- t + "[" + loc.x + ", " + loc.y + "]\n";	
+				}
+				curLoc<-curLoc+1;
+			}
+			t <- t + "]";
+			t <- t+",\n\"timestamps\": [";
+			curLoc<-0;
+			loop l over: locs {
+				point loc <- CRS_transform(l).location;
+				if(curLoc<length(locs)-1){
+				t <- t + loc.z + ",\n";	
+				}else{
+				t <- t +  loc.z + "\n";	
+				}
+				curLoc<-curLoc+1;
+			}
+			t <- t + "]";	
+			t<- t+ "\n}";
+			if (int(self) < (length(pedestrian) - 1)) {
+				t <- t + ",";
+			}
+			save t to: "result.json" rewrite: false;
+		}
+
+		save "]" to: "result.json" rewrite: false;
+		file JsonFileResults <- json_file("./result.json");	
+	}
 	
 	action updateStoryTelling (int n){
 		    if(n=0){currentStoryTellingState<-0;}
@@ -1292,6 +1343,7 @@ species pedestrian skills:[moving] control: fsm {//schedules:[]{
 	list<point> current_trajectory;
 	
 	int side;
+	list<point> locs;
 
 	
 	
@@ -1501,6 +1553,8 @@ species pedestrian skills:[moving] control: fsm {//schedules:[]{
 		}		
 	}
 	
+
+	
 	point calcul_loc {
 		road ce <- road(copy(current_edge));
 		if (ce = nil or not(state in ["walk_to_objective","stroll_in_city"])) {
@@ -1512,6 +1566,13 @@ species pedestrian skills:[moving] control: fsm {//schedules:[]{
 
 		}
 	} 
+	
+	reflex saveValue when:saveToJson{
+			if((time mod saveLocationInterval = 0) and (time mod totalTimeInSec)>1){
+				write "cycle" + cycle;
+		 	locs << {location.x,location.y,cycle};
+		 	}
+	}
 	
 	aspect base{
 		if(showPeople){
