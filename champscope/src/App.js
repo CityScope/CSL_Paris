@@ -50,15 +50,25 @@ export default class App extends Component {
         const width = this.mountingDiv.clientWidth;
         const height = this.mountingDiv.clientHeight;
         this.scene = new THREE.Scene();
+        // this.camera = new THREE.PerspectiveCamera(
+        //     45,
+        //     window.innerWidth / window.innerHeight,
+        //     0.1,
+        //     100000
+        // );
+        // this.camera.position.z = 3;
+        // this.camera.position.x = 2;
+        // this.camera.position.y = 3;
+
         this.camera = new THREE.PerspectiveCamera(
-            45,
-            window.innerWidth / window.innerHeight,
             0.1,
+            window.innerWidth / window.innerHeight,
+            1,
             100000
         );
-        this.camera.position.z = 3;
-        this.camera.position.x = 2;
-        this.camera.position.y = 3;
+        this.camera.position.z = 0;
+        this.camera.position.x = 0;
+        this.camera.position.y = 2000;
 
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
 
@@ -130,7 +140,7 @@ export default class App extends Component {
         this.agentsContainer = new THREE.Object3D();
         this.agentsContainer.rotation.set(0, -1.75, 0);
         this.agentsContainer.scale.set(0.4, 0.4, 0.4);
-        this.agentsContainer.position.set(0.3, 1.1, -1);
+        this.agentsContainer.position.set(0, 1.1, -0.95);
         this.count = trips.length;
         let agentScale = 0.025;
         this.agentsDummy = new THREE.Object3D();
@@ -200,6 +210,7 @@ export default class App extends Component {
             // (worldRadius * C + h) * cosLat * sinLon,
             (worldRadius * S + h) * sinLat - 400
         );
+        // console.log(res);
 
         return res;
     };
