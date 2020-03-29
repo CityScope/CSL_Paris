@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as THREE from "three";
 import OrbitControls from "three-orbitcontrols";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-import trips from "./resources/trips/trips.json";
+import trips from "./trips/trips.json";
 
 // ! https://codesandbox.io/s/81qjyxonm8
 // ! https://github.com/mrdoob/three.js/pull/17505
@@ -10,6 +10,8 @@ import trips from "./resources/trips/trips.json";
 
 // ! Good structure:
 // ! https://codesandbox.io/s/mjp143zq9x?from-embed
+
+// ! materials https://codepen.io/bartuc/pen/eEbmvJ?editors=0010
 
 const style = {
     height: "100vh"
@@ -60,20 +62,30 @@ export default class App extends Component {
         this.camera.position.z = 0;
         this.camera.position.x = 0;
         this.camera.position.y = 5;
-
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
-
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.shadowMap.enabled = true;
         this.renderer.setSize(width, height);
         this.mountingDiv.appendChild(this.renderer.domElement);
+
+        /**
+         * Lights
+         */
+
+        let ambLight = new THREE.PointLight(0xfffff, 0.15, 100);
+        ambLight.position.set(10, 4, 10);
+
         let light = new THREE.PointLight(0xf26101, 0.5, 100);
         light.position.set(-1, 2, -1);
         light.castShadow = true;
+        light.shadow.radius = 8;
+
         let light2 = new THREE.PointLight(0x0071bc, 0.5, 100);
         light2.position.set(1, 2, 1);
         light2.castShadow = true;
-        this.scene.add(light, light2);
+        light2.shadow.radius = 8;
+
+        this.scene.add(ambLight, light, light2);
 
         this._loadOBJmodel(this.scene);
     };
@@ -86,16 +98,8 @@ export default class App extends Component {
                 model.scale.set(0.001, 0.001, 0.001);
                 model.position.set(0, 1, 0);
                 model.rotation.set(0, 0.4625123, 0);
-
-                // ! cast shadows
-                // model.traverse(function(child) {
-                //     child.castShadow = true;
-                // });
                 scene.add(model);
             },
-            // function(xhr) {
-            //     // console.log(xhr.loaded);
-            // },
             function(error) {
                 console.log(error);
             }
@@ -106,12 +110,12 @@ export default class App extends Component {
         // load the model
         // ! should consider https://tinyurl.com/wqpozgh
 
+        var phongMat = new THREE.MeshPhongMaterial();
+
         const planeSize = 100;
         const planeMesh = new THREE.Mesh(
             new THREE.PlaneBufferGeometry(planeSize, planeSize),
-            new THREE.MeshPhongMaterial({
-                side: THREE.DoubleSide
-            })
+            phongMat
         );
         planeMesh.receiveShadow = true;
         planeMesh.rotation.x = Math.PI * -0.5;
@@ -123,17 +127,25 @@ export default class App extends Component {
         var pedestalTexture = new THREE.TextureLoader().load(
             "./resources/textures/shadowmap.png"
         );
-        var pedestalMaterial = new THREE.MeshPhongMaterial({
+        var pedestalModelMaterial = new THREE.MeshPhongMaterial({
             map: pedestalTexture
         });
 
+        // 6 sides material for pedestal
+        let materialArray = [
+            phongMat,
+            phongMat,
+            pedestalModelMaterial,
+            phongMat,
+            phongMat,
+            phongMat
+        ];
+
+        // fix scaling issue
+        pedestalTexture.minFilter = THREE.LinearFilter;
+
         const cubeGeo = new THREE.BoxBufferGeometry(3.5, 1, 2);
-
-        const cubeMat = new THREE.MeshPhongMaterial({ color: "#FFF" });
-
-        const pedestalMesh = new THREE.Mesh(cubeGeo, pedestalMaterial);
-        console.log(pedestalMesh);
-
+        const pedestalMesh = new THREE.Mesh(cubeGeo, materialArray);
         pedestalMesh.castShadow = true;
         pedestalMesh.receiveShadow = true;
         pedestalMesh.position.set(0, 0.5, 0);
@@ -158,7 +170,8 @@ export default class App extends Component {
         this.agents.instanceMatrix.setUsage(THREE.DynamicDrawUsage); // will be updated every frame
         this.agentsContainer.add(this.agents);
         this.scene.add(this.agentsContainer);
-        // this._animateAgents();
+        // put first frame of agents in scene
+        this._animateAgents();
     };
 
     _animateAgents = () => {
