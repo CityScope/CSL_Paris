@@ -77,16 +77,16 @@ export default class App extends Component {
         let light = new THREE.PointLight(0xf26101, 0.5, 100);
         light.position.set(-1, 2, -1);
         light.castShadow = true;
-        light.shadow.radius = 8;
+        light.shadow.radius = 2;
 
         let light2 = new THREE.PointLight(0x0071bc, 0.5, 100);
         light2.position.set(1, 2, 1);
         light2.castShadow = true;
-        light2.shadow.radius = 8;
+        light2.shadow.radius = 2;
 
         this.scene.add(ambLight, light, light2);
 
-        this._loadOBJmodel(this.scene);
+        // this._loadOBJmodel(this.scene);
     };
 
     _loadOBJmodel = scene => {
@@ -171,9 +171,7 @@ export default class App extends Component {
     _addCustomSceneObjects = async () => {
         // load the model
         // ! should consider https://tinyurl.com/wqpozgh
-
         this.createFloor();
-
         /**
          * The model pedestal
          */
@@ -209,11 +207,12 @@ export default class App extends Component {
 
     _addAgents = () => {
         this.agentsContainer = new THREE.Object3D();
-        this.agentsContainer.rotation.set(0, -1.75, 0);
-        this.agentsContainer.scale.set(0.4, 0.4, 0.4);
-        this.agentsContainer.position.set(0, 1.1, -0.95);
+        this.agentsContainer.scale.set(50, 1, 50);
+        this.agentsContainer.position.set(16.5, 0, -1.2);
+        this.agentsContainer.rotation.set(0, 2.82, 0);
+
         this.count = trips.length;
-        let agentScale = 0.025;
+        let agentScale = 0.0001;
         this.agentsDummy = new THREE.Object3D();
         var geometry = new THREE.BoxBufferGeometry(
             agentScale,
@@ -227,6 +226,7 @@ export default class App extends Component {
         this.scene.add(this.agentsContainer);
         // put first frame of agents in scene
         this._animateAgents();
+        console.log(this.agentsContainer);
     };
 
     _animateAgents = () => {
@@ -234,8 +234,9 @@ export default class App extends Component {
 
         for (var i = 0; i < trips.length; i++) {
             if (trips[i].timestamps[time]) {
-                let posVector = this._calcPosFromLatLonRad(trips[i].path[time]);
-                this.agentsDummy.position.copy(posVector);
+                this.agentsDummy.position.x = trips[i].path[time][0] - 2;
+                this.agentsDummy.position.y = 1;
+                this.agentsDummy.position.z = trips[i].path[time][1] - 49;
                 // put a clone of obj in each place holder
                 this.agentsDummy.updateMatrix();
                 this.agents.setMatrixAt(i, this.agentsDummy.matrix);
@@ -249,42 +250,6 @@ export default class App extends Component {
                     ? this.state.timeCounter + this.state.simSpeed
                     : 0
         });
-    };
-
-    // ! https://stackoverflow.com/questions/28365948/javascript-latitude-longitude-to-xyz-position-on-earth-threejs
-    _calcPosFromLatLonRad = cor => {
-        let lat = cor[0];
-        let lon = cor[1];
-        // lat = Math.random() * 180 - 90;
-        // lon = Math.random() * 260 - 180;
-        var cosLat = Math.cos((lat * Math.PI) / 180.0);
-        var sinLat = Math.sin((lat * Math.PI) / 180.0);
-        var cosLon = Math.cos((lon * Math.PI) / 180.0);
-        // var sinLon = Math.sin((lon * Math.PI) / 180.0);
-        // var worldRadius = 6378137.0;
-        let worldRadius = 10000;
-        /**
-         * 
-         * f   the "flattening" parameter ( = (a-b)/a ,the ratio of the
-                 difference between the equatorial and polar radii to a;
-                this is a measure of how "elliptical" a polar cross-section
-                is).
-        */
-        var f = 1.0 / 298.257224;
-        var C =
-            1.0 /
-            Math.sqrt(cosLat * cosLat + (1 - f) * (1 - f) * sinLat * sinLat);
-        var S = (1.0 - f) * (1.0 - f) * C;
-        var h = 0.0;
-        let res = new THREE.Vector3(
-            (worldRadius * C + h) * cosLat * cosLon - 6570,
-            0,
-            // (worldRadius * C + h) * cosLat * sinLon,
-            (worldRadius * S + h) * sinLat - 400
-        );
-        // console.log(res);
-
-        return res;
     };
 
     handleWindowResize = () => {
