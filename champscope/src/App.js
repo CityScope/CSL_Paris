@@ -20,8 +20,10 @@ export default class App extends Component {
         this.state = {
             timeCounter: 0,
             agentsYheight: 1.1,
-            simSpeed: 0
+            simSpeed: 1
         };
+
+        this.simulationDuration = 50;
     }
 
     componentDidMount() {
@@ -128,7 +130,7 @@ export default class App extends Component {
         this.agentsContainer = new THREE.Object3D();
         this.agentsContainer.rotation.set(0, -1.75, 0);
         this.agentsContainer.scale.set(0.4, 0.4, 0.4);
-        this.agentsContainer.position.set(0.5, 1.2, -1);
+        this.agentsContainer.position.set(0.3, 1.1, -1);
         this.count = trips.length;
         let agentScale = 0.025;
         this.agentsDummy = new THREE.Object3D();
@@ -147,8 +149,9 @@ export default class App extends Component {
 
     _animateAgents = () => {
         const time = this.state.timeCounter;
+
         for (var i = 0; i < trips.length; i++) {
-            if (trips[i].timestamps[time] === time) {
+            if (trips[i].timestamps[time]) {
                 let posVector = this._calcPosFromLatLonRad(trips[i].path[time]);
                 this.agentsDummy.position.copy(posVector);
                 // put a clone of obj in each place holder
@@ -160,7 +163,7 @@ export default class App extends Component {
 
         this.setState({
             timeCounter:
-                this.state.timeCounter < 1000
+                this.state.timeCounter < this.simulationDuration
                     ? this.state.timeCounter + this.state.simSpeed
                     : 0
         });
@@ -197,6 +200,7 @@ export default class App extends Component {
             // (worldRadius * C + h) * cosLat * sinLon,
             (worldRadius * S + h) * sinLat - 400
         );
+
         return res;
     };
 
@@ -209,7 +213,7 @@ export default class App extends Component {
     };
 
     startAnimationLoop = () => {
-        // this._animateAgents();
+        this._animateAgents();
         this.renderer.render(this.scene, this.camera);
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
