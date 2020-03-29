@@ -197,6 +197,11 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 	float t_re_init <- machine_time;	
 	float time_between_clean <- 2 * (60.0 * 60 * 1000);
 	
+	//Use to store value in a json
+	float saveLocationInterval<-step;
+	int totalTimeInSec<-50; //24hx60minx60sec 1step is 10#sec
+	bool saveToJson<-true;
+	
 	init {
 		
 		//------------------ STATIC AGENT ----------------------------------- //
@@ -608,6 +613,56 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 		}
 	}
 	
+	reflex save_results when: (cycle mod totalTimeInSec = 0 and cycle>1)  {		
+		write "save to results.json";
+		do savetoJSon;
+	}
+	
+	action savetoJSon{
+		string t;
+		map<string, unknown> test;
+		save "[" to: "result.json";
+		int curPed<-0;
+		ask pedestrian {
+			
+			test <+ "mode"::1;
+			test<+"path"::locs;
+			test<+locs;
+			t <- "{\n\"mode\": ["+ 1 + ","+"\"people\""+    "],\n\"path\": [";
+			int curLoc<-0;
+			loop l over: locs {
+				point loc<-CRS_transform(l, "EPSG:4326").location;
+				if(curLoc<length(locs)-1){
+				t <- t + "[" + loc.x + ", " + loc.y + "],\n";	
+				}else{
+				t <- t + "[" + loc.x + ", " + loc.y + "]\n";	
+				}
+				curLoc<-curLoc+1;
+			}
+			t <- t + "]";
+			t <- t+",\n\"timestamps\": [";
+			curLoc<-0;
+			loop l over: locs {
+				point loc <- CRS_transform(l).location;
+				if(curLoc<length(locs)-1){
+				t <- t + int(loc.z) + ",\n";	
+				}else{
+				t <- t +  int(loc.z) + "\n";	
+				}
+				curLoc<-curLoc+1;
+			}
+			t <- t + "]";	
+			t<- t+ "\n}";
+			if (curPed < (length(pedestrian) - 1)) {
+				t <- t + ",";
+			}
+			curPed<-curPed+1;
+			save t to: "result.json" rewrite: false;
+		}
+
+		save "]" to: "result.json" rewrite: false;
+		file JsonFileResults <- json_file("./result.json");	
+	}
 	
 	action updateStoryTelling (int n){
 		    if(n=0){currentStoryTellingState<-0;}
@@ -1292,6 +1347,7 @@ species pedestrian skills:[moving] control: fsm {//schedules:[]{
 	list<point> current_trajectory;
 	
 	int side;
+	list<point> locs;
 
 	
 	
@@ -1501,6 +1557,8 @@ species pedestrian skills:[moving] control: fsm {//schedules:[]{
 		}		
 	}
 	
+
+	
 	point calcul_loc {
 		road ce <- road(copy(current_edge));
 		if (ce = nil or not(state in ["walk_to_objective","stroll_in_city"])) {
@@ -1512,6 +1570,12 @@ species pedestrian skills:[moving] control: fsm {//schedules:[]{
 
 		}
 	} 
+	
+	reflex saveValue when:saveToJson{
+			if((time mod saveLocationInterval = 0) and (time mod totalTimeInSec)>1){
+		 	locs << {location.x,location.y,cycle};
+		 	}
+	}
 	
 	aspect base{
 		if(showPeople){
@@ -2204,7 +2268,7 @@ experiment ReChamp type: gui autorun:true virtual:true{
 	float minimum_cycle_duration<-0.025;	
 	output {
 
-		display champ type:opengl background:#black draw_env:false fullscreen:1  rotate:angle toolbar:false autosave:false synchronized:true
+		display champ type:opengl background:#black draw_env:false fullscreen:false  rotate:angle toolbar:false autosave:false synchronized:true
 		camera_pos: {1377.9646,1230.5875,3126.3113} camera_look_pos: {1377.9646,1230.533,0.0051} camera_up_vector: {0.0,1.0,0.0}
         keystone: [{0.12704565027375098,-0.005697301640547492,0.0},{-0.19504933859455517,1.3124020399566794,0.0},{1.1454962633840384,1.2440344202701115,0.0},{0.8687370667296103,-0.001899100546849053,0.0}]
 		
@@ -2284,7 +2348,7 @@ experiment ReChamp type: gui autorun:true virtual:true{
 experiment ReChampPavillonDemo  parent: ReChamp autorun:true{	
 	
 	output {	
-		display indicator type:opengl background:#black draw_env:false fullscreen:0 toolbar:false
+		/*display indicator type:opengl background:#black draw_env:false fullscreen:0 toolbar:false
 		camera_pos: {1812.4353,1521.57,1260.6049} camera_look_pos: {1812.4353,1521.548,0.0} camera_up_vector: {0.0,1.0,0.0}
 		keystone: [{0.0,0.0,0.0},{0.04939455407469323,0.9929027711998522,0.0},{0.9474300817347908,1.0014194457600294,0.0},{1.0,0.0,0.0}]
 		{
@@ -2296,7 +2360,7 @@ experiment ReChampPavillonDemo  parent: ReChamp autorun:true{
 		    			draw rectangle(1920,1080) texture:dashboardbackground_after.path at:{world.shape.width/2,world.shape.height/2}color:#white empty:true;
 		    		}			
 			}
-		}
+		}*/
 	}
 }
 
