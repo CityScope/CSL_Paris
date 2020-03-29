@@ -622,7 +622,9 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 		string t;
 		map<string, unknown> test;
 		save "[" to: "result.json";
+		int curPed<-0;
 		ask pedestrian {
+			
 			test <+ "mode"::1;
 			test<+"path"::locs;
 			test<+locs;
@@ -651,9 +653,10 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 			}
 			t <- t + "]";	
 			t<- t+ "\n}";
-			if (int(self) < (length(pedestrian) - 1)) {
+			if (curPed < (length(pedestrian) - 1)) {
 				t <- t + ",";
 			}
+			curPed<-curPed+1;
 			save t to: "result.json" rewrite: false;
 		}
 
