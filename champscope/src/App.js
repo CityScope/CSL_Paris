@@ -50,31 +50,18 @@ export default class App extends Component {
         const width = this.mountingDiv.clientWidth;
         const height = this.mountingDiv.clientHeight;
         this.scene = new THREE.Scene();
-        // this.camera = new THREE.PerspectiveCamera(
-        //     45,
-        //     window.innerWidth / window.innerHeight,
-        //     0.1,
-        //     100000
-        // );
-        // this.camera.position.z = 3;
-        // this.camera.position.x = 2;
-        // this.camera.position.y = 3;
 
         this.camera = new THREE.PerspectiveCamera(
-            0.1,
+            35,
             window.innerWidth / window.innerHeight,
             1,
             100000
         );
         this.camera.position.z = 0;
         this.camera.position.x = 0;
-        this.camera.position.y = 2000;
+        this.camera.position.y = 5;
 
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
-
-        // this.camera.position.set(4192079, 4800600, 254663);
-        // this.controls.target.set(4192060, 4800600, 254650);
-        // this.controls.update();
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.shadowMap.enabled = true;
@@ -94,19 +81,21 @@ export default class App extends Component {
     _loadOBJmodel = scene => {
         var loader = new OBJLoader();
         loader.load(
-            "./model/champ.obj",
+            "./resources/model/champ.obj",
             function(model) {
                 model.scale.set(0.001, 0.001, 0.001);
                 model.position.set(0, 1, 0);
                 model.rotation.set(0, 0.4625123, 0);
-                model.traverse(function(child) {
-                    child.castShadow = true;
-                });
+
+                // ! cast shadows
+                // model.traverse(function(child) {
+                //     child.castShadow = true;
+                // });
                 scene.add(model);
             },
-            function(xhr) {
-                // console.log(xhr.loaded);
-            },
+            // function(xhr) {
+            //     // console.log(xhr.loaded);
+            // },
             function(error) {
                 console.log(error);
             }
@@ -127,9 +116,24 @@ export default class App extends Component {
         planeMesh.receiveShadow = true;
         planeMesh.rotation.x = Math.PI * -0.5;
         planeMesh.position.y = 0;
+
+        /**
+         * The model pedestal
+         */
+        var pedestalTexture = new THREE.TextureLoader().load(
+            "./resources/textures/shadowmap.png"
+        );
+        var pedestalMaterial = new THREE.MeshPhongMaterial({
+            map: pedestalTexture
+        });
+
         const cubeGeo = new THREE.BoxBufferGeometry(3.5, 1, 2);
+
         const cubeMat = new THREE.MeshPhongMaterial({ color: "#FFF" });
-        const pedestalMesh = new THREE.Mesh(cubeGeo, cubeMat);
+
+        const pedestalMesh = new THREE.Mesh(cubeGeo, pedestalMaterial);
+        console.log(pedestalMesh);
+
         pedestalMesh.castShadow = true;
         pedestalMesh.receiveShadow = true;
         pedestalMesh.position.set(0, 0.5, 0);
@@ -154,7 +158,7 @@ export default class App extends Component {
         this.agents.instanceMatrix.setUsage(THREE.DynamicDrawUsage); // will be updated every frame
         this.agentsContainer.add(this.agents);
         this.scene.add(this.agentsContainer);
-        this._animateAgents();
+        // this._animateAgents();
     };
 
     _animateAgents = () => {
