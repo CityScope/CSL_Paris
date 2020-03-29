@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as THREE from "three";
+
 import OrbitControls from "three-orbitcontrols";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import trips from "./trips/trips.json";
@@ -7,10 +8,8 @@ import trips from "./trips/trips.json";
 // ! https://codesandbox.io/s/81qjyxonm8
 // ! https://github.com/mrdoob/three.js/pull/17505
 // ! https://codepen.io/pen/?editors=0010
-
 // ! Good structure:
 // ! https://codesandbox.io/s/mjp143zq9x?from-embed
-
 // ! materials https://codepen.io/bartuc/pen/eEbmvJ?editors=0010
 
 const style = {
@@ -56,7 +55,7 @@ export default class App extends Component {
         this.camera = new THREE.PerspectiveCamera(
             35,
             window.innerWidth / window.innerHeight,
-            1,
+            0.01,
             100000
         );
         this.camera.position.z = 0;
@@ -72,8 +71,8 @@ export default class App extends Component {
          * Lights
          */
 
-        let ambLight = new THREE.PointLight(0xfffff, 0.15, 100);
-        ambLight.position.set(10, 4, 10);
+        let ambLight = new THREE.PointLight(0xffffff, 0.1, 100);
+        ambLight.position.set(0, 10, 0);
 
         let light = new THREE.PointLight(0xf26101, 0.5, 100);
         light.position.set(-1, 2, -1);
@@ -106,24 +105,80 @@ export default class App extends Component {
         );
     };
 
+    createFloor = () => {
+        // Create a floor.
+        var loader = new THREE.TextureLoader();
+        let renderer = this.renderer;
+        let scene = this.scene;
+        loader.load("./resources/textures/floor/COL.jpg", function(texture) {
+            var repeatX = 50;
+            var repeatY = 50;
+
+            texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(repeatX, repeatY);
+
+            var normal = loader.load("./resources/textures/floor/NRM.jpg");
+            normal.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            normal.wrapS = THREE.RepeatWrapping;
+            normal.wrapT = THREE.RepeatWrapping;
+            normal.repeat.set(repeatX, repeatY);
+
+            var ao = loader.load("./resources/textures/floor/GLOSS.jpg");
+            ao.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            ao.wrapS = THREE.RepeatWrapping;
+            normal.wrapT = THREE.RepeatWrapping;
+            ao.repeat.set(repeatX, repeatY);
+
+            var displace = loader.load("./resources/textures/floor/DISP.jpg");
+            displace.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            displace.wrapS = THREE.RepeatWrapping;
+            displace.wrapT = THREE.RepeatWrapping;
+            displace.repeat.set(repeatX, repeatY);
+
+            var spec = loader.load("./resources/textures/floor/REFL.jpg");
+            spec.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            spec.wrapS = THREE.RepeatWrapping;
+            spec.wrapT = THREE.RepeatWrapping;
+            spec.repeat.set(repeatX, repeatY);
+
+            var material = new THREE.MeshStandardMaterial({
+                aoMap: ao,
+                aoMapIntensity: 0.5,
+                color: 0xffffff,
+                map: texture,
+                metalnessMap: texture,
+                displacementMap: displace,
+                normalMap: normal,
+                metalness: 0.5,
+                roughness: 0.5
+            });
+
+            const planeSize = 50;
+            const planeMesh = new THREE.Mesh(
+                new THREE.PlaneBufferGeometry(planeSize, planeSize),
+                material
+            );
+            planeMesh.receiveShadow = true;
+            planeMesh.rotation.x = Math.PI * -0.5;
+            planeMesh.position.y = 0;
+
+            scene.add(planeMesh);
+        });
+    };
+
     _addCustomSceneObjects = async () => {
         // load the model
         // ! should consider https://tinyurl.com/wqpozgh
 
-        var phongMat = new THREE.MeshPhongMaterial();
-
-        const planeSize = 100;
-        const planeMesh = new THREE.Mesh(
-            new THREE.PlaneBufferGeometry(planeSize, planeSize),
-            phongMat
-        );
-        planeMesh.receiveShadow = true;
-        planeMesh.rotation.x = Math.PI * -0.5;
-        planeMesh.position.y = 0;
+        this.createFloor();
 
         /**
          * The model pedestal
          */
+        var phongMat = new THREE.MeshPhongMaterial();
+
         var pedestalTexture = new THREE.TextureLoader().load(
             "./resources/textures/shadowmap.png"
         );
@@ -149,7 +204,7 @@ export default class App extends Component {
         pedestalMesh.castShadow = true;
         pedestalMesh.receiveShadow = true;
         pedestalMesh.position.set(0, 0.5, 0);
-        this.scene.add(planeMesh, pedestalMesh);
+        this.scene.add(pedestalMesh);
     };
 
     _addAgents = () => {
