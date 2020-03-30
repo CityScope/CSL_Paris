@@ -3,7 +3,8 @@ import * as THREE from "three";
 
 import OrbitControls from "three-orbitcontrols";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-import trips from "../../trips/trips.json";
+import trips_car from "../../trips/trips_car.json";
+import trips_people from "../../trips/trips_people.json";
 import { geoMercator } from "d3-geo";
 
 // ! https://codesandbox.io/s/81qjyxonm8
@@ -23,7 +24,6 @@ export default class ThreeScene extends Component {
             timeCounter: 0,
             simSpeed: 1
         };
-
         this.simulationDuration = 50;
     }
 
@@ -34,7 +34,7 @@ export default class ThreeScene extends Component {
          */
         this._sceneSetup();
         this._addCustomSceneObjects();
-        this._addAgents();
+        this._addAgents(trips_car,"red");
         this.startAnimationLoop();
 
         window.addEventListener("resize", this.handleWindowResize);
@@ -70,7 +70,7 @@ export default class ThreeScene extends Component {
          */
 
         let ambLight = new THREE.PointLight(0xffffff, 0.1, 100);
-        ambLight.position.set(0, 10, 0);
+        ambLight.position.set(0, 5, 0);
 
         let light = new THREE.PointLight(0xf26101, 0.5, 100);
         light.position.set(-1, 2, -1);
@@ -84,7 +84,7 @@ export default class ThreeScene extends Component {
 
         this.scene.add(ambLight, light, light2);
 
-        // this._loadOBJmodel(this.scene);
+        //this._loadOBJmodel(this.scene);
     };
 
     _loadOBJmodel = scene => {
@@ -200,18 +200,18 @@ export default class ThreeScene extends Component {
         // fix scaling issue
         pedestalTexture.minFilter = THREE.LinearFilter;
 
-        const cubeGeo = new THREE.BoxBufferGeometry(3.5, 1, 2);
+        const cubeGeo = new THREE.BoxBufferGeometry(1.57, 0.7, 0.92);
         const pedestalMesh = new THREE.Mesh(cubeGeo, materialArray);
         pedestalMesh.castShadow = true;
         pedestalMesh.receiveShadow = true;
-        pedestalMesh.position.set(0, 0.5, 0);
+        pedestalMesh.position.set(0, 0.35, 0);
+        //pedestalMesh.rotation.set(0, -0.4625123, 0);
         this.scene.add(pedestalMesh);
     };
 
-    _addAgents = () => {
+    _addAgents = (_trips,_color) => {
         this.agentsContainer = new THREE.Object3D();
-        // this.agentsContainer.rotateY(0.4625123);
-        this.count = trips.length;
+        this.count = _trips.length;
         let agentScale = 0.01;
         this.agentsDummy = new THREE.Object3D();
         var geometry = new THREE.BoxBufferGeometry(
@@ -219,26 +219,29 @@ export default class ThreeScene extends Component {
             agentScale,
             agentScale
         );
-        var material = new THREE.MeshBasicMaterial({ color: "yellow" });
+        var material = new THREE.MeshBasicMaterial({ color: _color });
         this.agents = new THREE.InstancedMesh(geometry, material, this.count);
+        this.agents.rotateY(0.4625123);
+        this.agents.position.set(-(Math.cos(0.4625123)*822)/2000 - 1.57/2,0.0,(Math.sin(0.4625123)*822)/2000-0.92/2);
         this.agents.instanceMatrix.setUsage(THREE.DynamicDrawUsage); // will be updated every frame
-        // this.agentsContainer.add(this.agents);
-        // this.scene.add(this.agentsContainer);
         this.scene.add(this.agents);
-        // put first frame of agents in scene
-        this._animateAgents();
+        //FIXME: Not sure here if we want a container of agent or just push agents.
+        //this.agentsContainer.add(this.agents);
+        //this.scene.add(this.agentsContainer);
+        //FIXME: Do we want to call the animation here as it's already called in startAnimationLoop
+        //this._animateAgents(_trips);
     };
 
-    _animateAgents = () => {
+    _animateAgents = (_myTrips) => {
         const time = this.state.timeCounter;
 
-        for (var i = 0; i < trips.length; i++) {
-            if (trips[i].timestamps[time]) {
-                let pnt = this._meractorProj(trips[i].path[time]);
-
-                this.agentsDummy.position.x = pnt[0];
-                this.agentsDummy.position.y = 1;
-                this.agentsDummy.position.z = pnt[1];
+        for (var i = 0; i < _myTrips.length; i++) {
+            if (_myTrips[i].timestamps[time]) {
+                //let pnt = this._meractorProj(trips[i].path[time]);
+                let pnt = _myTrips[i].path[time];
+                this.agentsDummy.position.x = pnt[0];//-0.85;
+                this.agentsDummy.position.y = 0.7;
+                this.agentsDummy.position.z = pnt[1];//-0.72;
                 // put a clone of obj in each place holder
                 this.agentsDummy.updateMatrix();
                 this.agents.setMatrixAt(i, this.agentsDummy.matrix);
@@ -279,7 +282,7 @@ export default class ThreeScene extends Component {
     };
 
     startAnimationLoop = () => {
-        this._animateAgents();
+        this._animateAgents(trips_car);
         this.renderer.render(this.scene, this.camera);
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
