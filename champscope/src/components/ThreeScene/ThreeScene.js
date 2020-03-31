@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import * as THREE from "three";
-import { _createFloor } from "./utils";
+import { _createFloor, _loadOBJmodel, _setupAgents, _shaders } from "./utils";
 import OrbitControls from "three-orbitcontrols";
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 
-//
 import trips_car from "../../trips/trips_car.json";
 // import trips_people from "../../trips/trips_people.json";
 
+// ! https://github.com/mrdoob/three.js/blob/master/examples/css3d_youtube.html
 // ! https://codesandbox.io/s/81qjyxonm8
 // ! https://github.com/mrdoob/three.js/pull/17505
 // ! https://codepen.io/pen/?editors=0010
 // ! Good structure:
 // ! https://codesandbox.io/s/mjp143zq9x?from-embed
 // ! materials https://codepen.io/bartuc/pen/eEbmvJ?editors=0010
-
 // ! Bloom https://jsfiddle.net/yp2t6op6/3/
-// ! https://github.com/mrdoob/three.js/blob/master/examples/webgl_postprocessing_unreal_bloom_selective.html
+// ! https://github.com/mrdoob/three.js/blob/master/examples/webgl_postprocesnsing_unreal_bloom_selective.html
 // ! https://stackoverflow.com/questions/47922923/ceiling-lights-effect-using-three-js
 
 const style = {
@@ -33,13 +35,16 @@ export default class ThreeScene extends Component {
     }
 
     componentDidMount() {
+        // get the div dims on init
+        this.width = this.mountingDiv.clientWidth;
+        this.height = this.mountingDiv.clientHeight;
         /**
          * call the THREE setup with the
          * ref'ed div that REACT renders
          */
         this._sceneSetup();
         this._addCustomSceneObjects();
-        this._addAgents(trips_car, "red");
+        // this._addAgents(trips_car);
         this.startAnimationLoop();
 
         window.addEventListener("resize", this.handleWindowResize);
@@ -51,13 +56,11 @@ export default class ThreeScene extends Component {
     }
 
     _sceneSetup = () => {
-        const width = this.mountingDiv.clientWidth;
-        const height = this.mountingDiv.clientHeight;
         this.scene = new THREE.Scene();
-
+        // camera
         this.camera = new THREE.PerspectiveCamera(
             50,
-            window.innerWidth / window.innerHeight,
+            this.width / this.height,
             0.01,
             1000
         );
@@ -65,24 +68,29 @@ export default class ThreeScene extends Component {
         this.camera.position.x = 0;
         this.camera.position.y = 4;
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
+        // renderer
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.shadowMap.enabled = true;
-
-        this.renderer.setSize(width, height);
+        this.renderer.toneMapping = THREE.ReinhardToneMapping;
+        this.renderer.setSize(this.width, this.height);
         this.mountingDiv.appendChild(this.renderer.domElement);
+        /*
+            BLOOM
+        */
+        this.setupBloom(this.width, this.height);
 
         /**
          * Lights
          */
 
-        let ambLight = new THREE.PointLight(0xffffff, 0.1, 100);
+        let ambLight = new THREE.PointLight(0xffffff, 0.05, 100);
         ambLight.position.set(0, 5, 0);
-
+        //
         let light = new THREE.PointLight(0xf26101, 0.5, 100);
         light.position.set(-1, 2, -1);
         light.castShadow = true;
         light.shadow.radius = 2;
-
+        //
         let light2 = new THREE.PointLight(0x0071bc, 0.5, 100);
         light2.position.set(1, 2, 1);
         light2.castShadow = true;
@@ -90,26 +98,14 @@ export default class ThreeScene extends Component {
 
         this.scene.add(ambLight, light, light2);
 
-        this._loadOBJmodel(this.scene);
-    };
+        // global model material
+        this.modelColor = new THREE.Color();
+        this.modelColor.setHSL(0, 0, 0.3);
+        this.modelMaterial = new THREE.MeshPhongMaterial({
+            color: this.modelColor
+        });
 
-    _loadOBJmodel = scene => {
-        var loader = new OBJLoader();
-        loader.load(
-            "./resources/model/champ.obj",
-            function(model) {
-                model.scale.set(0.000505, 0.001, 0.000505);
-                model.position.set(-0.0055, 0.7, 0);
-                model.rotation.set(0, 0.4625123, 0);
-                // model.traverse(function(child) {
-                //     child.castShadow = true;
-                // });
-                scene.add(model);
-            },
-            function(error) {
-                console.log(error);
-            }
-        );
+        _loadOBJmodel(this.scene, this.modelMaterial);
     };
 
     _addCustomSceneObjects = async () => {
@@ -117,26 +113,22 @@ export default class ThreeScene extends Component {
         /**
          * The model pedestal
          */
-        var phongMat = new THREE.MeshPhongMaterial();
-
         var pedestalTexture = new THREE.TextureLoader().load(
             "./resources/textures/shadowmap.png"
         );
-        var pedestalModelMaterial = new THREE.MeshPhongMaterial({
-            map: pedestalTexture
+        var topModelMaterial = new THREE.MeshPhongMaterial({
+            map: pedestalTexture,
+            color: this.modelColor
         });
-
         // 6 sides material for pedestal
         let materialArray = [
-            phongMat,
-            phongMat,
-
-            pedestalModelMaterial,
-            phongMat,
-            phongMat,
-            phongMat
+            this.modelMaterial,
+            this.modelMaterial,
+            topModelMaterial,
+            this.modelMaterial,
+            this.modelMaterial,
+            this.modelMaterial
         ];
-
         // fix scaling issue
         pedestalTexture.minFilter = THREE.LinearFilter;
         const cubeGeo = new THREE.BoxBufferGeometry(1.57, 0.7, 0.92);
@@ -145,71 +137,24 @@ export default class ThreeScene extends Component {
         pedestalMesh.castShadow = true;
         pedestalMesh.receiveShadow = true;
         this.scene.add(pedestalMesh);
+
+        this.agentsWrapper = _setupAgents(trips_car);
+        this.scene.add(this.agentsWrapper);
     };
 
-    _addAgents = (trips, color) => {
-        this.agentsDummy = new THREE.Object3D();
-        this.count = trips.length;
-
-        let agentScale = 0.005;
-        var geometry = new THREE.BoxBufferGeometry(
-            agentScale,
-            agentScale,
-            agentScale
-        );
-        var material = new THREE.MeshBasicMaterial({ color: color });
-        this.agents = new THREE.InstancedMesh(geometry, material, this.count);
-
-        /*
-        let textLoader = new THREE.TextureLoader();
-        let spriteText = textLoader.load("./resources/textures/agent.png");
-        var spriteMaterial = new THREE.SpriteMaterial({
-            map: spriteText,
-            transparent: true
-        });
-
-        var pplSprite = new THREE.Sprite(spriteMaterial);
-        // pplSprite.material.color.setHex(colorByNation(grp[person].N));
-        pplSprite.material.blending = THREE.AdditiveBlending;
-        pplSprite.material.transparent = true;
-        pplSprite.scale.set(5, 5, 5);
-  this.agents = new THREE.InstancedMesh(
-            pplSprite,
-            spriteMaterial,
-            this.count
-        );
-
-        */
-
-        this.agents.rotation.set(0, 0.4625123, 0);
-        let pos = this._agentsPos();
-        this.agents.position.set(pos[0], 0, pos[1]);
-        this.agents.instanceMatrix.setUsage(THREE.DynamicDrawUsage); // will be updated every frame
-        this.scene.add(this.agents);
-    };
-
-    _agentsPos = () => {
-        return [
-            -(Math.cos(0.4625123) * 822) / 2000 - 1.57 / 2,
-            (Math.sin(0.4625123) * 822) / 2000 - 0.92 / 2
-        ];
-    };
-
-    _animateAgents = myTrips => {
+    _animateAgents = trips => {
         const time = this.state.timeCounter;
 
-        for (var i = 0; i < myTrips.length; i++) {
-            if (myTrips[i].timestamps[time]) {
-                let pnt = myTrips[i].path[time];
-                this.agentsDummy.position.x = pnt[0];
-                this.agentsDummy.position.y = 0.7;
-                this.agentsDummy.position.z = pnt[1];
-                // put a clone of obj in each place holder
-                this.agentsDummy.updateMatrix();
-                this.agents.setMatrixAt(i, this.agentsDummy.matrix);
+        for (var i = 0; i < trips.length; i++) {
+            if (trips[i].timestamps[time]) {
+                let pnt = trips[i].path[time];
+                this.agentsWrapper.children[i].position.set(
+                    pnt[0],
+                    0.705,
+                    pnt[1]
+                );
             }
         }
-        this.agents.instanceMatrix.needsUpdate = true;
 
         this.setState({
             timeCounter:
@@ -229,10 +174,53 @@ export default class ThreeScene extends Component {
 
     startAnimationLoop = () => {
         this._animateAgents(trips_car);
-        this.renderer.render(this.scene, this.camera);
+        this.bloomComposer.render();
+        this.finalComposer.render();
 
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
+
+    setupBloom(width, height) {
+        var params = {
+            exposure: 1,
+            bloomStrength: 1,
+            bloomThreshold: 0,
+            bloomRadius: 0.1,
+            scene: "Scene with Glow"
+        };
+        var renderScene = new RenderPass(this.scene, this.camera);
+        var bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(width, height),
+            1,
+            0.4,
+            0.85
+        );
+        bloomPass.threshold = params.bloomThreshold;
+        bloomPass.strength = params.bloomStrength;
+        bloomPass.radius = params.bloomRadius;
+        this.bloomComposer = new EffectComposer(this.renderer);
+        this.bloomComposer.renderToScreen = false;
+        this.bloomComposer.addPass(renderScene);
+        this.bloomComposer.addPass(bloomPass);
+        var finalPass = new ShaderPass(
+            new THREE.ShaderMaterial({
+                uniforms: {
+                    baseTexture: { value: null },
+                    bloomTexture: {
+                        value: this.bloomComposer.renderTarget2.texture
+                    }
+                },
+                vertexShader: _shaders().vertex,
+                fragmentShader: _shaders().frag,
+                defines: {}
+            }),
+            "baseTexture"
+        );
+        finalPass.needsSwap = true;
+        this.finalComposer = new EffectComposer(this.renderer);
+        this.finalComposer.addPass(renderScene);
+        this.finalComposer.addPass(finalPass);
+    }
 
     render() {
         return <div style={style} ref={div => (this.mountingDiv = div)}></div>;

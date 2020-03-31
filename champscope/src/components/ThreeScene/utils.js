@@ -1,5 +1,104 @@
 import * as THREE from "three";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 
+/***
+ *
+ *
+ */
+export const _setupAgents = trips => {
+    let agentsWrapper = new THREE.Object3D();
+    for (let i = 0; i < trips.length; i++) {
+        let textLoader = new THREE.TextureLoader();
+        let spriteText = textLoader.load("./resources/textures/agent.png");
+        var spriteMaterial = new THREE.SpriteMaterial({
+            map: spriteText,
+            transparent: true
+        });
+
+        var sprite = new THREE.Sprite(spriteMaterial);
+        sprite.material.color.setHSL(Math.random(), Math.random(), 0.1);
+        sprite.material.blending = THREE.AdditiveBlending;
+        sprite.material.transparent = true;
+        sprite.scale.set(0.05, 0.05, 0.05);
+        sprite.position.set(0, 0, 0);
+        agentsWrapper.add(sprite);
+    }
+
+    agentsWrapper.rotation.set(0, 0.4625123, 0);
+
+    agentsWrapper.position.set(
+        -(Math.cos(0.4625123) * 822) / 2000 - 1.57 / 2,
+        0,
+        (Math.sin(0.4625123) * 822) / 2000 - 0.92 / 2
+    );
+    agentsWrapper.rotation.set(0, 0.4625123, 0);
+    return agentsWrapper;
+};
+
+/**
+ *
+ *
+ */
+
+export const _loadOBJmodel = (scene, modelMaterial) => {
+    var loader = new OBJLoader();
+
+    loader.load(
+        "./resources/model/champ.obj",
+        function(model) {
+            model.scale.set(0.000505, 0.001, 0.000505);
+            model.position.set(-0.0055, 0.7, 0);
+            model.rotation.set(0, 0.4625123, 0);
+            model.traverse(function(child) {
+                // child.castShadow = true;
+                child.material = modelMaterial;
+            });
+            scene.add(model);
+        },
+        function(error) {
+            console.log(error);
+        }
+    );
+};
+
+/**
+ *
+ * @param {*} renderer
+ * @param {*} scene
+ */
+
+export const _shaders = () => {
+    const _vertexShader = () => {
+        return `
+    varying vec2 vUv;
+       void main() {
+           vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+        }
+    `;
+    };
+    //
+    const _fragmentshader = () => {
+        return ` 
+    uniform sampler2D baseTexture;
+    uniform sampler2D bloomTexture;
+    varying vec2 vUv;
+    vec4 getTexture( sampler2D texelToLinearTexture ) {
+        return mapTexelToLinear( texture2D( texelToLinearTexture , vUv ) );
+    }
+    void main() {
+        gl_FragColor = ( getTexture( baseTexture ) + vec4( 1.0 ) * getTexture( bloomTexture ) );
+    }`;
+    };
+
+    return { vertex: _vertexShader(), frag: _fragmentshader() };
+};
+
+/**
+ *
+ * @param {*} renderer
+ * @param {*} scene
+ */
 // ! should consider https://tinyurl.com/wqpozgh
 
 export const _createFloor = (renderer, scene) => {
