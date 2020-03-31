@@ -83,7 +83,7 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 
 	float step <-2.5#sec parameter: 'Simulation Step' category: "Simulation" min: 0.1#sec max: 1000#sec;
 	float traffic_light_duration <-70#sec parameter: 'Traffic light duration' category: "Simulation" min: 1#sec max: 300#sec;
-	float speedUpSpeedMax <-50#sec;// parameter: 'Speedup Max' category: "Simulation" min: 1#sec max:200#sec;
+	float speedUpSpeedMax <-2.5#sec;// parameter: 'Speedup Max' category: "Simulation" min: 1#sec max:200#sec;
 	float speedUpSpeedMin <-2.5#sec;// parameter: 'Speedup Min' category: "Simulation" min: 0.1#sec max: 20#sec;
 	float speedUpSpeedDecrease <-2#sec;// parameter: 'Speedup Decrement' category: "Simulation" min: 1#sec max: 20#sec;
 	bool speedUpSim<-true;// parameter: 'speedUpSim' category: "Simulation" <-true;
@@ -199,7 +199,7 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 	
 	//Use to store value in a json
 	float saveLocationInterval<-step;
-	int totalTimeInSec<-50; //24hx60minx60sec 1step is 10#sec
+	int totalTimeInSec<-100; //24hx60minx60sec 1step is 10#sec
 	bool saveToJson<-true;
 	
 	init {
@@ -631,7 +631,8 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 			t <- "{\n\"mode\": ["+ 1 + ","+"\"people\""+    "],\n\"path\": [";
 			int curLoc<-0;
 			loop l over: locs {
-				point loc<-CRS_transform(l, "EPSG:4326").location;
+				point loc<-CRS_transform(l, "EPSG:4326").location;				
+				loc<-point(to_GAMA_CRS(loc, "EPSG:4326"))/2000;
 				if(curLoc<length(locs)-1){
 				t <- t + "[" + loc.x + ", " + loc.y + "],\n";	
 				}else{
@@ -1635,6 +1636,7 @@ species bike skills:[moving] {//schedules:[]{
 	list<point> current_trajectory;
 	float maxSpeed<-10#km/#h;
 	list<list<point>> trail;
+	list<point> locs;
 
 	
 	
@@ -1676,6 +1678,12 @@ species bike skills:[moving] {//schedules:[]{
 		trail <- [];
 		location<-any_location_in(one_of(bikelane));
 		my_target <- nil;
+	}
+	
+	reflex saveValue when:saveToJson{
+			if((time mod saveLocationInterval = 0) and (time mod totalTimeInSec)>1){
+		 	locs << {location.x,location.y,cycle};
+		 	}
 	}
 		
 	
@@ -1761,6 +1769,7 @@ species car skills:[advanced_driving] {//schedules:[]{
 	list<point> last_locations;
 	intersection starting_intersection;
 	point target;
+	list<point> locs;
 	
 	int cpt_blocked;
 	int max_cpt_blocked <- 100;
@@ -1889,6 +1898,12 @@ species car skills:[advanced_driving] {//schedules:[]{
 		old_location <- copy(location);
 		old_indexes <- [int(starting_intersection), current_index,segment_index_on_road]; 
 		path_updated <- false;
+	}
+	
+	reflex saveValue when:saveToJson{
+			if((time mod saveLocationInterval = 0) and (time mod totalTimeInSec)>1){
+		 	locs << {location.x,location.y,cycle};
+		 	}
 	}
 	
 	
@@ -2268,9 +2283,9 @@ experiment ReChamp type: gui autorun:true virtual:true{
 	float minimum_cycle_duration<-0.025;	
 	output {
 
-		display champ type:opengl background:#black draw_env:false fullscreen:false  rotate:angle toolbar:false autosave:false synchronized:true
-		camera_pos: {1377.9646,1230.5875,3126.3113} camera_look_pos: {1377.9646,1230.533,0.0051} camera_up_vector: {0.0,1.0,0.0}
-        keystone: [{0.12704565027375098,-0.005697301640547492,0.0},{-0.19504933859455517,1.3124020399566794,0.0},{1.1454962633840384,1.2440344202701115,0.0},{0.8687370667296103,-0.001899100546849053,0.0}]
+		display champ type:opengl background:#black draw_env:true fullscreen:false  rotate:0 toolbar:false autosave:false synchronized:true
+		//camera_pos: {1377.9646,1230.5875,3126.3113} camera_look_pos: {1377.9646,1230.533,0.0051} camera_up_vector: {0.0,1.0,0.0}
+        //keystone: [{0.12704565027375098,-0.005697301640547492,0.0},{-0.19504933859455517,1.3124020399566794,0.0},{1.1454962633840384,1.2440344202701115,0.0},{0.8687370667296103,-0.001899100546849053,0.0}]
 		
 	   	{    	
 		    species building aspect: base;
@@ -2288,7 +2303,7 @@ experiment ReChamp type: gui autorun:true virtual:true{
 
 									
 			graphics 'tablebackground'{
-				//draw geometry(shape_file_bounds) color:#white empty:true;
+				draw geometry(shape_file_bounds) color:#white empty:true;
 				//draw string("State: " + currentSimuState) rotate:angle at:{400,400} color:#white empty:true;
 			}
 			
