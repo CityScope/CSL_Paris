@@ -6,17 +6,22 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
  *
  */
 export const _setupAgents = trips => {
+    let rndCol = 1 / (Math.random() * 4);
+    console.log(rndCol);
+
     let agentsWrapper = new THREE.Object3D();
     for (let i = 0; i < trips.length; i++) {
         let textLoader = new THREE.TextureLoader();
         let spriteText = textLoader.load("./resources/textures/agent.png");
+        spriteText.minFilter = THREE.LinearFilter;
+
         var spriteMaterial = new THREE.SpriteMaterial({
             map: spriteText,
             transparent: true
         });
 
         var sprite = new THREE.Sprite(spriteMaterial);
-        sprite.material.color.setHSL(Math.random(), Math.random(), 0.1);
+        sprite.material.color.setHSL(rndCol, 1, 0.2);
         sprite.material.blending = THREE.AdditiveBlending;
         sprite.material.transparent = true;
         sprite.scale.set(0.05, 0.05, 0.05);

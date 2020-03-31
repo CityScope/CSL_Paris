@@ -1,15 +1,3 @@
-import React, { Component } from "react";
-import * as THREE from "three";
-import { _createFloor, _loadOBJmodel, _setupAgents, _shaders } from "./utils";
-import OrbitControls from "three-orbitcontrols";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-
-import trips_car from "../../trips/trips_car.json";
-// import trips_people from "../../trips/trips_people.json";
-
 // ! https://github.com/mrdoob/three.js/blob/master/examples/css3d_youtube.html
 // ! https://codesandbox.io/s/81qjyxonm8
 // ! https://github.com/mrdoob/three.js/pull/17505
@@ -21,6 +9,25 @@ import trips_car from "../../trips/trips_car.json";
 // ! https://github.com/mrdoob/three.js/blob/master/examples/webgl_postprocesnsing_unreal_bloom_selective.html
 // ! https://stackoverflow.com/questions/47922923/ceiling-lights-effect-using-three-js
 
+import React, { Component } from "react";
+import * as THREE from "three";
+import { _createFloor, _loadOBJmodel, _setupAgents, _shaders } from "./utils";
+import OrbitControls from "three-orbitcontrols";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+
+import trips_car from "../../trips/trips_car.json";
+import trips_people from "../../trips/trips_people.json";
+import trips_bike from "../../trips/trips_bike.json";
+
+const trips = {
+    cars: trips_car,
+    poeple: trips_people,
+    bike: trips_bike
+};
+
 const style = {
     height: "100vh"
 };
@@ -29,7 +36,8 @@ export default class ThreeScene extends Component {
         super(props);
         this.state = {
             timeCounter: 0,
-            simSpeed: 1
+            simSpeed: 1,
+            trips: {}
         };
         this.simulationDuration = 50;
     }
@@ -44,7 +52,6 @@ export default class ThreeScene extends Component {
          */
         this._sceneSetup();
         this._addCustomSceneObjects();
-        // this._addAgents(trips_car);
         this.startAnimationLoop();
 
         window.addEventListener("resize", this.handleWindowResize);
@@ -138,23 +145,30 @@ export default class ThreeScene extends Component {
         pedestalMesh.receiveShadow = true;
         this.scene.add(pedestalMesh);
 
-        this.agentsWrapper = _setupAgents(trips_car);
+        this.agentsWrapper = new THREE.Object3D();
+        for (const trip in trips) {
+            let thisTripsAgents = _setupAgents(trips[trip]);
+            thisTripsAgents.name = trip;
+            thisTripsAgents.trips = trips[trip];
+            this.agentsWrapper.add(thisTripsAgents);
+        }
         this.scene.add(this.agentsWrapper);
+
+        this._animateAgents();
     };
 
-    _animateAgents = trips => {
+    _animateAgents = () => {
         const time = this.state.timeCounter;
 
-        for (var i = 0; i < trips.length; i++) {
-            if (trips[i].timestamps[time]) {
-                let pnt = trips[i].path[time];
-                this.agentsWrapper.children[i].position.set(
-                    pnt[0],
-                    0.705,
-                    pnt[1]
-                );
+        this.agentsWrapper.children.forEach(tripsObject => {
+            for (let i = 0; i < tripsObject.trips.length; i++) {
+                if (tripsObject.trips[i].path[time]) {
+                    let pnt = tripsObject.trips[i].path[time];
+                    let agent = tripsObject.children[i];
+                    agent.position.set(pnt[0], 0.702, pnt[1]);
+                }
             }
-        }
+        });
 
         this.setState({
             timeCounter:
@@ -173,7 +187,7 @@ export default class ThreeScene extends Component {
     };
 
     startAnimationLoop = () => {
-        this._animateAgents(trips_car);
+        this._animateAgents();
         this.bloomComposer.render();
         this.finalComposer.render();
 
@@ -183,7 +197,7 @@ export default class ThreeScene extends Component {
     setupBloom(width, height) {
         var params = {
             exposure: 1,
-            bloomStrength: 1,
+            bloomStrength: 0.6,
             bloomThreshold: 0,
             bloomRadius: 0.1,
             scene: "Scene with Glow"
