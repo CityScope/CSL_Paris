@@ -525,6 +525,7 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 			bike_graph[j] <- directed(bike_graph[j]);
 		}
 		create graphicWorld from:shape_file_bounds;
+		//save building to: "building.geojson" type:json crs: "GAMA";
 	}
 	
 	
