@@ -6,9 +6,15 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
  *
  */
 export const _setupAgents = trips => {
-    let rndCol = 1 / (Math.random() * 4);
     let agentsWrapper = new THREE.Object3D();
-    for (let i = 0; i < trips.length; i++) {
+    let scale = 0.015;
+    let color = new THREE.Color();
+
+    color.setHSL(trips.color.h, trips.color.s, trips.color.l);
+
+    console.log(color);
+
+    for (let i = 0; i < trips.dataObj.length; i++) {
         let textLoader = new THREE.TextureLoader();
         let spriteText = textLoader.load("./resources/textures/agent.png");
         spriteText.minFilter = THREE.LinearFilter;
@@ -19,10 +25,11 @@ export const _setupAgents = trips => {
         });
 
         var sprite = new THREE.Sprite(spriteMaterial);
-        sprite.material.color.setHSL(rndCol, 1, 0.2);
+
+        sprite.material.color = color;
         sprite.material.blending = THREE.AdditiveBlending;
         sprite.material.transparent = true;
-        let scale = 0.025;
+
         sprite.scale.set(scale, scale, scale);
         sprite.position.set(0, 0, 0);
         agentsWrapper.add(sprite);

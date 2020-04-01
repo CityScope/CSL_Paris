@@ -23,9 +23,9 @@ import trips_people from "../../trips/trips_people.json";
 import trips_bike from "../../trips/trips_bike.json";
 
 const trips = {
-    cars: trips_car,
-    poeple: trips_people,
-    bike: trips_bike
+    cars: { dataObj: trips_car, color: { h: 1, s: 1, l: 0.5 } },
+    poeple: { dataObj: trips_people, color: { h: 0, s: 0, l: 0.8 } },
+    bike: { dataObj: trips_bike, color: { h: 0.3, s: 1, l: 0.5 } }
 };
 
 const style = {
@@ -154,7 +154,7 @@ export default class ThreeScene extends Component {
         for (const trip in trips) {
             let thisTripsAgents = _setupAgents(trips[trip]);
             thisTripsAgents.name = trip;
-            thisTripsAgents.trips = trips[trip];
+            thisTripsAgents.trips = trips[trip].dataObj;
             this.agentsWrapper.add(thisTripsAgents);
         }
         this.scene.add(this.agentsWrapper);
