@@ -46,15 +46,8 @@ export default class ThreeScene extends Component {
         // get the div dims on init
         this.width = this.mountingDiv.clientWidth;
         this.height = this.mountingDiv.clientHeight;
-        /**
-         * call the THREE setup with the
-         * ref'ed div that REACT renders
-         */
-        this._sceneSetup();
-        this._addCustomSceneObjects();
-        this.startAnimationLoop();
-
         window.addEventListener("resize", this.handleWindowResize);
+        this._init();
     }
 
     componentWillUnmount() {
@@ -62,7 +55,19 @@ export default class ThreeScene extends Component {
         window.removeEventListener("resize", this.handleWindowResize);
     }
 
-    _sceneSetup = () => {
+    _init = async () => {
+        /**
+         * call the THREE setup with the
+         * ref'ed div that REACT renders
+         */
+
+        await this._sceneSetup();
+        _loadOBJmodel(this.scene, this.modelMaterial);
+        this._addCustomSceneObjects();
+        this.startAnimationLoop();
+    };
+
+    _sceneSetup = async () => {
         this.scene = new THREE.Scene();
         // camera
         this.camera = new THREE.PerspectiveCamera(
@@ -112,10 +117,10 @@ export default class ThreeScene extends Component {
             color: this.modelColor
         });
 
-        _loadOBJmodel(this.scene, this.modelMaterial);
+        console.log("..done init scene");
     };
 
-    _addCustomSceneObjects = async () => {
+    _addCustomSceneObjects = () => {
         _createFloor(this.renderer, this.scene);
         /**
          * The model pedestal
@@ -154,7 +159,7 @@ export default class ThreeScene extends Component {
         }
         this.scene.add(this.agentsWrapper);
 
-        this._animateAgents();
+        console.log("..done adding items to scene");
     };
 
     _animateAgents = () => {

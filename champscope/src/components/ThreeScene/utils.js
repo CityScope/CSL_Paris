@@ -7,8 +7,6 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
  */
 export const _setupAgents = trips => {
     let rndCol = 1 / (Math.random() * 4);
-    console.log(rndCol);
-
     let agentsWrapper = new THREE.Object3D();
     for (let i = 0; i < trips.length; i++) {
         let textLoader = new THREE.TextureLoader();
@@ -24,7 +22,8 @@ export const _setupAgents = trips => {
         sprite.material.color.setHSL(rndCol, 1, 0.2);
         sprite.material.blending = THREE.AdditiveBlending;
         sprite.material.transparent = true;
-        sprite.scale.set(0.05, 0.05, 0.05);
+        let scale = 0.025;
+        sprite.scale.set(scale, scale, scale);
         sprite.position.set(0, 0, 0);
         agentsWrapper.add(sprite);
     }
@@ -45,13 +44,13 @@ export const _setupAgents = trips => {
  *
  */
 
-export const _loadOBJmodel = (scene, modelMaterial) => {
+export const _loadOBJmodel = async (scene, modelMaterial) => {
     var loader = new OBJLoader();
 
     loader.load(
         "./resources/model/champ.obj",
         function(model) {
-            model.scale.set(0.000505, 0.001, 0.000505);
+            model.scale.set(0.000505, 0.000505, 0.000505);
             model.position.set(-0.0055, 0.7, 0);
             model.rotation.set(0, 0.4625123, 0);
             model.traverse(function(child) {
