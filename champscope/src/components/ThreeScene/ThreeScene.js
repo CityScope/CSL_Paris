@@ -62,7 +62,7 @@ export default class ThreeScene extends Component {
          */
 
         await this._sceneSetup();
-        _loadOBJmodel(this.scene, this.modelMaterial);
+        //_loadOBJmodel(this.scene, this.modelMaterial);
         this._addCustomSceneObjects();
         this.startAnimationLoop();
     };
