@@ -18,9 +18,9 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 
-import trips_car from "../../trips/trips_car.json";
-import trips_people from "../../trips/trips_people.json";
-import trips_bike from "../../trips/trips_bike.json";
+import trips_car from "../../trips/trips_car_before.json";
+import trips_people from "../../trips/trips_people_before.json";
+import trips_bike from "../../trips/trips_bike_before.json";
 
 const trips = {
     cars: { dataObj: trips_car, color: { h: 1, s: 1, l: 0.5 } },
