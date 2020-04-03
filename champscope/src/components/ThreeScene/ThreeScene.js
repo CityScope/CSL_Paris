@@ -22,15 +22,6 @@ import trips_car from "../../trips/trips_car_before.json";
 import trips_people from "../../trips/trips_people_before.json";
 import trips_bike from "../../trips/trips_bike_before.json";
 
-const trips = {
-    cars: { dataObj: trips_car, color: { h: 1, s: 1, l: 0.5 } },
-    poeple: { dataObj: trips_people, color: { h: 0, s: 0, l: 0.8 } },
-    bike: { dataObj: trips_bike, color: { h: 0.3, s: 1, l: 0.5 } },
-};
-
-const style = {
-    height: "100vh",
-};
 export default class ThreeScene extends Component {
     constructor(props) {
         super(props);
@@ -40,6 +31,23 @@ export default class ThreeScene extends Component {
             trips: {},
         };
         this.simulationDuration = 50;
+        this.cityModelURL = "./resources/model/champ.obj";
+        this.landscapeModels = {
+            parks_before: "./resources/model/champ.obj",
+            parks_after: "./resources/model/champ.obj",
+            cultural_before: "./resources/model/champ.obj",
+            cultural_after: "./resources/model/champ.obj",
+        };
+
+        this.trips = {
+            cars: { dataObj: trips_car, color: { h: 1, s: 1, l: 0.5 } },
+            poeple: { dataObj: trips_people, color: { h: 0, s: 0, l: 0.8 } },
+            bike: { dataObj: trips_bike, color: { h: 0.3, s: 1, l: 0.5 } },
+        };
+
+        this.style = {
+            height: "100vh",
+        };
     }
 
     componentDidMount() {
@@ -57,15 +65,34 @@ export default class ThreeScene extends Component {
     }
 
     _init = async () => {
-        let url = "./resources/model/champ.obj";
+        this.shpContainer = new THREE.Object3D();
         this._sceneSetup().then(
-            await _loadOBJmodel(url).then((model) => {
+            // load urban model
+            await _loadOBJmodel(this.cityModelURL).then((model) => {
                 this._handelModel(model);
-                console.log("model loaded!");
+                console.log("city model loaded!");
             }),
+            // load other street models
+            await this._landscapeModelsLoader(),
+            // load the rest of the scene
             this._addCustomSceneObjects(),
+
+            // start the animation
             this.startAnimationLoop()
         );
+    };
+
+    _landscapeModelsLoader = async () => {
+        for (const modelUrl in this.landscapeModels) {
+            console.log(modelUrl);
+
+            // load other models
+            await _loadOBJmodel(this.landscapeModels[modelUrl]).then(
+                (model) => {
+                    console.log(model);
+                }
+            );
+        }
     };
 
     _handelModel = (model) => {
@@ -164,10 +191,10 @@ export default class ThreeScene extends Component {
         this.scene.add(pedestalMesh);
 
         this.agentsWrapper = new THREE.Object3D();
-        for (const trip in trips) {
-            let thisTripsAgents = _setupAgents(trips[trip]);
+        for (const trip in this.trips) {
+            let thisTripsAgents = _setupAgents(this.trips[trip]);
             thisTripsAgents.name = trip;
-            thisTripsAgents.trips = trips[trip].dataObj;
+            thisTripsAgents.trips = this.trips[trip].dataObj;
             this.agentsWrapper.add(thisTripsAgents);
         }
         this.scene.add(this.agentsWrapper);
@@ -256,7 +283,10 @@ export default class ThreeScene extends Component {
 
     render() {
         return (
-            <div style={style} ref={(div) => (this.mountingDiv = div)}></div>
+            <div
+                style={this.style}
+                ref={(div) => (this.mountingDiv = div)}
+            ></div>
         );
     }
 }
