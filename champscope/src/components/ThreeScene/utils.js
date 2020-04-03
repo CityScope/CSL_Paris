@@ -1,6 +1,20 @@
 import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 
+/**
+ *
+ * @param {
+ * } trips
+ */
+
+export const _blockCamera = (camera) => {
+    if (camera) {
+        let p = camera.position;
+        if (p.y < 0.3) p.y = 0.3;
+        if (p.y > 4) p.y = 4;
+    }
+};
+
 /***
  *
  *

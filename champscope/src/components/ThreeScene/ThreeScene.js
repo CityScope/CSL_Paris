@@ -11,7 +11,13 @@
 
 import React, { Component } from "react";
 import * as THREE from "three";
-import { _createFloor, _loadOBJmodel, _setupAgents, _shaders } from "./utils";
+import {
+    _createFloor,
+    _loadOBJmodel,
+    _blockCamera,
+    _setupAgents,
+    _shaders,
+} from "./utils";
 import OrbitControls from "three-orbitcontrols";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
@@ -73,7 +79,7 @@ export default class ThreeScene extends Component {
                 console.log("city model loaded!");
             }),
             // load other street models
-            await this._landscapeModelsLoader(),
+            // await this._landscapeModelsLoader(),
             // load the rest of the scene
             this._addCustomSceneObjects(),
 
@@ -120,8 +126,13 @@ export default class ThreeScene extends Component {
         this.camera.position.x = 0;
         this.camera.position.y = 4;
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
+        this.controls.maxDistance = 6;
+        this.controls.minDistance = 1;
         // renderer
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true,
+        });
         this.renderer.shadowMap.enabled = true;
         this.renderer.toneMapping = THREE.ReinhardToneMapping;
         this.renderer.setSize(this.width, this.height);
@@ -233,9 +244,10 @@ export default class ThreeScene extends Component {
 
     startAnimationLoop = () => {
         this._animateAgents();
+        _blockCamera(this.camera);
+
         this.bloomComposer.render();
         this.finalComposer.render();
-
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
 
