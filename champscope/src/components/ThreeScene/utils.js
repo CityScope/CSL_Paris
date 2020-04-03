@@ -5,15 +5,11 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
  *
  *
  */
-export const _setupAgents = trips => {
+export const _setupAgents = (trips) => {
     let agentsWrapper = new THREE.Object3D();
     let scale = 0.015;
     let color = new THREE.Color();
-
     color.setHSL(trips.color.h, trips.color.s, trips.color.l);
-
-    console.log(color);
-
     for (let i = 0; i < trips.dataObj.length; i++) {
         let textLoader = new THREE.TextureLoader();
         let spriteText = textLoader.load("./resources/textures/agent.png");
@@ -21,7 +17,7 @@ export const _setupAgents = trips => {
 
         var spriteMaterial = new THREE.SpriteMaterial({
             map: spriteText,
-            transparent: true
+            transparent: true,
         });
 
         var sprite = new THREE.Sprite(spriteMaterial);
@@ -51,25 +47,13 @@ export const _setupAgents = trips => {
  *
  */
 
-export const _loadOBJmodel = async (scene, modelMaterial) => {
-    var loader = new OBJLoader();
-
-    loader.load(
-        "./resources/model/champ.obj",
-        function(model) {
-            model.scale.set(0.000505, 0.000505, 0.000505);
-            model.position.set(-0.0055, 0.7, 0);
-            model.rotation.set(0, 0.4625123, 0);
-            model.traverse(function(child) {
-                // child.castShadow = true;
-                child.material = modelMaterial;
-            });
-            scene.add(model);
-        },
-        function(error) {
-            console.log(error);
-        }
-    );
+export const _loadOBJmodel = async (url) => {
+    console.log("start obj model load...");
+    return new Promise((resolve) => {
+        new OBJLoader().load(url, resolve);
+    }).then((result) => {
+        return result;
+    });
 };
 
 /**
@@ -116,7 +100,7 @@ export const _createFloor = (renderer, scene) => {
     // Create a floor.
     var loader = new THREE.TextureLoader();
 
-    loader.load("./resources/textures/floor/WOOD_SML.jpg", function(texture) {
+    loader.load("./resources/textures/floor/WOOD_SML.jpg", function (texture) {
         texture.minFilter = THREE.LinearFilter;
         var repeatX = 15;
         var repeatY = 15;
@@ -156,7 +140,7 @@ export const _createFloor = (renderer, scene) => {
             displacementScale: 0.1,
             normalMap: normal,
             metalness: 5,
-            roughness: 0.5
+            roughness: 0.5,
         });
 
         const planeSize = 50;

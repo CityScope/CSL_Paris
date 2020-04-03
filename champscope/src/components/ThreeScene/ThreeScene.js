@@ -25,11 +25,11 @@ import trips_bike from "../../trips/trips_bike_before.json";
 const trips = {
     cars: { dataObj: trips_car, color: { h: 1, s: 1, l: 0.5 } },
     poeple: { dataObj: trips_people, color: { h: 0, s: 0, l: 0.8 } },
-    bike: { dataObj: trips_bike, color: { h: 0.3, s: 1, l: 0.5 } }
+    bike: { dataObj: trips_bike, color: { h: 0.3, s: 1, l: 0.5 } },
 };
 
 const style = {
-    height: "100vh"
+    height: "100vh",
 };
 export default class ThreeScene extends Component {
     constructor(props) {
@@ -37,7 +37,7 @@ export default class ThreeScene extends Component {
         this.state = {
             timeCounter: 0,
             simSpeed: 1,
-            trips: {}
+            trips: {},
         };
         this.simulationDuration = 50;
     }
@@ -47,6 +47,7 @@ export default class ThreeScene extends Component {
         this.width = this.mountingDiv.clientWidth;
         this.height = this.mountingDiv.clientHeight;
         window.addEventListener("resize", this.handleWindowResize);
+        // start the app setup
         this._init();
     }
 
@@ -56,15 +57,27 @@ export default class ThreeScene extends Component {
     }
 
     _init = async () => {
-        /**
-         * call the THREE setup with the
-         * ref'ed div that REACT renders
-         */
+        let url = "./resources/model/champ.obj";
+        this._sceneSetup().then(
+            await _loadOBJmodel(url).then((model) => {
+                this._handelModel(model);
+                console.log("model loaded!");
+            }),
+            this._addCustomSceneObjects(),
+            this.startAnimationLoop()
+        );
+    };
 
-        await this._sceneSetup();
-        _loadOBJmodel(this.scene, this.modelMaterial);
-        this._addCustomSceneObjects();
-        this.startAnimationLoop();
+    _handelModel = (model) => {
+        let modelMaterial = this.modelMaterial;
+        model.scale.set(0.000505, 0.000505, 0.000505);
+        model.position.set(-0.0055, 0.7, 0);
+        model.rotation.set(0, 0.4625123, 0);
+        model.traverse(function (child) {
+            // child.castShadow = true;
+            child.material = modelMaterial;
+        });
+        this.scene.add(model);
     };
 
     _sceneSetup = async () => {
@@ -86,10 +99,6 @@ export default class ThreeScene extends Component {
         this.renderer.toneMapping = THREE.ReinhardToneMapping;
         this.renderer.setSize(this.width, this.height);
         this.mountingDiv.appendChild(this.renderer.domElement);
-        /*
-            BLOOM
-        */
-        this.setupBloom(this.width, this.height);
 
         /**
          * Lights
@@ -114,13 +123,17 @@ export default class ThreeScene extends Component {
         this.modelColor = new THREE.Color();
         this.modelColor.setHSL(0, 0, 0.3);
         this.modelMaterial = new THREE.MeshPhongMaterial({
-            color: this.modelColor
+            color: this.modelColor,
         });
-
-        console.log("..done init scene");
+        /*
+            BLOOM
+        */
+        this.setupBloom(this.width, this.height);
     };
 
     _addCustomSceneObjects = () => {
+        console.log("Start scene objects...");
+
         _createFloor(this.renderer, this.scene);
         /**
          * The model pedestal
@@ -130,7 +143,7 @@ export default class ThreeScene extends Component {
         );
         var topModelMaterial = new THREE.MeshPhongMaterial({
             map: pedestalTexture,
-            color: this.modelColor
+            color: this.modelColor,
         });
         // 6 sides material for pedestal
         let materialArray = [
@@ -139,7 +152,7 @@ export default class ThreeScene extends Component {
             topModelMaterial,
             this.modelMaterial,
             this.modelMaterial,
-            this.modelMaterial
+            this.modelMaterial,
         ];
         // fix scaling issue
         pedestalTexture.minFilter = THREE.LinearFilter;
@@ -159,13 +172,13 @@ export default class ThreeScene extends Component {
         }
         this.scene.add(this.agentsWrapper);
 
-        console.log("..done adding items to scene");
+        console.log("..done adding items to scene!");
     };
 
     _animateAgents = () => {
         const time = this.state.timeCounter;
 
-        this.agentsWrapper.children.forEach(tripsObject => {
+        this.agentsWrapper.children.forEach((tripsObject) => {
             for (let i = 0; i < tripsObject.trips.length; i++) {
                 if (tripsObject.trips[i].path[time]) {
                     let pnt = tripsObject.trips[i].path[time];
@@ -179,7 +192,7 @@ export default class ThreeScene extends Component {
             timeCounter:
                 this.state.timeCounter < this.simulationDuration
                     ? this.state.timeCounter + this.state.simSpeed
-                    : 0
+                    : 0,
         });
     };
 
@@ -205,7 +218,7 @@ export default class ThreeScene extends Component {
             bloomStrength: 0.6,
             bloomThreshold: 0,
             bloomRadius: 0.1,
-            scene: "Scene with Glow"
+            scene: "Scene with Glow",
         };
         var renderScene = new RenderPass(this.scene, this.camera);
         var bloomPass = new UnrealBloomPass(
@@ -226,12 +239,12 @@ export default class ThreeScene extends Component {
                 uniforms: {
                     baseTexture: { value: null },
                     bloomTexture: {
-                        value: this.bloomComposer.renderTarget2.texture
-                    }
+                        value: this.bloomComposer.renderTarget2.texture,
+                    },
                 },
                 vertexShader: _shaders().vertex,
                 fragmentShader: _shaders().frag,
-                defines: {}
+                defines: {},
             }),
             "baseTexture"
         );
@@ -242,6 +255,8 @@ export default class ThreeScene extends Component {
     }
 
     render() {
-        return <div style={style} ref={div => (this.mountingDiv = div)}></div>;
+        return (
+            <div style={style} ref={(div) => (this.mountingDiv = div)}></div>
+        );
     }
 }
