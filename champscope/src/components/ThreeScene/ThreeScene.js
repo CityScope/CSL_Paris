@@ -27,6 +27,7 @@ export default class ThreeScene extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             timeCounter: 0,
             simSpeed: 1,
             trips: {},
@@ -67,20 +68,22 @@ export default class ThreeScene extends Component {
 
     _init = async () => {
         this.shpContainer = new THREE.Object3D();
-        this._sceneSetup().then(
-            // load urban model
-            await _loadOBJmodel(this.cityModelURL).then((model) => {
-                this._handelModel(model);
-                console.log("city model loaded!");
-            }),
-            // load other street models
-            // await this._landscapeModelsLoader(),
-            // load the rest of the scene
-            this._addCustomSceneObjects(),
+        this._sceneSetup()
+            .then(
+                // load urban model
+                await _loadOBJmodel(this.cityModelURL).then((model) => {
+                    this._handelModel(model);
+                    console.log("city model loaded!");
+                }),
+                // load other street models
+                // await this._landscapeModelsLoader(),
+                // load the rest of the scene
+                this._addCustomSceneObjects(),
 
-            // start the animation
-            this.startAnimationLoop()
-        );
+                // start the animation
+                this.startAnimationLoop()
+            )
+            .then(this.setState({ loading: false }));
     };
 
     _landscapeModelsLoader = async () => {
@@ -256,11 +259,42 @@ export default class ThreeScene extends Component {
     };
 
     render() {
-        return (
-            <div
-                style={this.style}
-                ref={(div) => (this.mountingDiv = div)}
-            ></div>
-        );
+        let loading = this.state.loading;
+
+        if (loading) {
+            return (
+                <React.Fragment>
+                    <div
+                        style={this.style}
+                        ref={(div) => (this.mountingDiv = div)}
+                    />
+                    <div
+                        style={{
+                            height: "100vh",
+                            width: "100vw",
+                            color: "white",
+
+                            backgroundColor: "red",
+                            position: "fixed",
+                            fontFamily: " Arial, Helvetica, sans-serif",
+                            top: 0,
+                            left: 0,
+                        }}
+                    >
+                        <h1>HIDE ME WHEN DONE LOADING...</h1>
+                    </div>
+                    }
+                </React.Fragment>
+            );
+        } else {
+            return (
+                <React.Fragment>
+                    <div
+                        style={this.style}
+                        ref={(div) => (this.mountingDiv = div)}
+                    />
+                </React.Fragment>
+            );
+        }
     }
 }
