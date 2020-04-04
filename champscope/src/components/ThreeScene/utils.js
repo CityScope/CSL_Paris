@@ -1,5 +1,58 @@
 import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+
+/**
+ *
+ * @param {} camera
+ */
+
+export const _setupBloom = (width, height, scene, camera, renderer) => {
+    var params = {
+        exposure: 1,
+        bloomStrength: 0.6,
+        bloomThreshold: 0,
+        bloomRadius: 0.1,
+        scene: "Scene with Glow",
+    };
+    var renderScene = new RenderPass(scene, camera);
+    var bloomPass = new UnrealBloomPass(
+        new THREE.Vector2(width, height),
+        1,
+        0.4,
+        0.85
+    );
+    bloomPass.threshold = params.bloomThreshold;
+    bloomPass.strength = params.bloomStrength;
+    bloomPass.radius = params.bloomRadius;
+    let bloomComposer = new EffectComposer(renderer);
+    bloomComposer.renderToScreen = false;
+    bloomComposer.addPass(renderScene);
+    bloomComposer.addPass(bloomPass);
+    var finalPass = new ShaderPass(
+        new THREE.ShaderMaterial({
+            uniforms: {
+                baseTexture: { value: null },
+                bloomTexture: {
+                    value: bloomComposer.renderTarget2.texture,
+                },
+            },
+            vertexShader: _shaders().vertex,
+            fragmentShader: _shaders().frag,
+            defines: {},
+        }),
+        "baseTexture"
+    );
+    finalPass.needsSwap = true;
+    let finalComposer = new EffectComposer(renderer);
+    finalComposer.addPass(renderScene);
+    finalComposer.addPass(finalPass);
+
+    return { bloomComposer: bloomComposer, finalComposer: finalComposer };
+};
 
 /**
  *
@@ -76,7 +129,7 @@ export const _loadOBJmodel = async (url) => {
  * @param {*} scene
  */
 
-export const _shaders = () => {
+const _shaders = () => {
     const _vertexShader = () => {
         return `
     varying vec2 vUv;

@@ -12,18 +12,13 @@
 import React, { Component } from "react";
 import * as THREE from "three";
 import {
+    _setupBloom,
     _createFloor,
     _loadOBJmodel,
     _blockCamera,
     _setupAgents,
-    _shaders,
 } from "./utils";
 import OrbitControls from "three-orbitcontrols";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-
 import trips_car from "../../trips/trips_car_before.json";
 import trips_people from "../../trips/trips_people_before.json";
 import trips_bike from "../../trips/trips_bike_before.json";
@@ -127,7 +122,7 @@ export default class ThreeScene extends Component {
         this.camera.position.y = 4;
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
         this.controls.maxDistance = 6;
-        this.controls.minDistance = 1;
+        this.controls.minDistance = 1.5;
         // renderer
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
@@ -163,10 +158,19 @@ export default class ThreeScene extends Component {
         this.modelMaterial = new THREE.MeshPhongMaterial({
             color: this.modelColor,
         });
+
         /*
             BLOOM
         */
-        this.setupBloom(this.width, this.height);
+        let postEffect = _setupBloom(
+            this.width,
+            this.height,
+            this.scene,
+            this.camera,
+            this.renderer
+        );
+        this.bloomComposer = postEffect.bloomComposer;
+        this.finalComposer = postEffect.finalComposer;
     };
 
     _addCustomSceneObjects = () => {
@@ -250,48 +254,6 @@ export default class ThreeScene extends Component {
         this.finalComposer.render();
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
-
-    setupBloom(width, height) {
-        var params = {
-            exposure: 1,
-            bloomStrength: 0.6,
-            bloomThreshold: 0,
-            bloomRadius: 0.1,
-            scene: "Scene with Glow",
-        };
-        var renderScene = new RenderPass(this.scene, this.camera);
-        var bloomPass = new UnrealBloomPass(
-            new THREE.Vector2(width, height),
-            1,
-            0.4,
-            0.85
-        );
-        bloomPass.threshold = params.bloomThreshold;
-        bloomPass.strength = params.bloomStrength;
-        bloomPass.radius = params.bloomRadius;
-        this.bloomComposer = new EffectComposer(this.renderer);
-        this.bloomComposer.renderToScreen = false;
-        this.bloomComposer.addPass(renderScene);
-        this.bloomComposer.addPass(bloomPass);
-        var finalPass = new ShaderPass(
-            new THREE.ShaderMaterial({
-                uniforms: {
-                    baseTexture: { value: null },
-                    bloomTexture: {
-                        value: this.bloomComposer.renderTarget2.texture,
-                    },
-                },
-                vertexShader: _shaders().vertex,
-                fragmentShader: _shaders().frag,
-                defines: {},
-            }),
-            "baseTexture"
-        );
-        finalPass.needsSwap = true;
-        this.finalComposer = new EffectComposer(this.renderer);
-        this.finalComposer.addPass(renderScene);
-        this.finalComposer.addPass(finalPass);
-    }
 
     render() {
         return (
