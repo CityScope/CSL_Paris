@@ -11,6 +11,7 @@
 
 import React, { Component } from "react";
 import * as THREE from "three";
+import LandingPage from "../LandingPage/LandingPage";
 import {
     _setupBloom,
     _createFloor,
@@ -76,7 +77,7 @@ export default class ThreeScene extends Component {
                     console.log("city model loaded!");
                 }),
                 // load other street models
-                // await this._landscapeModelsLoader(),
+                await this._landscapeModelsLoader(),
                 // load the rest of the scene
                 this._addCustomSceneObjects(),
 
@@ -250,11 +251,12 @@ export default class ThreeScene extends Component {
     };
 
     startAnimationLoop = () => {
-        this._animateAgents();
-        _blockCamera(this.camera);
-
-        this.bloomComposer.render();
-        this.finalComposer.render();
+        if (!this.state.loading) {
+            this._animateAgents();
+            _blockCamera(this.camera);
+            this.bloomComposer.render();
+            this.finalComposer.render();
+        }
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
 
@@ -268,22 +270,7 @@ export default class ThreeScene extends Component {
                         style={this.style}
                         ref={(div) => (this.mountingDiv = div)}
                     />
-                    <div
-                        style={{
-                            height: "100vh",
-                            width: "100vw",
-                            color: "white",
-
-                            backgroundColor: "red",
-                            position: "fixed",
-                            fontFamily: " Arial, Helvetica, sans-serif",
-                            top: 0,
-                            left: 0,
-                        }}
-                    >
-                        <h1>HIDE ME WHEN DONE LOADING...</h1>
-                    </div>
-                    }
+                    <LandingPage />}
                 </React.Fragment>
             );
         } else {
