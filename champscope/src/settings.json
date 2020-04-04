@@ -1,0 +1,47 @@
+{
+    "simulationDuration": 50,
+    "cityModelURL": "./resources/model/champ.obj",
+    "landscapeModels": {
+        "parks_before": "resources/model/champ.obj",
+        "parks_after": "resources/model/champ.obj",
+        "cultural_before": "resources/model/champ.obj",
+        "cultural_after": "resources/model/champ.obj"
+    },
+
+    "trips": {
+        "trips_car_before": {
+            "dataObj": "trips_car_before",
+            "color": { "h": 1, "s": 1, "l": 0.5 },
+            "URL": "resources/trips/trips_car_before.json"
+        },
+        "trips_people_before": {
+            "dataObj": "trips_people_before",
+            "color": { "h": 0, "s": 0, "l": 0.8 },
+            "URL": "resources/trips/trips_people_before.json"
+        },
+        "trips_bike_before": {
+            "dataObj": "trips_bike_before",
+            "color": { "h": 0.3, "s": 1, "l": 0.5 },
+            "URL": "resources/trips/trips_bike_before.json"
+        },
+        "trips_car_after": {
+            "dataObj": "trips_car_after",
+            "color": { "h": 1, "s": 1, "l": 0.5 },
+            "URL": "resources/trips/trips_car_after.json"
+        },
+        "trips_people_after": {
+            "dataObj": "trips_people_after",
+            "color": { "h": 0, "s": 0, "l": 0.8 },
+            "URL": "resources/trips/trips_people_after.json"
+        },
+        "trips_bike_after": {
+            "dataObj": "trips_bike_after",
+            "color": { "h": 0.3, "s": 1, "l": 0.5 },
+            "URL": "resources/trips/trips_bike_after.json"
+        }
+    },
+
+    "style": {
+        "height": "100vh"
+    }
+}

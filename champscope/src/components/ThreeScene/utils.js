@@ -4,6 +4,7 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+import * as settings from "../../settings.json";
 
 /**
  *
@@ -72,34 +73,25 @@ export const _blockCamera = (camera) => {
  *
  *
  */
-export const _setupAgents = (trips) => {
+export const _setupAgents = async () => {
     let agentsWrapper = new THREE.Object3D();
-    let scale = 0.015;
-    let color = new THREE.Color();
-    color.setHSL(trips.color.h, trips.color.s, trips.color.l);
-    for (let i = 0; i < trips.dataObj.length; i++) {
-        let textLoader = new THREE.TextureLoader();
-        let spriteText = textLoader.load("./resources/textures/agent.png");
-        spriteText.minFilter = THREE.LinearFilter;
+    for (const tripName in settings.trips) {
+        let URL = settings.trips[tripName].URL;
 
-        var spriteMaterial = new THREE.SpriteMaterial({
-            map: spriteText,
-            transparent: true,
-        });
-
-        var sprite = new THREE.Sprite(spriteMaterial);
-
-        sprite.material.color = color;
-        sprite.material.blending = THREE.AdditiveBlending;
-        sprite.material.transparent = true;
-
-        sprite.scale.set(scale, scale, scale);
-        sprite.position.set(0, 0, 0);
-        agentsWrapper.add(sprite);
+        fetch(URL)
+            .then((res) => res.json())
+            .then((tripsData) => {
+                let thisTripsAgents = _makeAgents(tripsData, tripName);
+                thisTripsAgents.name = tripName;
+                // adds a record of the trips to the
+                // THREEE obj so we can run anim from inside
+                // this oject itself
+                thisTripsAgents.trips = tripsData;
+                agentsWrapper.add(thisTripsAgents);
+            })
+            .catch((err) => console.error(err));
     }
-
     agentsWrapper.rotation.set(0, 0.4625123, 0);
-
     agentsWrapper.position.set(
         -(Math.cos(0.4625123) * 822) / 2000 - 1.57 / 2,
         0,
@@ -107,6 +99,36 @@ export const _setupAgents = (trips) => {
     );
     agentsWrapper.rotation.set(0, 0.4625123, 0);
     return agentsWrapper;
+};
+
+const _makeAgents = (trips, tripName) => {
+    let scale = 0.015;
+    let color = new THREE.Color();
+    color.setHSL(
+        settings.trips[tripName].color.h,
+        settings.trips[tripName].color.s,
+        settings.trips[tripName].color.l
+    );
+
+    let textLoader = new THREE.TextureLoader();
+    let spriteText = textLoader.load("./resources/textures/agent.png");
+    spriteText.minFilter = THREE.LinearFilter;
+    let spritesWarpper = new THREE.Object3D();
+    for (let i = 0; i < trips.length; i++) {
+        var spriteMaterial = new THREE.SpriteMaterial({
+            map: spriteText,
+            transparent: true,
+        });
+
+        var sprite = new THREE.Sprite(spriteMaterial);
+        sprite.material.color = color;
+        sprite.material.blending = THREE.AdditiveBlending;
+        sprite.material.transparent = true;
+        sprite.scale.set(scale, scale, scale);
+        sprite.position.set(0, 0, 0);
+        spritesWarpper.add(sprite);
+    }
+    return spritesWarpper;
 };
 
 /**

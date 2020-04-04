@@ -20,9 +20,7 @@ import {
     _setupAgents,
 } from "./utils";
 import OrbitControls from "three-orbitcontrols";
-import trips_car from "../../trips/trips_car_before.json";
-import trips_people from "../../trips/trips_people_before.json";
-import trips_bike from "../../trips/trips_bike_before.json";
+import * as settings from "../../settings.json";
 
 export default class ThreeScene extends Component {
     constructor(props) {
@@ -32,24 +30,6 @@ export default class ThreeScene extends Component {
             timeCounter: 0,
             simSpeed: 1,
             trips: {},
-        };
-        this.simulationDuration = 50;
-        this.cityModelURL = "./resources/model/champ.obj";
-        this.landscapeModels = {
-            parks_before: "./resources/model/champ.obj",
-            parks_after: "./resources/model/champ.obj",
-            cultural_before: "./resources/model/champ.obj",
-            cultural_after: "./resources/model/champ.obj",
-        };
-
-        this.trips = {
-            cars: { dataObj: trips_car, color: { h: 1, s: 1, l: 0.5 } },
-            poeple: { dataObj: trips_people, color: { h: 0, s: 0, l: 0.8 } },
-            bike: { dataObj: trips_bike, color: { h: 0.3, s: 1, l: 0.5 } },
-        };
-
-        this.style = {
-            height: "100vh",
         };
     }
 
@@ -72,12 +52,17 @@ export default class ThreeScene extends Component {
         this._sceneSetup()
             .then(
                 // load urban model
-                await _loadOBJmodel(this.cityModelURL).then((model) => {
+                await _loadOBJmodel(settings.cityModelURL).then((model) => {
                     this._handelModel(model);
                     console.log("city model loaded!");
                 }),
+                await _setupAgents().then((agentWrapper) => {
+                    this.agentWrapper = agentWrapper;
+                    this.scene.add(this.agentWrapper);
+                }),
                 // load other street models
-                await this._landscapeModelsLoader(),
+                // await this._landscapeModelsLoader(),
+
                 // load the rest of the scene
                 this._addCustomSceneObjects(),
 
@@ -88,15 +73,13 @@ export default class ThreeScene extends Component {
     };
 
     _landscapeModelsLoader = async () => {
-        for (const modelUrl in this.landscapeModels) {
-            console.log(modelUrl);
+        for (const modelUrl in settings.landscapeModels) {
+            let URL = settings.landscapeModels[modelUrl];
 
             // load other models
-            await _loadOBJmodel(this.landscapeModels[modelUrl]).then(
-                (model) => {
-                    console.log(model);
-                }
-            );
+            await _loadOBJmodel(URL).then((model) => {
+                console.log(model);
+            });
         }
     };
 
@@ -132,6 +115,8 @@ export default class ThreeScene extends Component {
             antialias: true,
             alpha: true,
         });
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+
         this.renderer.shadowMap.enabled = true;
         this.renderer.toneMapping = THREE.ReinhardToneMapping;
         this.renderer.setSize(this.width, this.height);
@@ -209,22 +194,12 @@ export default class ThreeScene extends Component {
         pedestalMesh.receiveShadow = true;
         this.scene.add(pedestalMesh);
 
-        this.agentsWrapper = new THREE.Object3D();
-        for (const trip in this.trips) {
-            let thisTripsAgents = _setupAgents(this.trips[trip]);
-            thisTripsAgents.name = trip;
-            thisTripsAgents.trips = this.trips[trip].dataObj;
-            this.agentsWrapper.add(thisTripsAgents);
-        }
-        this.scene.add(this.agentsWrapper);
-
         console.log("..done adding items to scene!");
     };
 
     _animateAgents = () => {
         const time = this.state.timeCounter;
-
-        this.agentsWrapper.children.forEach((tripsObject) => {
+        this.agentWrapper.children.forEach((tripsObject) => {
             for (let i = 0; i < tripsObject.trips.length; i++) {
                 if (tripsObject.trips[i].path[time]) {
                     let pnt = tripsObject.trips[i].path[time];
@@ -236,7 +211,7 @@ export default class ThreeScene extends Component {
 
         this.setState({
             timeCounter:
-                this.state.timeCounter < this.simulationDuration
+                this.state.timeCounter < settings.simulationDuration
                     ? this.state.timeCounter + this.state.simSpeed
                     : 0,
         });
@@ -267,17 +242,17 @@ export default class ThreeScene extends Component {
             return (
                 <React.Fragment>
                     <div
-                        style={this.style}
+                        style={settings.style}
                         ref={(div) => (this.mountingDiv = div)}
                     />
-                    <LandingPage />}
+                    <LandingPage />
                 </React.Fragment>
             );
         } else {
             return (
                 <React.Fragment>
                     <div
-                        style={this.style}
+                        style={settings.style}
                         ref={(div) => (this.mountingDiv = div)}
                     />
                 </React.Fragment>
