@@ -133,7 +133,7 @@ const _makeAgents = (trips, tripName) => {
 
 /**
  *
- *
+ * @param {*} url
  */
 
 export const _loadOBJmodel = async (url) => {
@@ -141,6 +141,21 @@ export const _loadOBJmodel = async (url) => {
     return new Promise((resolve) => {
         new OBJLoader().load(url, resolve);
     }).then((result) => {
+        return result;
+    });
+};
+
+/**
+ *
+ * @param {*} url
+ */
+
+export const _loadTexture = async (url) => {
+    console.log("start texture load...");
+    return new Promise((resolve) => {
+        new THREE.TextureLoader().load(url, resolve);
+    }).then((result) => {
+        result.minFilter = THREE.LinearFilter;
         return result;
     });
 };
@@ -181,67 +196,65 @@ const _shaders = () => {
 /**
  *
  * @param {*} renderer
- * @param {*} scene
+ *     Create a floor.
+
  */
 // ! should consider https://tinyurl.com/wqpozgh
 
-export const _createFloor = (renderer, scene) => {
-    // Create a floor.
-    var loader = new THREE.TextureLoader();
+export const _createFloor = async (renderer) => {
+    var baseText = await _loadTexture(
+        "./resources/textures/floor/WOOD_SML.jpg"
+    );
+    var repeatX = 15;
+    var repeatY = 15;
+    baseText.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    baseText.wrapS = THREE.RepeatWrapping;
+    baseText.wrapT = THREE.RepeatWrapping;
+    baseText.repeat.set(repeatX, repeatY);
 
-    loader.load("./resources/textures/floor/WOOD_SML.jpg", function (texture) {
-        texture.minFilter = THREE.LinearFilter;
-        var repeatX = 15;
-        var repeatY = 15;
+    var normalText = await _loadTexture("./resources/textures/floor/NRM.jpg");
+    normalText.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    normalText.wrapS = THREE.RepeatWrapping;
+    normalText.wrapT = THREE.RepeatWrapping;
+    normalText.repeat.set(repeatX, repeatY);
 
-        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(repeatX, repeatY);
+    var ao = await _loadTexture("./resources/textures/floor/GLOSS.jpg");
+    ao.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    ao.wrapS = THREE.RepeatWrapping;
+    normalText.wrapT = THREE.RepeatWrapping;
+    ao.repeat.set(repeatX, repeatY);
 
-        var normal = loader.load("./resources/textures/floor/NRM.jpg");
-        normal.anisotropy = renderer.capabilities.getMaxAnisotropy();
-        normal.wrapS = THREE.RepeatWrapping;
-        normal.wrapT = THREE.RepeatWrapping;
-        normal.repeat.set(repeatX, repeatY);
+    var displace = await _loadTexture(
+        "./resources/textures/floor/WOOD_DISP.jpg"
+    );
+    displace.minFilter = THREE.LinearFilter;
 
-        var ao = loader.load("./resources/textures/floor/GLOSS.jpg");
-        ao.anisotropy = renderer.capabilities.getMaxAnisotropy();
-        ao.wrapS = THREE.RepeatWrapping;
-        normal.wrapT = THREE.RepeatWrapping;
-        ao.repeat.set(repeatX, repeatY);
+    displace.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    displace.wrapS = THREE.RepeatWrapping;
+    displace.wrapT = THREE.RepeatWrapping;
+    displace.repeat.set(repeatX, repeatY);
 
-        var displace = loader.load("./resources/textures/floor/WOOD_DISP.jpg");
-        displace.minFilter = THREE.LinearFilter;
-
-        displace.anisotropy = renderer.capabilities.getMaxAnisotropy();
-        displace.wrapS = THREE.RepeatWrapping;
-        displace.wrapT = THREE.RepeatWrapping;
-        displace.repeat.set(repeatX, repeatY);
-
-        var material = new THREE.MeshStandardMaterial({
-            aoMap: ao,
-            aoMapIntensity: 1,
-            color: 0xffffff,
-            map: texture,
-            metalnessMap: texture,
-            displacementMap: displace,
-            displacementScale: 0.1,
-            normalMap: normal,
-            metalness: 5,
-            roughness: 0.5,
-        });
-
-        const planeSize = 50;
-        const planeMesh = new THREE.Mesh(
-            new THREE.PlaneBufferGeometry(planeSize, planeSize),
-            material
-        );
-        planeMesh.receiveShadow = true;
-        planeMesh.rotation.x = Math.PI * -0.5;
-        planeMesh.position.y = 0;
-        planeMesh.position.z = 0;
-
-        scene.add(planeMesh);
+    var material = new THREE.MeshStandardMaterial({
+        aoMap: ao,
+        aoMapIntensity: 1,
+        color: 0xffffff,
+        map: baseText,
+        metalnessMap: baseText,
+        displacementMap: displace,
+        displacementScale: 0.1,
+        normalMap: normalText,
+        metalness: 5,
+        roughness: 0.5,
     });
+    const planeSize = 50;
+    const planeMesh = new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(planeSize, planeSize),
+        material
+    );
+    planeMesh.receiveShadow = true;
+    planeMesh.rotation.x = Math.PI * -0.5;
+    planeMesh.position.y = 0;
+    planeMesh.position.z = 0;
+
+    return planeMesh;
 };

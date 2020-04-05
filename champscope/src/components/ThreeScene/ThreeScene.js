@@ -18,6 +18,7 @@ import {
     _loadOBJmodel,
     _blockCamera,
     _setupAgents,
+    _loadTexture,
 } from "./utils";
 import OrbitControls from "three-orbitcontrols";
 import * as settings from "../../settings.json";
@@ -63,8 +64,12 @@ export default class ThreeScene extends Component {
                 // load other street models
                 // await this._landscapeModelsLoader(),
 
+                await _createFloor(this.renderer).then((floor) => {
+                    this.scene.add(floor);
+                }),
+
                 // load the rest of the scene
-                this._addCustomSceneObjects(),
+                await this._addCustomSceneObjects(),
 
                 // start the animation
                 this.startAnimationLoop()
@@ -162,16 +167,17 @@ export default class ThreeScene extends Component {
         this.finalComposer = postEffect.finalComposer;
     };
 
-    _addCustomSceneObjects = () => {
+    _addCustomSceneObjects = async () => {
         console.log("Start scene objects...");
 
-        _createFloor(this.renderer, this.scene);
         /**
          * The model pedestal
          */
-        var pedestalTexture = new THREE.TextureLoader().load(
+
+        var pedestalTexture = await _loadTexture(
             "./resources/textures/shadowmap.png"
         );
+
         var topModelMaterial = new THREE.MeshPhongMaterial({
             map: pedestalTexture,
             color: this.modelColor,
