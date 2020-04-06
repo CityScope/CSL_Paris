@@ -10,8 +10,10 @@
 // ! https://stackoverflow.com/questions/47922923/ceiling-lights-effect-using-three-js
 
 import React, { Component } from "react";
+import { setLoadingState } from "../../redux/actions";
+import { connect } from "react-redux";
 import * as THREE from "three";
-import LandingPage from "../LandingPage/LandingPage";
+
 import {
     _setupBloom,
     _createFloor,
@@ -23,7 +25,7 @@ import {
 import OrbitControls from "three-orbitcontrols";
 import * as settings from "../../settings.json";
 
-export default class ThreeScene extends Component {
+class ThreeScene extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,6 +38,7 @@ export default class ThreeScene extends Component {
 
     componentDidMount() {
         // get the div dims on init
+
         this.width = this.mountingDiv.clientWidth;
         this.height = this.mountingDiv.clientHeight;
         window.addEventListener("resize", this.handleWindowResize);
@@ -55,26 +58,30 @@ export default class ThreeScene extends Component {
                 // load urban model
                 await _loadOBJmodel(settings.cityModelURL).then((model) => {
                     this._handelModel(model);
-                    console.log("city model loaded!");
                 }),
+
+                // setup agents
                 await _setupAgents().then((agentWrapper) => {
                     this.agentWrapper = agentWrapper;
                     this.scene.add(this.agentWrapper);
                 }),
                 // load other street models
-                // await this._landscapeModelsLoader(),
+                await this._landscapeModelsLoader(),
 
                 await _createFloor(this.renderer).then((floor) => {
                     this.scene.add(floor);
                 }),
 
-                // load the rest of the scene
+                //  load the rest of the scene
                 await this._addCustomSceneObjects(),
 
-                // start the animation
+                //  start the animation
                 this.startAnimationLoop()
             )
-            .then(this.setState({ loading: false }));
+            .then(
+                this.setState({ loading: false }),
+                this.props.setLoadingState(this.state.loading)
+            );
     };
 
     _landscapeModelsLoader = async () => {
@@ -83,7 +90,7 @@ export default class ThreeScene extends Component {
 
             // load other models
             await _loadOBJmodel(URL).then((model) => {
-                console.log(model);
+                console.log("loaded!");
             });
         }
     };
@@ -199,8 +206,6 @@ export default class ThreeScene extends Component {
         pedestalMesh.castShadow = true;
         pedestalMesh.receiveShadow = true;
         this.scene.add(pedestalMesh);
-
-        console.log("..done adding items to scene!");
     };
 
     _animateAgents = () => {
@@ -227,12 +232,15 @@ export default class ThreeScene extends Component {
         const width = this.mountingDiv.clientWidth;
         const height = this.mountingDiv.clientHeight;
         this.renderer.setSize(width, height);
+        this.bloomComposer.setSize(width, height);
+        this.finalComposer.setSize(width, height);
+
         this.camera.aspect = width / height;
         this.camera.updateProjectionMatrix();
     };
 
     startAnimationLoop = () => {
-        if (!this.state.loading) {
+        if (!this.state.loading && this.props.startScene) {
             this._animateAgents();
             _blockCamera(this.camera);
             this.bloomComposer.render();
@@ -242,27 +250,29 @@ export default class ThreeScene extends Component {
     };
 
     render() {
-        let loading = this.state.loading;
-
-        if (loading) {
-            return (
-                <React.Fragment>
-                    <div
-                        style={settings.style}
-                        ref={(div) => (this.mountingDiv = div)}
-                    />
-                    <LandingPage />
-                </React.Fragment>
-            );
-        } else {
-            return (
-                <React.Fragment>
-                    <div
-                        style={settings.style}
-                        ref={(div) => (this.mountingDiv = div)}
-                    />
-                </React.Fragment>
-            );
-        }
+        return (
+            <React.Fragment>
+                <div
+                    style={{
+                        height: "50vh",
+                        width: "50vw",
+                        visibility: "hidden",
+                    }}
+                    ref={(div) => (this.mountingDiv = div)}
+                />
+            </React.Fragment>
+        );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        startScene: state.START_SCENE,
+    };
+};
+
+const mapDispatchToProps = {
+    setLoadingState: setLoadingState,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThreeScene);

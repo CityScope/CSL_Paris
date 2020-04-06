@@ -137,7 +137,6 @@ const _makeAgents = (trips, tripName) => {
  */
 
 export const _loadOBJmodel = async (url) => {
-    console.log("start obj model load...");
     return new Promise((resolve) => {
         new OBJLoader().load(url, resolve);
     }).then((result) => {
@@ -151,7 +150,6 @@ export const _loadOBJmodel = async (url) => {
  */
 
 export const _loadTexture = async (url) => {
-    console.log("start texture load...");
     return new Promise((resolve) => {
         new THREE.TextureLoader().load(url, resolve);
     }).then((result) => {
@@ -202,31 +200,30 @@ const _shaders = () => {
 // ! should consider https://tinyurl.com/wqpozgh
 
 export const _createFloor = async (renderer) => {
-    var baseText = await _loadTexture(
-        "./resources/textures/floor/WOOD_SML.jpg"
-    );
     var repeatX = 15;
     var repeatY = 15;
+    let path = "./resources/textures/floor/";
+
+    var baseText = await _loadTexture(path + "WOOD_SML.jpg");
+    var ao = await _loadTexture(path + "GLOSS.jpg");
+    var displace = await _loadTexture(path + "WOOD_DISP.jpg");
+    var normalText = await _loadTexture(path + "NRM.jpg");
+
     baseText.anisotropy = renderer.capabilities.getMaxAnisotropy();
     baseText.wrapS = THREE.RepeatWrapping;
     baseText.wrapT = THREE.RepeatWrapping;
     baseText.repeat.set(repeatX, repeatY);
 
-    var normalText = await _loadTexture("./resources/textures/floor/NRM.jpg");
     normalText.anisotropy = renderer.capabilities.getMaxAnisotropy();
     normalText.wrapS = THREE.RepeatWrapping;
     normalText.wrapT = THREE.RepeatWrapping;
     normalText.repeat.set(repeatX, repeatY);
 
-    var ao = await _loadTexture("./resources/textures/floor/GLOSS.jpg");
     ao.anisotropy = renderer.capabilities.getMaxAnisotropy();
     ao.wrapS = THREE.RepeatWrapping;
     normalText.wrapT = THREE.RepeatWrapping;
     ao.repeat.set(repeatX, repeatY);
 
-    var displace = await _loadTexture(
-        "./resources/textures/floor/WOOD_DISP.jpg"
-    );
     displace.minFilter = THREE.LinearFilter;
 
     displace.anisotropy = renderer.capabilities.getMaxAnisotropy();

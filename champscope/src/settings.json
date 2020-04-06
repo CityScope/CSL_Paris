@@ -39,9 +39,5 @@
             "color": { "h": 0.3, "s": 1, "l": 0.5 },
             "URL": "resources/trips/trips_bike_after.json"
         }
-    },
-
-    "style": {
-        "height": "100vh"
     }
 }
