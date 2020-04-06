@@ -1,11 +1,11 @@
 {
     "simulationDuration": 50,
-    "cityModelURL": "./resources/model/champ.obj",
+    "cityModelURL": "./resources/model/city/city.obj",
     "landscapeModels": {
-        "parks_before": "resources/model/champ.obj",
-        "parks_after": "resources/model/champ.obj",
-        "cultural_before": "resources/model/champ.obj",
-        "cultural_after": "resources/model/champ.obj"
+        "parks_before": "resources/model/park/parks_before.obj",
+        "parks_after": "resources/model/park/parks_after.obj",
+        "cultural_before": "resources/model/culture/culture_before.obj",
+        "cultural_after": "resources/model/culture/culture_after.obj"
     },
 
     "trips": {

@@ -8,10 +8,7 @@ import "./LandingPage.css";
 import LoadingSprite from "../LandingPage/LoadingSprite";
 import EnterButton from "../LandingPage/EnterButton";
 import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-
 import Video from "./Video";
-
 import { setStartSceneState } from "../../redux/actions";
 
 const theme = createMuiTheme({

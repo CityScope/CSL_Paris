@@ -57,7 +57,7 @@ class ThreeScene extends Component {
             .then(
                 // load urban model
                 await _loadOBJmodel(settings.cityModelURL).then((model) => {
-                    this._handelModel(model);
+                    this._handelCityModel(model);
                 }),
 
                 // setup agents
@@ -90,12 +90,13 @@ class ThreeScene extends Component {
 
             // load other models
             await _loadOBJmodel(URL).then((model) => {
-                console.log("loaded!");
+                model.name = modelUrl;
+                this._handelLandscapeModel(model);
             });
         }
     };
 
-    _handelModel = (model) => {
+    _handelCityModel = (model) => {
         let modelMaterial = this.modelMaterial;
         model.scale.set(0.000505, 0.000505, 0.000505);
         model.position.set(-0.0055, 0.7, 0);
@@ -104,6 +105,38 @@ class ThreeScene extends Component {
             // child.castShadow = true;
             child.material = modelMaterial;
         });
+
+        this.scene.add(model);
+    };
+
+    _handelLandscapeModel = (model) => {
+        /**
+ 
+ */
+        let parksCol = new THREE.Color();
+        parksCol.setHSL(0.25, 1, 0.5);
+        let parksMaterial = new THREE.MeshPhongMaterial({
+            color: parksCol,
+        });
+
+        let cultureCol = new THREE.Color();
+        cultureCol.setHSL(0.6, 1, 0.5);
+        let cultureMaterial = new THREE.MeshPhongMaterial({
+            color: cultureCol,
+        });
+
+        model.scale.set(0.000505, 0.000505, 0.000505);
+        model.position.set(+0.09, 0.705, 0.01);
+        model.rotation.set(0, 0.4625123, 0);
+
+        model.traverse(function (child) {
+            if (model.name === "parks_before" || model.name === "parks_after") {
+                child.material = parksMaterial;
+            } else {
+                child.material = cultureMaterial;
+            }
+        });
+
         this.scene.add(model);
     };
 
@@ -241,7 +274,7 @@ class ThreeScene extends Component {
 
     startAnimationLoop = () => {
         if (!this.state.loading && this.props.startScene) {
-            this._animateAgents();
+            // this._animateAgents();
             _blockCamera(this.camera);
             this.bloomComposer.render();
             this.finalComposer.render();
