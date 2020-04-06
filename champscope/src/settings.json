@@ -7,6 +7,9 @@
         "cultural_before": "resources/model/culture/culture_before.obj",
         "cultural_after": "resources/model/culture/culture_after.obj"
     },
+    "pplModel": {
+        "ppl": "resources/ppl/ppl.obj"
+    },
 
     "trips": {
         "trips_car_before": {

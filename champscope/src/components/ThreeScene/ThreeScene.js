@@ -71,9 +71,10 @@ class ThreeScene extends Component {
                 await _createFloor(this.renderer).then((floor) => {
                     this.scene.add(floor);
                 }),
-
                 //  load the rest of the scene
                 await this._addCustomSceneObjects(),
+
+                await this._pplLoader(),
 
                 //  start the animation
                 this.startAnimationLoop()
@@ -82,6 +83,29 @@ class ThreeScene extends Component {
                 this.setState({ loading: false }),
                 this.props.setLoadingState(this.state.loading)
             );
+    };
+
+    _pplLoader = async () => {
+        for (const modelUrl in settings.pplModel) {
+            let URL = settings.pplModel[modelUrl];
+
+            let pplCol = new THREE.Color();
+            pplCol.setHSL(0, 0, 0.2);
+            let pplMaterial = new THREE.MeshLambertMaterial({
+                color: pplCol,
+            });
+
+            // load other models
+            await _loadOBJmodel(URL).then((model) => {
+                model.name = modelUrl;
+                model.traverse(function (child) {
+                    child.material = pplMaterial;
+                    child.castShadow = true;
+                });
+
+                this.scene.add(model);
+            });
+        }
     };
 
     _landscapeModelsLoader = async () => {
@@ -110,29 +134,26 @@ class ThreeScene extends Component {
     };
 
     _handelLandscapeModel = (model) => {
-        /**
- 
- */
         let parksCol = new THREE.Color();
         parksCol.setHSL(0.25, 1, 0.5);
         let parksMaterial = new THREE.MeshPhongMaterial({
             color: parksCol,
         });
-
         let cultureCol = new THREE.Color();
         cultureCol.setHSL(0.6, 1, 0.5);
         let cultureMaterial = new THREE.MeshPhongMaterial({
             color: cultureCol,
         });
-
         model.scale.set(0.000505, 0.000505, 0.000505);
-        model.position.set(+0.09, 0.705, 0.01);
         model.rotation.set(0, 0.4625123, 0);
-
         model.traverse(function (child) {
             if (model.name === "parks_before" || model.name === "parks_after") {
+                child.position.set(0.09, 0.701, 0.01);
+
                 child.material = parksMaterial;
             } else {
+                child.position.set(0.09, 0.705, 0.01);
+
                 child.material = cultureMaterial;
             }
         });
@@ -188,7 +209,7 @@ class ThreeScene extends Component {
 
         // global model material
         this.modelColor = new THREE.Color();
-        this.modelColor.setHSL(0, 0, 0.3);
+        this.modelColor.setHSL(0, 0, 0.5);
         this.modelMaterial = new THREE.MeshPhongMaterial({
             color: this.modelColor,
         });
@@ -274,7 +295,7 @@ class ThreeScene extends Component {
 
     startAnimationLoop = () => {
         if (!this.state.loading && this.props.startScene) {
-            // this._animateAgents();
+            this._animateAgents();
             _blockCamera(this.camera);
             this.bloomComposer.render();
             this.finalComposer.render();
