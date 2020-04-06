@@ -75,6 +75,7 @@ export const _blockCamera = (camera) => {
  */
 export const _setupAgents = async () => {
     let agentsWrapper = new THREE.Object3D();
+    agentsWrapper.name = "agentsWrapper";
     for (const tripName in settings.trips) {
         let URL = settings.trips[tripName].URL;
 

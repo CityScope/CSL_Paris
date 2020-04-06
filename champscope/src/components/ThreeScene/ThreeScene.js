@@ -8,6 +8,7 @@
 // ! Bloom https://jsfiddle.net/yp2t6op6/3/
 // ! https://github.com/mrdoob/three.js/blob/master/examples/webgl_postprocesnsing_unreal_bloom_selective.html
 // ! https://stackoverflow.com/questions/47922923/ceiling-lights-effect-using-three-js
+// ! Glow https://stemkoski.github.io/Three.js/Shader-Glow.html
 
 import React, { Component } from "react";
 import { setLoadingState } from "../../redux/actions";
@@ -81,7 +82,8 @@ class ThreeScene extends Component {
             )
             .then(
                 this.setState({ loading: false }),
-                this.props.setLoadingState(this.state.loading)
+                this.props.setLoadingState(this.state.loading),
+                console.log(this.scene.children)
             );
     };
 
@@ -109,6 +111,7 @@ class ThreeScene extends Component {
     };
 
     _landscapeModelsLoader = async () => {
+        this.landscapeModelsWrapper = new THREE.Object3D();
         for (const modelUrl in settings.landscapeModels) {
             let URL = settings.landscapeModels[modelUrl];
 
@@ -118,19 +121,6 @@ class ThreeScene extends Component {
                 this._handelLandscapeModel(model);
             });
         }
-    };
-
-    _handelCityModel = (model) => {
-        let modelMaterial = this.modelMaterial;
-        model.scale.set(0.000505, 0.000505, 0.000505);
-        model.position.set(-0.0055, 0.7, 0);
-        model.rotation.set(0, 0.4625123, 0);
-        model.traverse(function (child) {
-            // child.castShadow = true;
-            child.material = modelMaterial;
-        });
-
-        this.scene.add(model);
     };
 
     _handelLandscapeModel = (model) => {
@@ -156,6 +146,20 @@ class ThreeScene extends Component {
 
                 child.material = cultureMaterial;
             }
+        });
+
+        this.scene.add(model);
+    };
+
+    _handelCityModel = (model) => {
+        let modelMaterial = this.modelMaterial;
+        model.name = "cityModel";
+        model.scale.set(0.000505, 0.000505, 0.000505);
+        model.position.set(-0.0055, 0.7, 0);
+        model.rotation.set(0, 0.4625123, 0);
+        model.traverse(function (child) {
+            // child.castShadow = true;
+            child.material = modelMaterial;
         });
 
         this.scene.add(model);
@@ -259,6 +263,7 @@ class ThreeScene extends Component {
         const pedestalMesh = new THREE.Mesh(cubeGeo, materialArray);
         pedestalMesh.castShadow = true;
         pedestalMesh.receiveShadow = true;
+        pedestalMesh.name = "pedestalMesh";
         this.scene.add(pedestalMesh);
     };
 
