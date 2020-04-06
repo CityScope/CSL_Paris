@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#fff",
         padding: theme.spacing(3),
         minWidth: "30vw",
-        maxWidth: "50vw",
+        maxWidth: "65vw",
         textAlign: "center",
         rounded: true,
         margin: "0 auto",
@@ -75,82 +75,77 @@ function LandingPage(props) {
         return (
             <MuiThemeProvider theme={theme}>
                 <CssBaseline />
-                <div className={classes.root}>
-                    <Box className={classes.box}>
-                        <Typography variant="h2">
-                            CityScope Champs-Élysées
+                <Box className={classes.box}>
+                    <Typography variant="h2">
+                        CityScope Champs-Élysées
+                    </Typography>
+
+                    <Box p={5}>
+                        <Typography variant="subtitle1">
+                            CityScope Champs-Élysées is an interactive platform
+                            to improve decision-making related to the
+                            revitalization of the Champs Élysées CityScope
+                            Champs-Élysée is a tangible interface that explores
+                            the experimental articulation between the diagnosis
+                            of existing conditions and the proposed
+                            interventions of PCA-STREAM for the Champs Élysées
+                            in 2024. The project, exposed at the Pavillon de
+                            l'Arsenal, illustrates interventions on the use of
+                            new mobility, the strengthening of nature along the
+                            avenue and finally the creation of new dynamic and
+                            modular spaces in the city.
+                        </Typography>
+                    </Box>
+
+                    {props.readyState ? (
+                        <LoadingSprite />
+                    ) : (
+                        <div onClick={_enterButtonEvent}>
+                            <EnterButton />
+                        </div>
+                    )}
+
+                    <Box p={2}>
+                        <Box p={2}>
+                            <Typography variant="h6">
+                                Virtual Champs-Élysées
+                            </Typography>
+                            <Typography variant="caption">
+                                Ariel Noyman, Arnaud Grignard, Nicolas Ayoub,
+                                Kent Larson
+                            </Typography>
+                        </Box>
+                        {/*  */}
+                        <Typography variant="h6">
+                            Pavillon de l'Arsenal
                         </Typography>
 
-                        <Box p={5}>
-                            <Typography variant="subtitle1">
-                                CityScope Champs-Élysées is an interactive
-                                platform to improve decision-making related to
-                                the revitalization of the Champs Élysées
-                                CityScope Champs-Élysée is a tangible interface
-                                that explores the experimental articulation
-                                between the diagnosis of existing conditions and
-                                the proposed interventions of PCA-STREAM for the
-                                Champs Élysées in 2024. The project, exposed at
-                                the Pavillon de l'Arsenal, illustrates
-                                interventions on the use of new mobility, the
-                                strengthening of nature along the avenue and
-                                finally the creation of new dynamic and modular
-                                spaces in the city.
-                            </Typography>
-                        </Box>
+                        <Typography variant="caption">[PCA Stream] </Typography>
 
-                        {props.readyState ? (
-                            <LoadingSprite />
-                        ) : (
-                            <div onClick={_enterButtonEvent}>
-                                <EnterButton />
-                            </div>
-                        )}
+                        <Typography variant="caption">
+                            name name, name name, name name{" "}
+                        </Typography>
 
-                        <Box p={2}>
-                            <Box p={2}>
-                                <Typography variant="h6">
-                                    Virtual Champs-Élysées
-                                </Typography>
-                                <Typography variant="caption">
-                                    Ariel Noyman, Arnaud Grignard, Nicolas
-                                    Ayoub, Kent Larson
-                                </Typography>
-                            </Box>
-                            {/*  */}
-                            <Typography variant="h6">
-                                Pavillon de l'Arsenal
-                            </Typography>
+                        <Typography variant="caption">
+                            [MIT City Science]{" "}
+                        </Typography>
 
-                            <Typography variant="caption">
-                                [PCA Stream]{" "}
-                            </Typography>
+                        <Typography variant="caption">
+                            Arnaud Grignard, Nicolas Ayoub, Luis Alonso, Ariel
+                            Noyman, Markus Elkatsha, Kent Larson{" "}
+                        </Typography>
 
-                            <Typography variant="caption">
-                                name name, name name, name name{" "}
-                            </Typography>
+                        <Typography variant="caption">
+                            [Gama Platform]{" "}
+                        </Typography>
 
-                            <Typography variant="caption">
-                                [MIT City Science]{" "}
-                            </Typography>
-
-                            <Typography variant="caption">
-                                Arnaud Grignard, Nicolas Ayoub, Luis Alonso,
-                                Ariel Noyman, Markus Elkatsha, Kent Larson{" "}
-                            </Typography>
-
-                            <Typography variant="caption">
-                                [Gama Platform]{" "}
-                            </Typography>
-
-                            <Typography variant="caption">
-                                Tri Nguyen-Huu (IRD) Patrick Taillandier (INRA)
-                                Alexis Drogoul (IRD)
-                            </Typography>
-                        </Box>
+                        <Typography variant="caption">
+                            Tri Nguyen-Huu (IRD) Patrick Taillandier (INRA)
+                            Alexis Drogoul (IRD)
+                        </Typography>
                     </Box>
-                    <Video youtubeId={"MVhauHKiEPA"} />
-                </div>
+                </Box>
+                <Video youtubeId={"MVhauHKiEPA"} />
             </MuiThemeProvider>
         );
     } else {
