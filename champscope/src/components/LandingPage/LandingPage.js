@@ -87,41 +87,6 @@ function LandingPage(props) {
                     {props.readyState ? <LoadingSprite /> : <EnterButton />}
 
                     <Box p={2}>
-                        <Typography variant="h6">
-                            Pavillon de l'Arsenal
-                        </Typography>
-
-                        <Box p={0}>
-                            <Typography variant="caption">
-                                PCA Stream
-                            </Typography>
-                        </Box>
-
-                        <Typography variant="caption">
-                            name name, name name, name name
-                        </Typography>
-
-                        <Box p={0}>
-                            <Typography variant="caption">
-                                MIT City Science
-                            </Typography>
-                        </Box>
-
-                        <Typography variant="caption">
-                            Arnaud Grignard, Nicolas Ayoub, Luis Alonso, Ariel
-                            Noyman, Markus Elkatsha, Kent Larson
-                        </Typography>
-
-                        <Box p={0}>
-                            <Typography variant="caption">
-                                Gama Platform
-                            </Typography>
-                        </Box>
-
-                        <Typography variant="caption">
-                            Tri Nguyen-Huu (IRD) Patrick Taillandier (INRA)
-                            Alexis Drogoul (IRD)
-                        </Typography>
                         <Box p={2}>
                             <Typography variant="h6">
                                 Virtual Champs-Élysées
@@ -131,6 +96,34 @@ function LandingPage(props) {
                                 Kent Larson
                             </Typography>
                         </Box>
+                        {/*  */}
+                        <Typography variant="h6">
+                            Pavillon de l'Arsenal
+                        </Typography>
+
+                        <Typography variant="caption">[PCA Stream] </Typography>
+
+                        <Typography variant="caption">
+                            name name, name name, name name{" "}
+                        </Typography>
+
+                        <Typography variant="caption">
+                            [MIT City Science]{" "}
+                        </Typography>
+
+                        <Typography variant="caption">
+                            Arnaud Grignard, Nicolas Ayoub, Luis Alonso, Ariel
+                            Noyman, Markus Elkatsha, Kent Larson{" "}
+                        </Typography>
+
+                        <Typography variant="caption">
+                            [Gama Platform]{" "}
+                        </Typography>
+
+                        <Typography variant="caption">
+                            Tri Nguyen-Huu (IRD) Patrick Taillandier (INRA)
+                            Alexis Drogoul (IRD)
+                        </Typography>
                     </Box>
                 </Box>
                 <Video youtubeId={"MVhauHKiEPA"} />
