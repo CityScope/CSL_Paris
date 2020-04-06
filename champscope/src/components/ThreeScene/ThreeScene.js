@@ -250,14 +250,21 @@ class ThreeScene extends Component {
     };
 
     render() {
+        let startScene = this.props.startScene;
+
         return (
             <React.Fragment>
                 <div
-                    style={{
-                        height: "50vh",
-                        width: "50vw",
-                        visibility: "hidden",
-                    }}
+                    style={
+                        startScene === true
+                            ? {
+                                  height: "100vh",
+                              }
+                            : {
+                                  height: "100vh",
+                                  visibility: "hidden",
+                              }
+                    }
                     ref={(div) => (this.mountingDiv = div)}
                 />
             </React.Fragment>
