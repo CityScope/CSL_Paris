@@ -8,11 +8,26 @@ import "./LandingPage.css";
 import LoadingSprite from "../LandingPage/LoadingSprite";
 import EnterButton from "../LandingPage/EnterButton";
 import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
+
 import Video from "./Video";
 
 import { setStartSceneState } from "../../redux/actions";
 
 const theme = createMuiTheme({
+    overrides: {
+        MuiCssBaseline: {
+            "@global": {
+                "*": {
+                    "scrollbar-width": "thin",
+                },
+                "*::-webkit-scrollbar": {
+                    width: "4px",
+                    height: "4px",
+                },
+            },
+        },
+    },
     palette: {
         background: {
             default: "none",
@@ -43,18 +58,31 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+
+        display: "flex",
+        flexWrap: "wrap",
     },
     box: {
         borderColor: "white !important",
-        marginTop: "15vh",
         background: "none",
         color: "#fff",
         padding: theme.spacing(3),
-        minWidth: "30vw",
-        maxWidth: "65vw",
+
+        [theme.breakpoints.down("sm")]: {
+            maxWidth: "95vw",
+        },
+        [theme.breakpoints.up("md")]: {
+            maxWidth: "75vw",
+        },
+        [theme.breakpoints.up("lg")]: {
+            maxWidth: "50vw",
+        },
+
         textAlign: "center",
-        rounded: true,
-        margin: "0 auto",
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxHeight: "90vh",
+        overflow: "auto",
     },
 }));
 
@@ -74,11 +102,21 @@ function LandingPage(props) {
     if (!startScene) {
         return (
             <MuiThemeProvider theme={theme}>
-                <CssBaseline />
                 <Box className={classes.box}>
+                    <CssBaseline />
+                    <Box p={5}></Box>
                     <Typography variant="h2">
                         CityScope Champs-Élysées
                     </Typography>
+                    <Box p={2}></Box>
+
+                    {props.readyState ? (
+                        <LoadingSprite />
+                    ) : (
+                        <div onClick={_enterButtonEvent}>
+                            <EnterButton />
+                        </div>
+                    )}
 
                     <Box p={5}>
                         <Typography variant="subtitle1">
@@ -97,14 +135,6 @@ function LandingPage(props) {
                         </Typography>
                     </Box>
 
-                    {props.readyState ? (
-                        <LoadingSprite />
-                    ) : (
-                        <div onClick={_enterButtonEvent}>
-                            <EnterButton />
-                        </div>
-                    )}
-
                     <Box p={2}>
                         <Box p={2}>
                             <Typography variant="h6">
@@ -115,7 +145,6 @@ function LandingPage(props) {
                                 Kent Larson
                             </Typography>
                         </Box>
-                        {/*  */}
                         <Typography variant="h6">
                             Pavillon de l'Arsenal
                         </Typography>
@@ -144,8 +173,8 @@ function LandingPage(props) {
                             Alexis Drogoul (IRD)
                         </Typography>
                     </Box>
+                    <Video youtubeId={"MVhauHKiEPA"} />
                 </Box>
-                <Video youtubeId={"MVhauHKiEPA"} />
             </MuiThemeProvider>
         );
     } else {
