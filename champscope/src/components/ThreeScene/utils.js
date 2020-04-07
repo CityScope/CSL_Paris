@@ -6,6 +6,93 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import * as settings from "../../settings.json";
 
+export const _addCustomSceneObjects = async () => {
+    /**
+     * The model pedestal
+     */
+
+    var pedestalTexture = await _loadTexture(
+        "./resources/textures/shadowmap.png"
+    );
+
+    // pedestal  model material
+    let modelColor = new THREE.Color();
+    modelColor.setHSL(0, 0, 0.5);
+    let modelMaterial = new THREE.MeshPhongMaterial({
+        color: modelColor,
+    });
+
+    var topModelMaterial = new THREE.MeshPhongMaterial({
+        map: pedestalTexture,
+        color: modelColor,
+    });
+
+    // 6 sides material for pedestal
+    let materialArray = [
+        modelMaterial,
+        modelMaterial,
+        topModelMaterial,
+        modelMaterial,
+        modelMaterial,
+        modelMaterial,
+    ];
+    // fix scaling issue
+    pedestalTexture.minFilter = THREE.LinearFilter;
+    const cubeGeo = new THREE.BoxBufferGeometry(1.57, 0.7, 0.92);
+    cubeGeo.translate(0, 0.35, 0);
+    const pedestalMesh = new THREE.Mesh(cubeGeo, materialArray);
+    pedestalMesh.castShadow = true;
+    pedestalMesh.receiveShadow = true;
+    pedestalMesh.name = "pedestalMesh";
+
+    return pedestalMesh;
+};
+
+export const _pplLoader = async () => {
+    let URL = settings.pplModel.ppl;
+    let pplCol = new THREE.Color();
+    pplCol.setHSL(0, 0, 0.2);
+    let pplMaterial = new THREE.MeshLambertMaterial({
+        color: pplCol,
+    });
+    // load other models
+    let model = await _loadOBJmodel(URL);
+    model.name = "people";
+    model.traverse(function (child) {
+        child.material = pplMaterial;
+        child.castShadow = true;
+    });
+    return model;
+};
+
+export const _landscapeModelsLoader = async () => {
+    let landscapeModelsWrapper = new THREE.Object3D();
+    landscapeModelsWrapper.name = "landscapeModelsWrapper";
+
+    for (const modelName in settings.landscapeModels) {
+        let modelURL = settings.landscapeModels[modelName].URL;
+        let modelColor = settings.landscapeModels[modelName].color;
+        let modelPos = settings.landscapeModels[modelName].position;
+        console.log(modelColor);
+
+        // load other models
+        await _loadOBJmodel(modelURL).then((model) => {
+            landscapeModelsWrapper.add(model);
+            model.name = settings.landscapeModels[modelName];
+            model.scale.set(0.000505, 0.000505, 0.000505);
+            model.rotation.set(0, 0.4625123, 0);
+            model.traverse(function (child) {
+                child.material = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color("hsl" + modelColor),
+                });
+                child.position.set(modelPos[0], modelPos[1], modelPos[2]);
+            });
+        });
+    }
+
+    return landscapeModelsWrapper;
+};
+
 /**
  *
  * @param {} camera
@@ -130,6 +217,27 @@ const _makeAgents = (trips, tripName) => {
         spritesWarpper.add(sprite);
     }
     return spritesWarpper;
+};
+
+export const _handelCityModel = async () => {
+    let model = await _loadOBJmodel(settings.cityModelURL);
+    // global model material
+    let modelColor = new THREE.Color();
+    modelColor.setHSL(0, 0, 0.5);
+    let modelMaterial = new THREE.MeshPhongMaterial({
+        color: modelColor,
+    });
+
+    model.name = "cityModel";
+    model.scale.set(0.000505, 0.000505, 0.000505);
+    model.position.set(-0.0055, 0.7, 0);
+    model.rotation.set(0, 0.4625123, 0);
+    model.traverse(function (child) {
+        // child.castShadow = true;
+        child.material = modelMaterial;
+    });
+
+    return model;
 };
 
 /**

@@ -102,9 +102,8 @@ function LandingPage(props) {
                 <Box className={classes.box}>
                     <CssBaseline />
                     <Box p={5}></Box>
-                    <Typography variant="h2">
-                        CityScope Champs-Élysées
-                    </Typography>
+                    <Typography variant="h2">CityScope</Typography>
+                    <Typography variant="h2">Champs-Élysées </Typography>
                     <Box p={2}></Box>
 
                     {props.readyState ? (

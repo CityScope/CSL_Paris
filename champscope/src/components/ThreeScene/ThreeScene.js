@@ -18,10 +18,12 @@ import * as THREE from "three";
 import {
     _setupBloom,
     _createFloor,
-    _loadOBJmodel,
     _blockCamera,
     _setupAgents,
-    _loadTexture,
+    _handelCityModel,
+    _landscapeModelsLoader,
+    _addCustomSceneObjects,
+    _pplLoader,
 } from "./utils";
 import OrbitControls from "three-orbitcontrols";
 import * as settings from "../../settings.json";
@@ -57,112 +59,37 @@ class ThreeScene extends Component {
         this._sceneSetup()
             .then(
                 // load urban model
-                await _loadOBJmodel(settings.cityModelURL).then((model) => {
-                    this._handelCityModel(model);
+                await _handelCityModel().then((model) => this.scene.add(model)),
+
+                // load other street models
+                await _landscapeModelsLoader().then((model) => {
+                    this.scene.add(model);
                 }),
+                // floor
+                await _createFloor(this.renderer).then((floor) => {
+                    this.scene.add(floor);
+                }),
+                //  load the rest of the scene
+                await _addCustomSceneObjects().then((pedestalMesh) =>
+                    this.scene.add(pedestalMesh)
+                ),
+                // load the public
+                await _pplLoader().then((ppl) => this.scene.add(ppl)),
 
                 // setup agents
                 await _setupAgents().then((agentWrapper) => {
                     this.agentWrapper = agentWrapper;
                     this.scene.add(this.agentWrapper);
-                }),
-                // load other street models
-                await this._landscapeModelsLoader(),
-
-                await _createFloor(this.renderer).then((floor) => {
-                    this.scene.add(floor);
-                }),
-                //  load the rest of the scene
-                await this._addCustomSceneObjects(),
-
-                await this._pplLoader(),
-
-                //  start the animation
-                this.startAnimationLoop()
+                })
             )
             .then(
                 this.setState({ loading: false }),
                 this.props.setLoadingState(this.state.loading),
-                console.log(this.scene.children)
+                console.log(this.scene.children),
+
+                //  start the animation
+                this.startAnimationLoop()
             );
-    };
-
-    _pplLoader = async () => {
-        for (const modelUrl in settings.pplModel) {
-            let URL = settings.pplModel[modelUrl];
-
-            let pplCol = new THREE.Color();
-            pplCol.setHSL(0, 0, 0.2);
-            let pplMaterial = new THREE.MeshLambertMaterial({
-                color: pplCol,
-            });
-
-            // load other models
-            await _loadOBJmodel(URL).then((model) => {
-                model.name = modelUrl;
-                model.traverse(function (child) {
-                    child.material = pplMaterial;
-                    child.castShadow = true;
-                });
-
-                this.scene.add(model);
-            });
-        }
-    };
-
-    _landscapeModelsLoader = async () => {
-        this.landscapeModelsWrapper = new THREE.Object3D();
-        for (const modelUrl in settings.landscapeModels) {
-            let URL = settings.landscapeModels[modelUrl];
-
-            // load other models
-            await _loadOBJmodel(URL).then((model) => {
-                model.name = modelUrl;
-                this._handelLandscapeModel(model);
-            });
-        }
-    };
-
-    _handelLandscapeModel = (model) => {
-        let parksCol = new THREE.Color();
-        parksCol.setHSL(0.25, 1, 0.5);
-        let parksMaterial = new THREE.MeshPhongMaterial({
-            color: parksCol,
-        });
-        let cultureCol = new THREE.Color();
-        cultureCol.setHSL(0.6, 1, 0.5);
-        let cultureMaterial = new THREE.MeshPhongMaterial({
-            color: cultureCol,
-        });
-        model.scale.set(0.000505, 0.000505, 0.000505);
-        model.rotation.set(0, 0.4625123, 0);
-        model.traverse(function (child) {
-            if (model.name === "parks_before" || model.name === "parks_after") {
-                child.position.set(0.09, 0.701, 0.01);
-
-                child.material = parksMaterial;
-            } else {
-                child.position.set(0.09, 0.705, 0.01);
-
-                child.material = cultureMaterial;
-            }
-        });
-
-        this.scene.add(model);
-    };
-
-    _handelCityModel = (model) => {
-        let modelMaterial = this.modelMaterial;
-        model.name = "cityModel";
-        model.scale.set(0.000505, 0.000505, 0.000505);
-        model.position.set(-0.0055, 0.7, 0);
-        model.rotation.set(0, 0.4625123, 0);
-        model.traverse(function (child) {
-            // child.castShadow = true;
-            child.material = modelMaterial;
-        });
-
-        this.scene.add(model);
     };
 
     _sceneSetup = async () => {
@@ -211,13 +138,6 @@ class ThreeScene extends Component {
 
         this.scene.add(ambLight, light, light2);
 
-        // global model material
-        this.modelColor = new THREE.Color();
-        this.modelColor.setHSL(0, 0, 0.5);
-        this.modelMaterial = new THREE.MeshPhongMaterial({
-            color: this.modelColor,
-        });
-
         /*
             BLOOM
         */
@@ -230,41 +150,6 @@ class ThreeScene extends Component {
         );
         this.bloomComposer = postEffect.bloomComposer;
         this.finalComposer = postEffect.finalComposer;
-    };
-
-    _addCustomSceneObjects = async () => {
-        console.log("Start scene objects...");
-
-        /**
-         * The model pedestal
-         */
-
-        var pedestalTexture = await _loadTexture(
-            "./resources/textures/shadowmap.png"
-        );
-
-        var topModelMaterial = new THREE.MeshPhongMaterial({
-            map: pedestalTexture,
-            color: this.modelColor,
-        });
-        // 6 sides material for pedestal
-        let materialArray = [
-            this.modelMaterial,
-            this.modelMaterial,
-            topModelMaterial,
-            this.modelMaterial,
-            this.modelMaterial,
-            this.modelMaterial,
-        ];
-        // fix scaling issue
-        pedestalTexture.minFilter = THREE.LinearFilter;
-        const cubeGeo = new THREE.BoxBufferGeometry(1.57, 0.7, 0.92);
-        cubeGeo.translate(0, 0.35, 0);
-        const pedestalMesh = new THREE.Mesh(cubeGeo, materialArray);
-        pedestalMesh.castShadow = true;
-        pedestalMesh.receiveShadow = true;
-        pedestalMesh.name = "pedestalMesh";
-        this.scene.add(pedestalMesh);
     };
 
     _animateAgents = () => {
