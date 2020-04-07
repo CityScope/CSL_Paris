@@ -201,6 +201,7 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 	float saveLocationInterval<-step;
 	int totalTimeInSec<-100; //24hx60minx60sec 1step is 10#sec
 	bool saveToJson<-true;
+	bool savetoShp<-false;
 	
 	init {
 		
@@ -525,7 +526,25 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 			bike_graph[j] <- directed(bike_graph[j]);
 		}
 		create graphicWorld from:shape_file_bounds;
-		//save building to: "building.geojson" type:json crs: "GAMA";
+		float scale <- 2000.0;
+		
+
+		//Save to GeoJson
+		/*geometry big_geom <- union(park where (each.type="exi"));
+		save union(building) to: "./results/building_test.geojson" type:json crs: "GAMA::" +scale;
+		save union(big_geom) to: "./results/park_test.geojson" type:json crs: "GAMA::" +scale;		
+		save (park where (each.type="exi")) to:"./results/parks_before.geojson" type:"json" crs:"GAMA::"+scale;
+		save (park where (each.type="pro")) to:"./results/parks_after.geojson" type:"json" crs:"GAMA::"+scale;
+		save (culture where (each.type="exi")) to:"./results/culture_before.geojson" type:"json" crs:"GAMA::"+scale;
+		save (culture where (each.type="pro")) to:"./results/culture_after.geojson" type:"json" crs:"GAMA::"+scale;*/
+		
+		if(savetoShp){
+		  save (park where (each.type="exi")) to:"./results/parks_before.shp" type:"shp" crs:"EPSG:2154";
+		  save (park where (each.type="pro")) to:"./results/parks_after.shp" type:"shp" crs:"EPSG:2154";
+		  save (culture where (each.type="exi" and each.visible="yes")) to:"./results/culture_before.shp" type:"shp" crs:"EPSG:2154";
+		  save (culture where (each.type="pro" and each.visible="yes")) to:"./results/culture_after.shp" type:"shp" crs:"EPSG:2154";	
+		}
+		
 	}
 	
 	
@@ -624,12 +643,11 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 		map<string, unknown> test;
 		save "[" to: "result.json";
 		int curPed<-0;
-		ask pedestrian {
-			
+		ask car {
 			test <+ "mode"::1;
 			test<+"path"::locs;
 			test<+locs;
-			t <- "{\n\"mode\": ["+ 1 + ","+"\"people\""+    "],\n\"path\": [";
+			t <- "{\n\"mode\": ["+ 1 + ","+"\"car\""+    "],\n\"path\": [";
 			int curLoc<-0;
 			loop l over: locs {
 				point loc<-CRS_transform(l, "EPSG:4326").location;				
@@ -655,7 +673,7 @@ global {//schedules:  station + road + intersection + culture + car + bus + bike
 			}
 			t <- t + "]";	
 			t<- t+ "\n}";
-			if (curPed < (length(pedestrian) - 1)) {
+			if (curPed < (length(car) - 1)) {
 				t <- t + ",";
 			}
 			curPed<-curPed+1;
