@@ -9,10 +9,12 @@ const store = configureStore();
 export default class App extends Component {
     render() {
         return (
-            <Provider store={store}>
-                <LandingPage />
-                <ThreeScene />
-            </Provider>
+            <div style={{ height: "100vh" }}>
+                <Provider store={store}>
+                    <LandingPage />
+                    <ThreeScene />
+                </Provider>
+            </div>
         );
     }
 }
