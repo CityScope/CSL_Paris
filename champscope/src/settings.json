@@ -1,0 +1,62 @@
+{
+    "simulationDuration": 50,
+    "cityModelURL": "./resources/model/city/city.obj",
+    "landscapeModels": {
+        "parks_before": {
+            "URL": "resources/model/park/parks_before.obj",
+            "color": "(80, 100%, 20%)",
+            "position": [0.09, 0.702, 0.01]
+        },
+        "parks_after": {
+            "URL": "resources/model/park/parks_after.obj",
+            "color": "(80, 100%, 50%)",
+            "position": [0.09, 0.702, 0.01]
+        },
+        "cultural_before": {
+            "URL": "resources/model/culture/culture_before.obj",
+            "color": "(200, 100%, 30%)",
+            "position": [0.09, 0.704, 0.01]
+        },
+        "cultural_after": {
+            "URL": "resources/model/culture/culture_after.obj",
+            "color": "(200, 100%, 55%)",
+            "position": [0.09, 0.704, 0.01]
+        }
+    },
+    "pplModel": {
+        "ppl": "resources/ppl/ppl.obj"
+    },
+
+    "trips": {
+        "trips_car_before": {
+            "dataObj": "trips_car_before",
+            "color": { "h": 1, "s": 1, "l": 0.5 },
+            "URL": "resources/trips/trips_car_before.json"
+        },
+        "trips_people_before": {
+            "dataObj": "trips_people_before",
+            "color": { "h": 0, "s": 0, "l": 0.8 },
+            "URL": "resources/trips/trips_people_before.json"
+        },
+        "trips_bike_before": {
+            "dataObj": "trips_bike_before",
+            "color": { "h": 0.3, "s": 1, "l": 0.5 },
+            "URL": "resources/trips/trips_bike_before.json"
+        },
+        "trips_car_after": {
+            "dataObj": "trips_car_after",
+            "color": { "h": 1, "s": 1, "l": 0.5 },
+            "URL": "resources/trips/trips_car_after.json"
+        },
+        "trips_people_after": {
+            "dataObj": "trips_people_after",
+            "color": { "h": 0, "s": 0, "l": 0.8 },
+            "URL": "resources/trips/trips_people_after.json"
+        },
+        "trips_bike_after": {
+            "dataObj": "trips_bike_after",
+            "color": { "h": 0.3, "s": 1, "l": 0.5 },
+            "URL": "resources/trips/trips_bike_after.json"
+        }
+    }
+}
