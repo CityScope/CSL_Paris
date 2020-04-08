@@ -14,10 +14,6 @@ import React, { Component } from "react";
 import { setLoadingState } from "../../redux/actions";
 import { connect } from "react-redux";
 import * as THREE from "three";
-import Switch from "@material-ui/core/Switch";
-
-import Box from "@material-ui/core/Box";
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 import {
     _setupBloom,
@@ -198,44 +194,11 @@ class ThreeScene extends Component {
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
 
-    _handleChange = (event) => {
-        this.setState({
-            ...this.state,
-            [event.target.name]: event.target.switch,
-        });
-    };
-
-    _ui = () => {
-        return (
-            <React.Fragment>
-                <CssBaseline />
-                <Box
-                    style={{
-                        position: "fixed",
-                        zIndex: "1",
-                        bottom: 0,
-                        left: 0,
-                    }}
-                >
-                    <Switch
-                        defaultChecked
-                        color="default"
-                        onChange={this._handleChange}
-                        name="checkedA"
-                        inputProps={{ "aria-label": "secondary checkbox" }}
-                    />
-                </Box>
-            </React.Fragment>
-        );
-    };
-
     render() {
         let displayTHREEscene = this.props.startScene;
 
         return (
             <React.Fragment>
-                {displayTHREEscene ? this._ui() : null}
-
                 <div
                     style={
                         displayTHREEscene

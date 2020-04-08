@@ -132,17 +132,8 @@ function LandingPage(props) {
                     </Box>
 
                     <Box p={2}>
-                        <Box p={2}>
-                            <Typography variant="h6">
-                                Virtual Champs-Élysées
-                            </Typography>
-                            <Typography variant="caption">
-                                Ariel Noyman, Arnaud Grignard, Nicolas Ayoub,
-                                Kent Larson
-                            </Typography>
-                        </Box>
                         <Typography variant="h6">
-                            Pavillon de l'Arsenal
+                            Pavillon de l'Arsenal (??)
                         </Typography>
 
                         <Typography variant="caption">[PCA Stream] </Typography>
@@ -169,6 +160,17 @@ function LandingPage(props) {
                             Alexis Drogoul (IRD)
                         </Typography>
                     </Box>
+
+                    <Box p={2}>
+                        <Typography variant="h6">
+                            Virtual Champs-Élysées (??)
+                        </Typography>
+                        <Typography variant="caption">
+                            Ariel Noyman, Arnaud Grignard, Nicolas Ayoub, Kent
+                            Larson
+                        </Typography>
+                    </Box>
+
                     <Video youtubeId={"MVhauHKiEPA"} />
                 </Box>
             </MuiThemeProvider>
