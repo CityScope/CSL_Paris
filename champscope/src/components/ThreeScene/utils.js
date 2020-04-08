@@ -73,8 +73,6 @@ export const _landscapeModelsLoader = async () => {
         let modelURL = settings.landscapeModels[modelName].URL;
         let modelColor = settings.landscapeModels[modelName].color;
         let modelPos = settings.landscapeModels[modelName].position;
-        console.log(modelColor);
-
         // load other models
         await _loadOBJmodel(modelURL).then((model) => {
             landscapeModelsWrapper.add(model);

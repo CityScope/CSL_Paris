@@ -85,7 +85,6 @@ class ThreeScene extends Component {
             .then(
                 this.setState({ loading: false }),
                 this.props.setLoadingState(this.state.loading),
-                console.log(this.scene.children),
 
                 //  start the animation
                 this.startAnimationLoop()
