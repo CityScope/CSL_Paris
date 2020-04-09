@@ -1,6 +1,6 @@
 {
     "simulationDuration": 50,
-    "cityModelURL": "./resources/model/city/city.obj",
+    "cityModelURL": "./resources/model/city/city_sml.obj",
     "landscapeModels": {
         "parks_before": {
             "URL": "resources/model/park/parks_before.obj",
@@ -10,17 +10,17 @@
         "parks_after": {
             "URL": "resources/model/park/parks_after.obj",
             "color": "(80, 100%, 50%)",
-            "position": [0.09, 0.702, 0.01]
+            "position": [0.09, 0.7015, 0.01]
         },
         "cultural_before": {
             "URL": "resources/model/culture/culture_before.obj",
             "color": "(200, 100%, 30%)",
-            "position": [0.09, 0.704, 0.01]
+            "position": [0.09, 0.7025, 0.01]
         },
         "cultural_after": {
             "URL": "resources/model/culture/culture_after.obj",
             "color": "(200, 100%, 55%)",
-            "position": [0.09, 0.704, 0.01]
+            "position": [0.09, 0.703, 0.01]
         }
     },
     "pplModel": {

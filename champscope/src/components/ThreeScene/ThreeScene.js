@@ -38,6 +38,7 @@ class ThreeScene extends Component {
             simSpeed: 1,
             trips: {},
             renderer: true,
+            past: true,
         };
     }
 
@@ -195,14 +196,67 @@ class ThreeScene extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
-            console.log(this.props.menuInteraction, this.scene.children);
-
+            let trips_car_before = this.scene.getObjectByName(
+                "trips_car_before"
+            );
+            let trips_car_after = this.scene.getObjectByName("trips_car_after");
+            let trips_pedestrians_before = this.scene.getObjectByName(
+                "trips_pedestrians_before"
+            );
+            let trips_pedestrians_after = this.scene.getObjectByName(
+                "trips_pedestrians_after"
+            );
+            let trips_bike_before = this.scene.getObjectByName(
+                "trips_bike_before"
+            );
+            let trips_bike_after = this.scene.getObjectByName(
+                "trips_bike_after"
+            );
             let prevMenu = prevProps.menuInteraction;
             let thisMenu = this.props.menuInteraction;
             let parks_before = this.scene.getObjectByName("parks_before");
             let parks_after = this.scene.getObjectByName("parks_after");
             let cultural_before = this.scene.getObjectByName("cultural_before");
             let cultural_after = this.scene.getObjectByName("cultural_after");
+            let scenario = thisMenu.scenarioSwitch;
+
+            if (prevMenu.scenarioSwitch !== thisMenu.scenarioSwitch) {
+                _objectDisplay(parks_before, true);
+                _objectDisplay(parks_after, scenario);
+                _objectDisplay(cultural_before, true);
+                _objectDisplay(cultural_after, scenario);
+                _objectDisplay(trips_car_before, !scenario);
+                _objectDisplay(trips_car_after, scenario);
+                _objectDisplay(trips_bike_before, !scenario);
+                _objectDisplay(trips_bike_after, scenario);
+                _objectDisplay(trips_pedestrians_before, !scenario);
+                _objectDisplay(trips_pedestrians_after, scenario);
+            }
+
+            if (prevMenu.parks !== thisMenu.parks) {
+                _objectDisplay(parks_before);
+                _objectDisplay(parks_after);
+            }
+
+            if (prevMenu.culturalBuildings !== thisMenu.culturalBuildings) {
+                _objectDisplay(cultural_before);
+                _objectDisplay(cultural_after);
+            }
+
+            if (prevMenu.cars !== thisMenu.cars) {
+                _objectDisplay(trips_car_before);
+                _objectDisplay(trips_car_after);
+            }
+
+            if (prevMenu.bicycles !== thisMenu.bicycles) {
+                _objectDisplay(trips_bike_before);
+                _objectDisplay(trips_bike_after);
+            }
+
+            if (prevMenu.pedestrians !== thisMenu.pedestrians) {
+                _objectDisplay(trips_pedestrians_before);
+                _objectDisplay(trips_pedestrians_after);
+            }
 
             if (prevMenu.quality !== thisMenu.quality) {
                 this.setState({ renderer: thisMenu.quality });
@@ -221,53 +275,6 @@ class ThreeScene extends Component {
                     blueLight.intensity = 0.5;
                     orangeLight.intensity = 0.5;
                 }
-            }
-
-            if (prevMenu.scenarioSwitch !== thisMenu.scenarioSwitch) {
-                if (!thisMenu.scenarioSwitch) {
-                }
-            }
-
-            if (prevMenu.parks !== thisMenu.parks) {
-                _objectDisplay(parks_before);
-                _objectDisplay(parks_after);
-            }
-
-            if (prevMenu.culturalBuildings !== thisMenu.culturalBuildings) {
-                _objectDisplay(cultural_before);
-                _objectDisplay(cultural_after);
-            }
-
-            let trips_car_before = this.scene.getObjectByName(
-                "trips_car_before"
-            );
-            let trips_car_after = this.scene.getObjectByName("trips_car_after");
-            let trips_pedestrians_before = this.scene.getObjectByName(
-                "trips_pedestrians_before"
-            );
-            let trips_pedestrians_after = this.scene.getObjectByName(
-                "trips_pedestrians_after"
-            );
-            let trips_bike_before = this.scene.getObjectByName(
-                "trips_bike_before"
-            );
-            let trips_bike_after = this.scene.getObjectByName(
-                "trips_bike_after"
-            );
-
-            if (prevMenu.cars !== thisMenu.cars) {
-                _objectDisplay(trips_car_before);
-                _objectDisplay(trips_car_after);
-            }
-
-            if (prevMenu.bicycles !== thisMenu.bicycles) {
-                _objectDisplay(trips_bike_before);
-                _objectDisplay(trips_bike_after);
-            }
-
-            if (prevMenu.pedestrians !== thisMenu.pedestrians) {
-                _objectDisplay(trips_pedestrians_before);
-                _objectDisplay(trips_pedestrians_after);
             }
         }
     }
