@@ -24,7 +24,8 @@ import {
     _landscapeModelsLoader,
     _addCustomSceneObjects,
     _pplLoader,
-} from "./utils";
+    _objectDisplay,
+} from "./ThreeUtils";
 import OrbitControls from "three-orbitcontrols";
 import * as settings from "../../settings.json";
 
@@ -36,6 +37,7 @@ class ThreeScene extends Component {
             timeCounter: 0,
             simSpeed: 1,
             trips: {},
+            renderer: true,
         };
     }
 
@@ -87,7 +89,8 @@ class ThreeScene extends Component {
                 this.props.setLoadingState(this.state.loading),
 
                 //  start the animation
-                this.startAnimationLoop()
+                this.startAnimationLoop(),
+                console.log(this.scene)
             );
     };
 
@@ -183,18 +186,39 @@ class ThreeScene extends Component {
         this.camera.updateProjectionMatrix();
     };
 
-    startAnimationLoop = () => {
-        if (!this.state.loading && this.props.startScene) {
-            this._animateAgents();
-            _blockCamera(this.camera);
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            console.log(this.scene, this.props.menuInteraction);
+        }
+
+        if (
+            prevProps.menuInteraction.quality !==
+            this.props.menuInteraction.quality
+        ) {
+            this.state.renderer = this.props.menuInteraction.quality;
+        }
+    }
+
+    _chooseRenderer = () => {
+        if (this.state.renderer) {
             this.bloomComposer.render();
             this.finalComposer.render();
+        } else {
+            this.renderer.render(this.scene, this.camera);
         }
+    };
+
+    startAnimationLoop = () => {
+        this._animateAgents();
+        _blockCamera(this.camera);
+        this._chooseRenderer();
+
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
 
     render() {
-        let displayTHREEscene = this.props.startScene;
+        let displayTHREEscene = true;
+        // this.props.startScene;
 
         return (
             <React.Fragment>

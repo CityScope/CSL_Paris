@@ -6,6 +6,18 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import * as settings from "../../settings.json";
 
+/**
+ *
+ * @param {*}  object THREEjs obj
+ */
+export const _objectDisplay = (object) => {
+    object.traverse(function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.visible = !child.visible;
+        }
+    });
+};
+
 export const _addCustomSceneObjects = async () => {
     /**
      * The model pedestal

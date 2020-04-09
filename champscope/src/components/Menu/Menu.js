@@ -1,7 +1,7 @@
 import FormGroup from "@material-ui/core/FormGroup";
 import { CSSwitch } from "./CSSwitch";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import HorizontalDivider from "./HorizontalDivider";
 import ReactPlayer from "react-player";
@@ -55,11 +55,20 @@ function Menu(props) {
 
     const [state, setState] = React.useState({
         scenarioSwitch: false,
+        parks: true,
+        culturalBuildings: true,
+        cars: true,
+        bicycles: true,
+        pedestrians: true,
+        quality: true,
+    });
+
+    useEffect(() => {
+        props.listenToMenuUI(state);
     });
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
-        console.log(state);
         props.listenToMenuUI(state);
     };
 
@@ -107,7 +116,7 @@ function Menu(props) {
                             value="parks"
                             control={
                                 <CSSwitch
-                                    checked={state.checked}
+                                    checked={state.parks}
                                     onChange={handleChange}
                                     name="parks"
                                 />
@@ -119,9 +128,9 @@ function Menu(props) {
                             value="cultural buildings"
                             control={
                                 <CSSwitch
-                                    checked={state.checked}
+                                    checked={state.culturalBuildings}
                                     onChange={handleChange}
-                                    name="cultural buildings"
+                                    name="culturalBuildings"
                                 />
                             }
                             label="cultural"
@@ -132,7 +141,7 @@ function Menu(props) {
                             value="cars"
                             control={
                                 <CSSwitch
-                                    checked={state.checked}
+                                    checked={state.cars}
                                     onChange={handleChange}
                                     name="cars"
                                 />
@@ -144,7 +153,7 @@ function Menu(props) {
                             value="bicycles"
                             control={
                                 <CSSwitch
-                                    checked={state.checked}
+                                    checked={state.bicycles}
                                     onChange={handleChange}
                                     name="bicycles"
                                 />
@@ -156,7 +165,7 @@ function Menu(props) {
                             value="pedestrians"
                             control={
                                 <CSSwitch
-                                    checked={state.checked}
+                                    checked={state.pedestrians}
                                     onChange={handleChange}
                                     name="pedestrians"
                                 />
@@ -166,15 +175,15 @@ function Menu(props) {
                         />
                         <HorizontalDivider />
                         <FormControlLabel
-                            value="city model"
+                            value="quality"
                             control={
                                 <CSSwitch
-                                    checked={state.checked}
+                                    checked={state.quality}
                                     onChange={handleChange}
-                                    name="city model"
+                                    name="quality"
                                 />
                             }
-                            label="city model"
+                            label="quality"
                             labelPlacement="top"
                         />
                         <HorizontalDivider />
