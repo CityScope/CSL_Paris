@@ -11,79 +11,79 @@ import Box from "@material-ui/core/Box";
 import Video from "./Video";
 import { setStartSceneState } from "../../redux/actions";
 
-const theme = createMuiTheme({
-    overrides: {
-        MuiCssBaseline: {
-            "@global": {
-                "*": {
-                    "scrollbar-width": "thin",
-                },
-                "*::-webkit-scrollbar": {
-                    width: "4px",
-                    height: "4px",
+function LandingPage(props) {
+    const theme = createMuiTheme({
+        overrides: {
+            MuiCssBaseline: {
+                "@global": {
+                    "*": {
+                        "scrollbar-width": "thin",
+                    },
+                    "*::-webkit-scrollbar": {
+                        width: "4px",
+                        height: "4px",
+                    },
                 },
             },
         },
-    },
-    palette: {
-        background: {
-            default: "none",
+        palette: {
+            background: {
+                default: "none",
+            },
+            color: {
+                default: "#fff",
+            },
         },
-        color: {
-            default: "#fff",
+        typography: {
+            h2: {
+                fontFamily: ["Petit Formal Script", "cursive"].join(","),
+            },
+            subtitle1: {
+                fontFamily: '"Open Sans", "sans-serif"',
+            },
+            subtitle2: {
+                fontFamily: '"Open Sans", "sans-serif"',
+            },
+            caption: {
+                fontFamily: '"Open Sans", "sans-serif"',
+            },
+            h6: {
+                fontFamily: ["Petit Formal Script", "cursive"].join(","),
+            },
         },
-    },
-    typography: {
-        h2: {
-            fontFamily: ["Petit Formal Script", "cursive"].join(","),
-        },
-        subtitle1: {
-            fontFamily: '"Open Sans", "sans-serif"',
-        },
-        subtitle2: {
-            fontFamily: '"Open Sans", "sans-serif"',
-        },
-        caption: {
-            fontFamily: '"Open Sans", "sans-serif"',
-        },
-        h6: {
-            fontFamily: ["Petit Formal Script", "cursive"].join(","),
-        },
-    },
-});
+    });
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            flexGrow: 1,
 
-        display: "flex",
-        flexWrap: "wrap",
-    },
-    box: {
-        borderColor: "white !important",
-        background: "none",
-        color: "#fff",
-        padding: theme.spacing(3),
-
-        [theme.breakpoints.down("sm")]: {
-            maxWidth: "95vw",
+            display: "flex",
+            flexWrap: "wrap",
         },
-        [theme.breakpoints.up("md")]: {
-            maxWidth: "75vw",
-        },
-        [theme.breakpoints.up("lg")]: {
-            maxWidth: "50vw",
-        },
+        box: {
+            borderColor: "white !important",
+            background: "none",
+            color: "#fff",
+            padding: theme.spacing(3),
 
-        textAlign: "center",
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxHeight: "90vh",
-        overflow: "auto",
-    },
-}));
+            [theme.breakpoints.down("sm")]: {
+                maxWidth: "95vw",
+            },
+            [theme.breakpoints.up("md")]: {
+                maxWidth: "75vw",
+            },
+            [theme.breakpoints.up("lg")]: {
+                maxWidth: "50vw",
+            },
 
-function LandingPage(props) {
+            textAlign: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+            maxHeight: "90vh",
+            overflow: "auto",
+        },
+    }));
+
     const [startScene, setStartScene] = useState(false);
 
     function _enterButtonEvent(e) {
@@ -132,17 +132,8 @@ function LandingPage(props) {
                     </Box>
 
                     <Box p={2}>
-                        <Box p={2}>
-                            <Typography variant="h6">
-                                Virtual Champs-Élysées
-                            </Typography>
-                            <Typography variant="caption">
-                                Ariel Noyman, Arnaud Grignard, Nicolas Ayoub,
-                                Kent Larson
-                            </Typography>
-                        </Box>
                         <Typography variant="h6">
-                            Pavillon de l'Arsenal
+                            Pavillon de l'Arsenal (??)
                         </Typography>
 
                         <Typography variant="caption">[PCA Stream] </Typography>
@@ -169,6 +160,17 @@ function LandingPage(props) {
                             Alexis Drogoul (IRD)
                         </Typography>
                     </Box>
+
+                    <Box p={2}>
+                        <Typography variant="h6">
+                            Virtual Champs-Élysées (??)
+                        </Typography>
+                        <Typography variant="caption">
+                            Ariel Noyman, Arnaud Grignard, Nicolas Ayoub, Kent
+                            Larson
+                        </Typography>
+                    </Box>
+
                     <Video youtubeId={"MVhauHKiEPA"} />
                 </Box>
             </MuiThemeProvider>
