@@ -10,13 +10,15 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Slide from "@material-ui/core/Slide";
 import IconButton from "@material-ui/core/IconButton";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
+import { listenToMenuUI } from "../../redux/actions";
+import { connect } from "react-redux";
 
 // ! https://github.com/mui-org/material-ui/issues/9290
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Menu() {
+function Menu(props) {
     const useStyles = makeStyles(() => ({
         formGroup: {
             spacing: "0",
@@ -43,6 +45,9 @@ export default function Menu() {
             width: 40,
             height: 40,
         },
+        dialog: {
+            backgroundColor: "rgba(255,255,255,0)",
+        },
     }));
 
     const [open, setOpen] = React.useState(true);
@@ -55,6 +60,7 @@ export default function Menu() {
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
         console.log(state);
+        props.listenToMenuUI(state);
     };
 
     const handleClickOpen = () => {
@@ -76,6 +82,7 @@ export default function Menu() {
             </IconButton>
 
             <Dialog
+                className={classes.dialog}
                 open={open}
                 TransitionComponent={Transition}
                 keepMounted
@@ -194,3 +201,9 @@ export default function Menu() {
         </div>
     );
 }
+
+const mapDispatchToProps = {
+    listenToMenuUI: listenToMenuUI,
+};
+
+export default connect(null, mapDispatchToProps)(Menu);
