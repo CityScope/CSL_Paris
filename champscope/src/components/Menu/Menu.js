@@ -60,7 +60,7 @@ function Menu(props) {
         cars: true,
         bicycles: true,
         pedestrians: true,
-        quality: true,
+        quality: false,
     });
 
     useEffect(() => {

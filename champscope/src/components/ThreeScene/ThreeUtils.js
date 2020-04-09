@@ -9,11 +9,12 @@ import * as settings from "../../settings.json";
 /**
  *
  * @param {*}  object THREEjs obj
+ * three-way display control
  */
 export const _objectDisplay = (object, bool) => {
     if (object) {
         object.traverse(function (child) {
-            if (child instanceof THREE.Mesh) {
+            if (child instanceof THREE.Mesh || child instanceof THREE.Sprite) {
                 if (bool === true || bool === false) {
                     child.visible = bool;
                 } else {

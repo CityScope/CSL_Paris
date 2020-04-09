@@ -124,20 +124,28 @@ class ThreeScene extends Component {
          * Lights
          */
 
-        let ambLight = new THREE.PointLight(0xffffff, 0.05, 100);
-        ambLight.position.set(0, 5, 0);
+        let whiteLight = new THREE.PointLight(0xffffff, 0.05, 100);
+        whiteLight.name = "whiteLight";
+        whiteLight.position.set(0, 5, 0);
         //
-        let light = new THREE.PointLight(0xf26101, 0.5, 100);
-        light.position.set(-1, 2, -1);
-        light.castShadow = true;
-        light.shadow.radius = 2;
+        let orangeLight = new THREE.PointLight(0xf26101, 0.5, 100);
+        orangeLight.name = "orangeLight";
+        orangeLight.position.set(-1, 2, -1);
+        orangeLight.castShadow = true;
+        orangeLight.shadow.radius = 2;
         //
-        let light2 = new THREE.PointLight(0x0071bc, 0.5, 100);
-        light2.position.set(1, 2, 1);
-        light2.castShadow = true;
-        light2.shadow.radius = 2;
+        let blueLight = new THREE.PointLight(0x0071bc, 0.5, 100);
+        blueLight.name = "blueLight";
+        blueLight.position.set(1, 2, 1);
+        blueLight.castShadow = true;
+        blueLight.shadow.radius = 2;
 
-        this.scene.add(ambLight, light, light2);
+        //
+        this.lightsWrapper = new THREE.Object3D();
+        this.lightsWrapper.name = "lightsWrapper";
+        this.lightsWrapper.add(whiteLight, orangeLight, blueLight);
+
+        this.scene.add(this.lightsWrapper);
 
         /*
             BLOOM
@@ -187,7 +195,8 @@ class ThreeScene extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
-            // console.log(this.scene.children, this.props.menuInteraction);
+            console.log(this.props.menuInteraction, this.scene.children);
+
             let prevMenu = prevProps.menuInteraction;
             let thisMenu = this.props.menuInteraction;
             let parks_before = this.scene.getObjectByName("parks_before");
@@ -197,19 +206,25 @@ class ThreeScene extends Component {
 
             if (prevMenu.quality !== thisMenu.quality) {
                 this.setState({ renderer: thisMenu.quality });
+                let cityModel = this.scene.getObjectByName("cityModel");
+                // lights intensity
+                let blueLight = this.scene.getObjectByName("blueLight");
+                let orangeLight = this.scene.getObjectByName("orangeLight");
+                // if low quality render
+                if (!thisMenu.quality) {
+                    _objectDisplay(cityModel, false);
+                    blueLight.intensity = 2;
+                    orangeLight.intensity = 2;
+                } else {
+                    // higher qulaity
+                    _objectDisplay(cityModel, true);
+                    blueLight.intensity = 0.5;
+                    orangeLight.intensity = 0.5;
+                }
             }
 
             if (prevMenu.scenarioSwitch !== thisMenu.scenarioSwitch) {
                 if (!thisMenu.scenarioSwitch) {
-                    _objectDisplay(parks_before, true);
-                    _objectDisplay(cultural_before, true);
-                    _objectDisplay(parks_after, false);
-                    _objectDisplay(cultural_after, false);
-                } else {
-                    _objectDisplay(parks_before, true);
-                    _objectDisplay(cultural_before, true);
-                    _objectDisplay(parks_after, true);
-                    _objectDisplay(cultural_after, true);
                 }
             }
 
@@ -221,6 +236,38 @@ class ThreeScene extends Component {
             if (prevMenu.culturalBuildings !== thisMenu.culturalBuildings) {
                 _objectDisplay(cultural_before);
                 _objectDisplay(cultural_after);
+            }
+
+            let trips_car_before = this.scene.getObjectByName(
+                "trips_car_before"
+            );
+            let trips_car_after = this.scene.getObjectByName("trips_car_after");
+            let trips_pedestrians_before = this.scene.getObjectByName(
+                "trips_pedestrians_before"
+            );
+            let trips_pedestrians_after = this.scene.getObjectByName(
+                "trips_pedestrians_after"
+            );
+            let trips_bike_before = this.scene.getObjectByName(
+                "trips_bike_before"
+            );
+            let trips_bike_after = this.scene.getObjectByName(
+                "trips_bike_after"
+            );
+
+            if (prevMenu.cars !== thisMenu.cars) {
+                _objectDisplay(trips_car_before);
+                _objectDisplay(trips_car_after);
+            }
+
+            if (prevMenu.bicycles !== thisMenu.bicycles) {
+                _objectDisplay(trips_bike_before);
+                _objectDisplay(trips_bike_after);
+            }
+
+            if (prevMenu.pedestrians !== thisMenu.pedestrians) {
+                _objectDisplay(trips_pedestrians_before);
+                _objectDisplay(trips_pedestrians_after);
             }
         }
     }
