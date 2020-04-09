@@ -89,8 +89,7 @@ class ThreeScene extends Component {
                 this.props.setLoadingState(this.state.loading),
 
                 //  start the animation
-                this.startAnimationLoop(),
-                console.log(this.scene)
+                this.startAnimationLoop()
             );
     };
 
@@ -188,14 +187,51 @@ class ThreeScene extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
-            console.log(this.scene, this.props.menuInteraction);
-        }
+            console.log(this.scene.children, this.props.menuInteraction);
+            let prevMenu = prevProps.menuInteraction;
+            let thisMenu = this.props.menuInteraction;
+            let parks_before = this.scene.getObjectByName("parks_before");
+            let parks_after = this.scene.getObjectByName("parks_after");
+            let cultural_before = this.scene.getObjectByName("cultural_before");
+            let cultural_after = this.scene.getObjectByName("cultural_after");
 
-        if (
-            prevProps.menuInteraction.quality !==
-            this.props.menuInteraction.quality
-        ) {
-            this.state.renderer = this.props.menuInteraction.quality;
+            if (prevMenu.scenarioSwitch !== thisMenu.scenarioSwitch) {
+                if (prevMenu.quality !== thisMenu.quality) {
+                    this.setState({ renderer: thisMenu.quality });
+                }
+
+                if (thisMenu.scenarioSwitch) {
+                    _objectDisplay(parks_before, true);
+                    _objectDisplay(cultural_before, true);
+                    _objectDisplay(parks_after, false);
+                    _objectDisplay(cultural_after, false);
+                } else {
+                    _objectDisplay(parks_before, true);
+                    _objectDisplay(cultural_before, true);
+                    _objectDisplay(parks_after, true);
+                    _objectDisplay(cultural_after, true);
+                }
+            }
+
+            if (prevMenu.parks !== thisMenu.parks) {
+                if (prevMenu.parks) {
+                    _objectDisplay(parks_before, true);
+                    _objectDisplay(parks_after, true);
+                } else {
+                    _objectDisplay(parks_before, false);
+                    _objectDisplay(parks_after, false);
+                }
+            }
+
+            if (prevMenu.culturalBuildings !== thisMenu.culturalBuildings) {
+                if (prevMenu.culturalBuildings) {
+                    _objectDisplay(cultural_before, true);
+                    _objectDisplay(cultural_after, true);
+                } else {
+                    _objectDisplay(cultural_before, false);
+                    _objectDisplay(cultural_after, false);
+                }
+            }
         }
     }
 

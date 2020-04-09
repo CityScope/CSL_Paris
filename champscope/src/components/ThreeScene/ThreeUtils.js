@@ -10,12 +10,14 @@ import * as settings from "../../settings.json";
  *
  * @param {*}  object THREEjs obj
  */
-export const _objectDisplay = (object) => {
-    object.traverse(function (child) {
-        if (child instanceof THREE.Mesh) {
-            child.visible = !child.visible;
-        }
-    });
+export const _objectDisplay = (object, bool) => {
+    if (object) {
+        object.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.visible = bool;
+            }
+        });
+    }
 };
 
 export const _addCustomSceneObjects = async () => {
@@ -88,7 +90,7 @@ export const _landscapeModelsLoader = async () => {
         // load other models
         await _loadOBJmodel(modelURL).then((model) => {
             landscapeModelsWrapper.add(model);
-            model.name = settings.landscapeModels[modelName];
+            model.name = modelName;
             model.scale.set(0.000505, 0.000505, 0.000505);
             model.rotation.set(0, 0.4625123, 0);
             model.traverse(function (child) {
