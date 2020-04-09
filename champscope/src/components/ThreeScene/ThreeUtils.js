@@ -92,11 +92,13 @@ export const _landscapeModelsLoader = async () => {
         let modelURL = settings.landscapeModels[modelName].URL;
         let modelColor = settings.landscapeModels[modelName].color;
         let modelPos = settings.landscapeModels[modelName].position;
+        let modelscale = settings.landscapeModels[modelName].scale;
         // load other models
         await _loadOBJmodel(modelURL).then((model) => {
             landscapeModelsWrapper.add(model);
             model.name = modelName;
-            model.scale.set(0.000505, 0.000505, 0.000505);
+            model.scale.set(modelscale, modelscale, modelscale);
+
             model.rotation.set(0, 0.4625123, 0);
             model.traverse(function (child) {
                 child.material = new THREE.MeshPhongMaterial({
