@@ -14,7 +14,11 @@ export const _objectDisplay = (object, bool) => {
     if (object) {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
-                child.visible = bool;
+                if (bool === true || bool === false) {
+                    child.visible = bool;
+                } else {
+                    child.visible = !child.visible;
+                }
             }
         });
     }
