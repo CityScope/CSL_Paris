@@ -205,6 +205,15 @@ class ThreeScene extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
+            let {
+                scenarioSwitch,
+                parks,
+                culturalBuildings,
+                cars,
+                bicycles,
+                pedestrians,
+                quality,
+            } = this.props.menuInteraction;
             let trips_car_before = this.scene.getObjectByName(
                 "trips_car_before"
             );
@@ -221,69 +230,43 @@ class ThreeScene extends Component {
             let trips_bike_after = this.scene.getObjectByName(
                 "trips_bike_after"
             );
-            let prevMenu = prevProps.menuInteraction;
-            let thisMenu = this.props.menuInteraction;
             let parks_before = this.scene.getObjectByName("parks_before");
             let parks_after = this.scene.getObjectByName("parks_after");
             let cultural_before = this.scene.getObjectByName("cultural_before");
             let cultural_after = this.scene.getObjectByName("cultural_after");
-            let scenario = thisMenu.scenarioSwitch;
 
-            if (prevMenu.scenarioSwitch !== thisMenu.scenarioSwitch) {
-                _objectDisplay(parks_before, true);
-                _objectDisplay(parks_after, scenario);
-                _objectDisplay(cultural_before, true);
-                _objectDisplay(cultural_after, scenario);
-                _objectDisplay(trips_car_before, !scenario);
-                _objectDisplay(trips_car_after, scenario);
-                _objectDisplay(trips_bike_before, !scenario);
-                _objectDisplay(trips_bike_after, scenario);
-                _objectDisplay(trips_pedestrians_before, !scenario);
-                _objectDisplay(trips_pedestrians_after, scenario);
-            }
+            _objectDisplay(parks_before, parks);
+            _objectDisplay(parks_after, scenarioSwitch && parks);
+            _objectDisplay(cultural_before, culturalBuildings);
+            _objectDisplay(cultural_after, scenarioSwitch && culturalBuildings);
+            _objectDisplay(trips_car_before, !scenarioSwitch && cars);
+            _objectDisplay(trips_car_after, scenarioSwitch && cars);
+            _objectDisplay(trips_bike_before, !scenarioSwitch && bicycles);
+            _objectDisplay(trips_bike_after, scenarioSwitch && bicycles);
+            _objectDisplay(
+                trips_pedestrians_before,
+                !scenarioSwitch && pedestrians
+            );
+            _objectDisplay(
+                trips_pedestrians_after,
+                scenarioSwitch && pedestrians
+            );
 
-            if (prevMenu.parks !== thisMenu.parks) {
-                _objectDisplay(parks_before);
-                _objectDisplay(parks_after);
-            }
-
-            if (prevMenu.culturalBuildings !== thisMenu.culturalBuildings) {
-                _objectDisplay(cultural_before);
-                _objectDisplay(cultural_after);
-            }
-
-            if (prevMenu.cars !== thisMenu.cars) {
-                _objectDisplay(trips_car_before);
-                _objectDisplay(trips_car_after);
-            }
-
-            if (prevMenu.bicycles !== thisMenu.bicycles) {
-                _objectDisplay(trips_bike_before);
-                _objectDisplay(trips_bike_after);
-            }
-
-            if (prevMenu.pedestrians !== thisMenu.pedestrians) {
-                _objectDisplay(trips_pedestrians_before);
-                _objectDisplay(trips_pedestrians_after);
-            }
-
-            if (prevMenu.quality !== thisMenu.quality) {
-                this.setState({ renderer: thisMenu.quality });
-                let cityModel = this.scene.getObjectByName("cityModel");
-                // lights intensity
-                let blueLight = this.scene.getObjectByName("blueLight");
-                let orangeLight = this.scene.getObjectByName("orangeLight");
-                // if low quality render
-                if (!thisMenu.quality) {
-                    _objectDisplay(cityModel, false);
-                    blueLight.intensity = 2;
-                    orangeLight.intensity = 2;
-                } else {
-                    // higher qulaity
-                    _objectDisplay(cityModel, true);
-                    blueLight.intensity = 0.5;
-                    orangeLight.intensity = 0.5;
-                }
+            this.setState({ renderer: quality });
+            let cityModel = this.scene.getObjectByName("cityModel");
+            // lights intensity
+            let blueLight = this.scene.getObjectByName("blueLight");
+            let orangeLight = this.scene.getObjectByName("orangeLight");
+            // if low quality render
+            if (!quality) {
+                _objectDisplay(cityModel, false);
+                blueLight.intensity = 2;
+                orangeLight.intensity = 2;
+            } else {
+                // higher qulaity
+                _objectDisplay(cityModel, true);
+                blueLight.intensity = 0.5;
+                orangeLight.intensity = 0.5;
             }
         }
     }
