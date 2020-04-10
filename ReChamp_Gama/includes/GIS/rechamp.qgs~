@@ -5,79 +5,85 @@
   <evaluateDefaultValues active="0"/>
   <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
     <customproperties/>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="origin_destination_line20200127203421252" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/origin_destination_line.shp" name="origin_destination_line">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="origin_destination_line20200127203421252" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/origin_destination_line.shp" name="origin_destination_line">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="zones20200211125501795" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/zones.shp" name="zones">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="zones20200211125501795" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/zones.shp" name="zones">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="PCA_CE_EXP_EXI_NATURE20200209015515393" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/PCA_CE_EXP_EXI_NATURE.shp" name="PCA_CE_EXP_EXI_NATURE">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="PCA_CE_EXP_EXI_NATURE20200209015515393" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/PCA_CE_EXP_EXI_NATURE.shp" name="PCA_CE_EXP_EXI_NATURE">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="PCA_CE_EXP_EXI_USAGE20200209015720463" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/PCA_CE_EXP_EXI_USAGE.shp" name="PCA_CE_EXP_EXI_USAGE">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="PCA_CE_EXP_EXI_USAGE20200209015720463" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/PCA_CE_EXP_EXI_USAGE.shp" name="PCA_CE_EXP_EXI_USAGE">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="PCA_CE_EXP_PRO_USAGE20200209015720422" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/PCA_CE_EXP_PRO_USAGE.shp" name="PCA_CE_EXP_PRO_USAGE">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="PCA_CE_EXP_PRO_USAGE20200209015720422" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/PCA_CE_EXP_PRO_USAGE.shp" name="PCA_CE_EXP_PRO_USAGE">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="PCA_CE_EXP_PRO_NATURE20200209015535692" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/PCA_CE_EXP_PRO_NATURE.shp" name="PCA_CE_EXP_PRO_NATURE">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="PCA_CE_EXP_PRO_NATURE20200209015535692" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/PCA_CE_EXP_PRO_NATURE.shp" name="PCA_CE_EXP_PRO_NATURE">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="nodes_OSM20200113191108013" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/nodes_OSM.shp" name="nodes_OSM">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="nodes_OSM20200113191108013" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/nodes_OSM.shp" name="nodes_OSM">
       <customproperties>
         <property key="legend/expressionFilter" value=""/>
         <property key="legend/expressionFilterEnabled" value="false"/>
       </customproperties>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="stations_metro_simple20200209002056850" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/stations_metro_simple.shp" name="stations_metro_simple">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="stations_metro_simple20200209002056850" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/stations_metro_simple.shp" name="stations_metro_simple">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="reseau_cyclable_clean20200212104932892" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/reseau_cyclable_clean.shp" name="reseau_cyclable_clean">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="reseau_cyclable_clean20200212104932892" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/reseau_cyclable_clean.shp" name="reseau_cyclable_clean">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="roads_OSM20200113191005665" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/roads_OSM.shp" name="roads_OSM">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="roads_OSM20200113191005665" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/roads_OSM.shp" name="roads_OSM">
       <customproperties>
         <property key="legend/expressionFilter" value=""/>
         <property key="legend/expressionFilterEnabled" value="false"/>
       </customproperties>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="voirie20200108144231333" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/voirie.shp" name="voirie">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="voirie20200108144231333" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/voirie.shp" name="voirie">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="TableBounds20200108144231333" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/TableBounds.shp" name="TableBounds">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="TableBounds20200108144231333" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/TableBounds.shp" name="TableBounds">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="water20200108144231271" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/old_GIS/water.shp" name="water">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="water20200108144231271" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/old_GIS/water.shp" name="water">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="Intervention20200108144222712" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/old_GIS/Intervention.shp" name="Intervention">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="Intervention20200108144222712" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/old_GIS/Intervention.shp" name="Intervention">
       <customproperties>
         <property key="legend/expressionFilter" value=""/>
         <property key="legend/expressionFilterEnabled" value="false"/>
       </customproperties>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="signals_zone20200114000826225" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/signals_zone.shp" name="signals_zone">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="signals_zone20200114000826225" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/signals_zone.shp" name="signals_zone">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="green_space20200108144222681" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/old_GIS/green_space.shp" name="green_space">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="green_space20200108144222681" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/old_GIS/green_space.shp" name="green_space">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="reseau_cyclable20200108144222649" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/reseau-cyclable.shp" name="reseau-cyclable">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="reseau_cyclable20200108144222649" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/reseau-cyclable.shp" name="reseau-cyclable">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="lignes_metro_RER20200108144222603" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/old_GIS/lignes_metro_RER.shp" name="lignes_metro_RER">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="lignes_metro_RER20200108144222603" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/old_GIS/lignes_metro_RER.shp" name="lignes_metro_RER">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="lignes_bus20200108144222571" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/lignes_bus.shp" name="lignes_bus">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="lignes_bus20200108144222571" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/lignes_bus.shp" name="lignes_bus">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="ColdSpot20200108144206161" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/ColdSpot.shp" name="ColdSpot">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="ColdSpot20200108144206161" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/ColdSpot.shp" name="ColdSpot">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="buildings20200108144206146" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/buildings.shp" name="buildings">
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="enveloppe20200410235530415" source="D:/tmp/enveloppe.shp" name="enveloppe">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="ilots20200108144222696" source="C:/Users/Tri/Documents/GitHub/ReChamp/ReChamp_Gama/includes/GIS/old_GIS/ilots.shp" name="ilots">
+    <layer-tree-layer expanded="1" providerKey="memory" checked="Qt::Checked" id="memory_20200410235511114" source="Polygon?uuid=3d912185-8caa-442e-91a9-33a374a8dcb4&amp;crs=EPSG:2154&amp;field=id:integer&amp;field=value:string&amp;field=area:double&amp;field=perim:double" name="Enveloppe convexe">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="buildings20200108144206146" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/buildings.shp" name="buildings">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="ilots20200108144222696" source="C:/Users/Tri/Documents/GitHub/CSL_Paris/ReChamp_Gama/includes/GIS/old_GIS/ilots.shp" name="ilots">
       <customproperties/>
     </layer-tree-layer>
   </layer-tree-group>
@@ -85,10 +91,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>647686.98119718523230404</xmin>
-      <ymin>6863864.21024234313517809</ymin>
-      <xmax>648622.98119718523230404</xmax>
-      <ymax>6864632.21024234313517809</ymax>
+      <xmin>646872.87576773075852543</xmin>
+      <ymin>6862109.56897663231939077</ymin>
+      <xmax>650616.87576773075852543</xmax>
+      <ymax>6865181.56897663231939077</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -114,7 +120,9 @@
       <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="roads20200108144140590"/>
       <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="stations_metro_bus_RER20200108144231302"/>
       <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="PCA_CE_EXP_EXI_NATURE20200209015515393"/>
+      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="enveloppe20200410235530415"/>
       <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="memory_20200108174000775"/>
+      <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="memory_20200410235511114"/>
       <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="PCA_CE_EXP_EXI_NATURE20200209015401292"/>
       <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="origin_destination_line20200127203421252"/>
       <layer_coordinate_transform destAuthId="EPSG:2154" srcAuthId="EPSG:2154" srcDatumTransform="-1" destDatumTransform="-1" layerid="Champs_Mobility_Now20200108152720613"/>
@@ -181,6 +189,8 @@
       <item>PCA_CE_EXP_EXI_USAGE20200209015720463</item>
       <item>zones20200211125501795</item>
       <item>reseau_cyclable_clean20200212104932892</item>
+      <item>memory_20200410235511114</item>
+      <item>enveloppe20200410235530415</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
@@ -194,9 +204,9 @@
         <legendlayerfile isInOverview="0" layerid="zones20200211125501795" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="PCA_CE_EXP_EXI_NATURE" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="PCA_CE_EXP_EXI_NATURE" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="PCA_CE_EXP_EXI_NATURE20200209015515393" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="PCA_CE_EXP_EXI_NATURE20200209015515393" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="PCA_CE_EXP_EXI_USAGE" showFeatureCount="0">
@@ -219,9 +229,9 @@
         <legendlayerfile isInOverview="0" layerid="nodes_OSM20200113191108013" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="stations_metro_simple" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="stations_metro_simple" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="stations_metro_simple20200209002056850" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="stations_metro_simple20200209002056850" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="reseau_cyclable_clean" showFeatureCount="0">
@@ -284,9 +294,19 @@
         <legendlayerfile isInOverview="0" layerid="ColdSpot20200108144206161" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="buildings" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="enveloppe" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="buildings20200108144206146" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="enveloppe20200410235530415" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Enveloppe convexe" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="memory_20200410235511114" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="buildings" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="buildings20200108144206146" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="ilots" showFeatureCount="0">
@@ -1144,124 +1164,10 @@
         <edittype widgetv2type="TextEdit" name="id">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
-        <edittype widgetv2type="TextEdit" name="OBJECTID">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="N_SQ_EB">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="B_IGH">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="B_ER">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="B_EE">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="AN_CONST">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="AN_REHAB">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="AN_REHABF">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="C_PERCONST">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="B_DALLE">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="B_HORSPU">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
         <edittype widgetv2type="TextEdit" name="H_MOY">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="H_MED">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="H_MIN">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="H_MAX">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="H_ECART">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_ZINC">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_TUILE">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_TERRVEG">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_ARDOISE">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_BETON">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="C_TOITDOM">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="N_SQ_AR">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="N_SQ_PC">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="N_SQ_PU">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="C_ENS_MOY">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_E_IN700">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_E_70_80">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_E_80_90">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_E_90_10">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_E_S1000">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="M2_E_TOT">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="C_SOURCE">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="CREATED_US">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="CREATED_DA">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="LAST_EDITE">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="LAST_EDI_1">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="SHAPE_Leng">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="SHAPE_Area">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="id_2">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
@@ -1487,46 +1393,8 @@
       <annotationform>.</annotationform>
       <aliases>
         <alias field="id" index="0" name=""/>
-        <alias field="OBJECTID" index="1" name=""/>
-        <alias field="N_SQ_EB" index="2" name=""/>
-        <alias field="B_IGH" index="3" name=""/>
-        <alias field="B_ER" index="4" name=""/>
-        <alias field="B_EE" index="5" name=""/>
-        <alias field="AN_CONST" index="6" name=""/>
-        <alias field="AN_REHAB" index="7" name=""/>
-        <alias field="AN_REHABF" index="8" name=""/>
-        <alias field="C_PERCONST" index="9" name=""/>
-        <alias field="B_DALLE" index="10" name=""/>
-        <alias field="B_HORSPU" index="11" name=""/>
-        <alias field="H_MOY" index="12" name=""/>
-        <alias field="H_MED" index="13" name=""/>
-        <alias field="H_MIN" index="14" name=""/>
-        <alias field="H_MAX" index="15" name=""/>
-        <alias field="H_ECART" index="16" name=""/>
-        <alias field="M2_ZINC" index="17" name=""/>
-        <alias field="M2_TUILE" index="18" name=""/>
-        <alias field="M2_TERRVEG" index="19" name=""/>
-        <alias field="M2_ARDOISE" index="20" name=""/>
-        <alias field="M2_BETON" index="21" name=""/>
-        <alias field="C_TOITDOM" index="22" name=""/>
-        <alias field="N_SQ_AR" index="23" name=""/>
-        <alias field="N_SQ_PC" index="24" name=""/>
-        <alias field="N_SQ_PU" index="25" name=""/>
-        <alias field="C_ENS_MOY" index="26" name=""/>
-        <alias field="M2_E_IN700" index="27" name=""/>
-        <alias field="M2_E_70_80" index="28" name=""/>
-        <alias field="M2_E_80_90" index="29" name=""/>
-        <alias field="M2_E_90_10" index="30" name=""/>
-        <alias field="M2_E_S1000" index="31" name=""/>
-        <alias field="M2_E_TOT" index="32" name=""/>
-        <alias field="C_SOURCE" index="33" name=""/>
-        <alias field="CREATED_US" index="34" name=""/>
-        <alias field="CREATED_DA" index="35" name=""/>
-        <alias field="LAST_EDITE" index="36" name=""/>
-        <alias field="LAST_EDI_1" index="37" name=""/>
-        <alias field="SHAPE_Leng" index="38" name=""/>
-        <alias field="SHAPE_Area" index="39" name=""/>
-        <alias field="id_2" index="40" name=""/>
+        <alias field="H_MOY" index="1" name=""/>
+        <alias field="H_MED" index="2" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -1605,46 +1473,129 @@ def my_form_open(dialog, layer, feature):
       </conditionalstyles>
       <defaults>
         <default field="id" expression=""/>
-        <default field="OBJECTID" expression=""/>
-        <default field="N_SQ_EB" expression=""/>
-        <default field="B_IGH" expression=""/>
-        <default field="B_ER" expression=""/>
-        <default field="B_EE" expression=""/>
-        <default field="AN_CONST" expression=""/>
-        <default field="AN_REHAB" expression=""/>
-        <default field="AN_REHABF" expression=""/>
-        <default field="C_PERCONST" expression=""/>
-        <default field="B_DALLE" expression=""/>
-        <default field="B_HORSPU" expression=""/>
         <default field="H_MOY" expression=""/>
         <default field="H_MED" expression=""/>
-        <default field="H_MIN" expression=""/>
-        <default field="H_MAX" expression=""/>
-        <default field="H_ECART" expression=""/>
-        <default field="M2_ZINC" expression=""/>
-        <default field="M2_TUILE" expression=""/>
-        <default field="M2_TERRVEG" expression=""/>
-        <default field="M2_ARDOISE" expression=""/>
-        <default field="M2_BETON" expression=""/>
-        <default field="C_TOITDOM" expression=""/>
-        <default field="N_SQ_AR" expression=""/>
-        <default field="N_SQ_PC" expression=""/>
-        <default field="N_SQ_PU" expression=""/>
-        <default field="C_ENS_MOY" expression=""/>
-        <default field="M2_E_IN700" expression=""/>
-        <default field="M2_E_70_80" expression=""/>
-        <default field="M2_E_80_90" expression=""/>
-        <default field="M2_E_90_10" expression=""/>
-        <default field="M2_E_S1000" expression=""/>
-        <default field="M2_E_TOT" expression=""/>
-        <default field="C_SOURCE" expression=""/>
-        <default field="CREATED_US" expression=""/>
-        <default field="CREATED_DA" expression=""/>
-        <default field="LAST_EDITE" expression=""/>
-        <default field="LAST_EDI_1" expression=""/>
-        <default field="SHAPE_Leng" expression=""/>
-        <default field="SHAPE_Area" expression=""/>
-        <default field="id_2" expression=""/>
+      </defaults>
+      <previewExpression></previewExpression>
+    </maplayer>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <id>enveloppe20200410235530415</id>
+      <datasource>D:/tmp/enveloppe.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>enveloppe</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>145</srsid>
+          <srid>2154</srid>
+          <authid>EPSG:2154</authid>
+          <description>RGF93 / Lambert-93</description>
+          <projectionacronym>lcc</projectionacronym>
+          <ellipsoidacronym>GRS80</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="System">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="id">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="value">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="area">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="perim">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="color" v="161,238,206,255"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.26"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>id</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Étiquette"/>
+        <family fieldname="" name="MS Shell Dlg 2"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform></annotationform>
+      <aliases>
+        <alias field="id" index="0" name=""/>
+        <alias field="value" index="1" name=""/>
+        <alias field="area" index="2" name=""/>
+        <alias field="perim" index="3" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="666897832">
+        <columns/>
+      </attributetableconfig>
+      <editform></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="id" expression=""/>
+        <default field="value" expression=""/>
+        <default field="area" expression=""/>
+        <default field="perim" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
@@ -2742,6 +2693,133 @@ def my_form_open(dialog, layer, feature):
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <extent>
+        <xmin>647444.36375829239841551</xmin>
+        <ymin>6862028.3360062325373292</ymin>
+        <xmax>650996.13123153045307845</xmax>
+        <ymax>6865004.89764286484569311</ymax>
+      </extent>
+      <id>memory_20200410235511114</id>
+      <datasource>memory?geometry=Polygon&amp;crs=EPSG:2154&amp;field=id:integer(-1,0)&amp;field=value:string(255,0)&amp;field=area:double(20,5)&amp;field=perim:double(20,5)</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>Enveloppe convexe</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>145</srsid>
+          <srid>2154</srid>
+          <authid>EPSG:2154</authid>
+          <description>RGF93 / Lambert-93</description>
+          <projectionacronym>lcc</projectionacronym>
+          <ellipsoidacronym>GRS80</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="System">memory</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="id">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="value">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="area">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="perim">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="color" v="123,172,8,255"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.26"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>id</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Étiquette"/>
+        <family fieldname="" name="MS Shell Dlg 2"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform></annotationform>
+      <aliases>
+        <alias field="id" index="0" name=""/>
+        <alias field="value" index="1" name=""/>
+        <alias field="area" index="2" name=""/>
+        <alias field="perim" index="3" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="1513036250">
+        <columns/>
+      </attributetableconfig>
+      <editform></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="id" expression=""/>
+        <default field="value" expression=""/>
+        <default field="area" expression=""/>
+        <default field="perim" expression=""/>
+      </defaults>
+      <previewExpression></previewExpression>
+    </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <extent>
         <xmin>647528.27862338500563055</xmin>
@@ -3616,6 +3694,9 @@ def my_form_open(dialog, layer, feature):
         <edittype widgetv2type="TextEdit" name="bike_lane">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
+        <edittype widgetv2type="TextEdit" name="bike_l_aft">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
       </edittypes>
       <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
         <symbols>
@@ -3853,6 +3934,7 @@ def my_form_open(dialog, layer, feature):
         <alias field="maxspeed" index="8" name=""/>
         <alias field="bus_lane" index="9" name=""/>
         <alias field="bike_lane" index="10" name=""/>
+        <alias field="bike_l_aft" index="11" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -3904,6 +3986,7 @@ def my_form_open(dialog, layer, feature):
         <default field="maxspeed" expression=""/>
         <default field="bus_lane" expression=""/>
         <default field="bike_lane" expression=""/>
+        <default field="bike_l_aft" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "lanes", '&lt;NULL>' )</previewExpression>
     </maplayer>
