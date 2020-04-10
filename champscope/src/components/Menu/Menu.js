@@ -1,10 +1,10 @@
 import FormGroup from "@material-ui/core/FormGroup";
 import { CSSwitch } from "./CSSwitch";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import HorizontalDivider from "./HorizontalDivider";
-import ReactPlayer from "react-player";
+
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import Slide from "@material-ui/core/Slide";
@@ -60,7 +60,8 @@ function Menu(props) {
         cars: true,
         bicycles: true,
         pedestrians: true,
-        quality: false,
+        animateCamera: true,
+        quality: true,
     });
 
     useEffect(() => {
@@ -91,6 +92,9 @@ function Menu(props) {
             </IconButton>
 
             <Dialog
+                BackdropProps={{
+                    invisible: true,
+                }}
                 className={classes.dialog}
                 open={open}
                 TransitionComponent={Transition}
@@ -175,6 +179,18 @@ function Menu(props) {
                         />
                         <HorizontalDivider />
                         <FormControlLabel
+                            value="animateCamera"
+                            control={
+                                <CSSwitch
+                                    checked={state.animateCamera}
+                                    onChange={handleChange}
+                                    name="animateCamera"
+                                />
+                            }
+                            label="animate camera"
+                            labelPlacement="top"
+                        />
+                        <FormControlLabel
                             value="quality"
                             control={
                                 <CSSwitch
@@ -187,23 +203,6 @@ function Menu(props) {
                             labelPlacement="top"
                         />
                         <HorizontalDivider />
-                        <div style={{ paddingLeft: "2em" }}>
-                            <ReactPlayer
-                                url={"resources/audio/ace.mp3"}
-                                playing={false}
-                                controls={true}
-                                loop
-                                width={"15em"}
-                                height={"2em"}
-                                config={{
-                                    file: {
-                                        attributes: {
-                                            controlsList: "nodownload",
-                                        },
-                                    },
-                                }}
-                            />
-                        </div>
                     </FormGroup>
                 </DialogContent>
             </Dialog>

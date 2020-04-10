@@ -120,10 +120,9 @@ export const _landscapeModelsLoader = async () => {
 export const _setupBloom = (width, height, scene, camera, renderer) => {
     var params = {
         exposure: 1,
-        bloomStrength: 0.6,
+        bloomStrength: 0.45,
         bloomThreshold: 0,
         bloomRadius: 0.1,
-        scene: "Scene with Glow",
     };
     var renderScene = new RenderPass(scene, camera);
     var bloomPass = new UnrealBloomPass(
@@ -149,7 +148,6 @@ export const _setupBloom = (width, height, scene, camera, renderer) => {
             },
             vertexShader: _shaders().vertex,
             fragmentShader: _shaders().frag,
-            defines: {},
         }),
         "baseTexture"
     );

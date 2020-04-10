@@ -7,7 +7,7 @@ class ThreeWrapper extends Component {
     render() {
         return (
             <React.Fragment>
-                <Menu />
+                {this.props.showMenu ? <Menu /> : null}
                 <ThreeScene menuInteraction={this.props.menuInteraction} />
             </React.Fragment>
         );
@@ -17,6 +17,7 @@ class ThreeWrapper extends Component {
 const mapStateToProps = (state) => {
     return {
         menuInteraction: state.MENU_INTERACTION,
+        showMenu: state.START_SCENE,
     };
 };
 

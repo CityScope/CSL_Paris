@@ -40,6 +40,9 @@ class ThreeScene extends Component {
             renderer: true,
             past: true,
         };
+        this.theta = 0;
+        this.cameraSpeed = 0.5;
+        this.radius = 2;
     }
 
     componentDidMount() {
@@ -290,15 +293,27 @@ class ThreeScene extends Component {
 
     startAnimationLoop = () => {
         this._animateAgents();
-        _blockCamera(this.camera);
+
+        if (this.props.menuInteraction.animateCamera) {
+            this.theta += this.cameraSpeed;
+            this.camera.position.x =
+                this.radius * Math.sin(THREE.MathUtils.degToRad(this.theta));
+            this.camera.position.y = 1.5;
+            this.camera.position.z =
+                this.radius * Math.cos(THREE.MathUtils.degToRad(this.theta));
+            this.camera.lookAt(this.scene.position);
+            this.camera.updateMatrixWorld();
+        } else {
+            _blockCamera(this.camera);
+        }
+
         this._chooseRenderer();
 
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
 
     render() {
-        let displayTHREEscene = true;
-        // this.props.startScene;
+        let displayTHREEscene = this.props.startScene;
 
         return (
             <React.Fragment>
