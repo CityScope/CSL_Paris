@@ -13,7 +13,7 @@ export default class App extends Component {
         return (
             <Provider store={store}>
                 <LandingPage />
-                {/* <ThreeWrapper /> */}
+                <ThreeWrapper />
                 <Audio />
             </Provider>
         );

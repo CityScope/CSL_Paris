@@ -207,7 +207,7 @@ export const _setupAgents = async () => {
 };
 
 const _makeAgents = (trips, tripName) => {
-    let scale = 0.015;
+    let scale = 0.02;
     let color = new THREE.Color();
     color.setHSL(
         settings.trips[tripName].color.h,

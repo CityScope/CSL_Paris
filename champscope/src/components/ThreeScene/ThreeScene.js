@@ -178,7 +178,7 @@ class ThreeScene extends Component {
                 if (tripsObject.trips[i].path[time]) {
                     let pnt = tripsObject.trips[i].path[time];
                     let agent = tripsObject.children[i];
-                    agent.position.set(pnt[0], 0.702, pnt[1]);
+                    agent.position.set(pnt[0], 0.705, pnt[1]);
                 }
             }
         });
