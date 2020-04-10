@@ -52,7 +52,10 @@ class ThreeScene extends Component {
         this.height = this.mountingDiv.clientHeight;
         window.addEventListener("resize", this.handleWindowResize);
         // start the app setup
-        this._init();
+
+        setTimeout(() => {
+            this._init();
+        }, 500);
     }
 
     componentWillUnmount() {
@@ -99,6 +102,7 @@ class ThreeScene extends Component {
 
     _sceneSetup = async () => {
         this.scene = new THREE.Scene();
+        this.scene.dispose();
         // camera
         this.camera = new THREE.PerspectiveCamera(
             50,
@@ -117,6 +121,8 @@ class ThreeScene extends Component {
             antialias: true,
             alpha: true,
         });
+
+        this.renderer.dispose();
         this.renderer.setPixelRatio(window.devicePixelRatio);
 
         this.renderer.shadowMap.enabled = true;
@@ -321,11 +327,22 @@ class ThreeScene extends Component {
                     style={
                         displayTHREEscene
                             ? {
-                                  height: "100vh",
+                                  height: "100%",
+                                  position: "fixed",
+                                  width: "100%",
+                                  top: 0,
+                                  left: 0,
                                   backgroundColor: "black",
+                                  visibility: "",
                               }
                             : {
-                                  height: "100vh",
+                                  height: "100%",
+                                  width: "100%",
+                                  position: "fixed",
+
+                                  top: 0,
+                                  left: 0,
+                                  backgroundColor: "black",
                                   visibility: "hidden",
                               }
                     }

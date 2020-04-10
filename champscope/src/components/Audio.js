@@ -18,7 +18,7 @@ const style = {
 
 export default class Audio extends Component {
     state = {
-        playing: true,
+        playing: false,
     };
 
     handlePause = () => {

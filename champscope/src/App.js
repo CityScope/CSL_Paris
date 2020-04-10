@@ -11,13 +11,11 @@ const store = configureStore();
 export default class App extends Component {
     render() {
         return (
-            <div style={{ height: "100vh" }}>
-                <Provider store={store}>
-                    <LandingPage />
-                    <ThreeWrapper />
-                    <Audio />
-                </Provider>
-            </div>
+            <Provider store={store}>
+                <LandingPage />
+                {/* <ThreeWrapper /> */}
+                <Audio />
+            </Provider>
         );
     }
 }
