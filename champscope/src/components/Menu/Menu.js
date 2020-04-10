@@ -1,7 +1,7 @@
 import FormGroup from "@material-ui/core/FormGroup";
 import { CSSwitch } from "./CSSwitch";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect } from "react";
+import React from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import HorizontalDivider from "./HorizontalDivider";
 
@@ -53,26 +53,6 @@ function Menu(props) {
     const [open, setOpen] = React.useState(true);
     const classes = useStyles();
 
-    const [state, setState] = React.useState({
-        scenarioSwitch: false,
-        parks: true,
-        culturalBuildings: true,
-        cars: true,
-        bicycles: true,
-        pedestrians: true,
-        animateCamera: true,
-        quality: true,
-    });
-
-    useEffect(() => {
-        props.listenToMenuUI(state);
-    });
-
-    const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-        props.listenToMenuUI(state);
-    };
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -80,6 +60,14 @@ function Menu(props) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const { toggleStates, listenToMenuUI } = props;
+
+    const handleToggle = (toggleName) =>
+        listenToMenuUI({
+            ...toggleStates,
+            [toggleName]: !toggleStates[toggleName],
+        });
 
     return (
         <div>
@@ -107,8 +95,10 @@ function Menu(props) {
                             value="scenario"
                             control={
                                 <CSSwitch
-                                    checked={state.scenarioSwitch}
-                                    onChange={handleChange}
+                                    checked={toggleStates.scenarioSwitch}
+                                    onChange={() =>
+                                        handleToggle("scenarioSwitch")
+                                    }
                                     name="scenarioSwitch"
                                 />
                             }
@@ -120,8 +110,8 @@ function Menu(props) {
                             value="parks"
                             control={
                                 <CSSwitch
-                                    checked={state.parks}
-                                    onChange={handleChange}
+                                    checked={toggleStates.parks}
+                                    onChange={() => handleToggle("parks")}
                                     name="parks"
                                 />
                             }
@@ -132,8 +122,10 @@ function Menu(props) {
                             value="cultural buildings"
                             control={
                                 <CSSwitch
-                                    checked={state.culturalBuildings}
-                                    onChange={handleChange}
+                                    checked={toggleStates.culturalBuildings}
+                                    onChange={() =>
+                                        handleToggle("culturalBuildings")
+                                    }
                                     name="culturalBuildings"
                                 />
                             }
@@ -145,8 +137,8 @@ function Menu(props) {
                             value="cars"
                             control={
                                 <CSSwitch
-                                    checked={state.cars}
-                                    onChange={handleChange}
+                                    checked={toggleStates.cars}
+                                    onChange={() => handleToggle("cars")}
                                     name="cars"
                                 />
                             }
@@ -157,8 +149,8 @@ function Menu(props) {
                             value="bicycles"
                             control={
                                 <CSSwitch
-                                    checked={state.bicycles}
-                                    onChange={handleChange}
+                                    checked={toggleStates.bicycles}
+                                    onChange={() => handleToggle("bicycles")}
                                     name="bicycles"
                                 />
                             }
@@ -169,8 +161,8 @@ function Menu(props) {
                             value="pedestrians"
                             control={
                                 <CSSwitch
-                                    checked={state.pedestrians}
-                                    onChange={handleChange}
+                                    checked={toggleStates.pedestrians}
+                                    onChange={() => handleToggle("pedestrians")}
                                     name="pedestrians"
                                 />
                             }
@@ -182,8 +174,10 @@ function Menu(props) {
                             value="animateCamera"
                             control={
                                 <CSSwitch
-                                    checked={state.animateCamera}
-                                    onChange={handleChange}
+                                    checked={toggleStates.animateCamera}
+                                    onChange={() =>
+                                        handleToggle("animateCamera")
+                                    }
                                     name="animateCamera"
                                 />
                             }
@@ -194,8 +188,8 @@ function Menu(props) {
                             value="quality"
                             control={
                                 <CSSwitch
-                                    checked={state.quality}
-                                    onChange={handleChange}
+                                    checked={toggleStates.quality}
+                                    onChange={() => handleToggle("quality")}
                                     name="quality"
                                 />
                             }
@@ -210,8 +204,12 @@ function Menu(props) {
     );
 }
 
+const mapStateToProps = (state) => ({
+    toggleStates: state.MENU_INTERACTION,
+});
+
 const mapDispatchToProps = {
     listenToMenuUI: listenToMenuUI,
 };
 
-export default connect(null, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
