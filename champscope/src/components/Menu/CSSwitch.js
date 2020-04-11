@@ -1,43 +1,50 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 
-export const CSSwitch = withStyles((theme) => ({
-    root: {
-        width: 42,
-        height: 23,
-        padding: 2,
-        margin: theme.spacing(1),
-    },
-    switchBase: {
-        padding: 2,
-        "&$checked": {
-            transform: "translateX(17px)",
-            color: theme.palette.common.white,
-            "& + $track": {
-                backgroundColor: "rgba(0,0,0,0)",
-                opacity: 1,
+export function CSSwitch(props) {
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            width: 42,
+            height: 26,
+            padding: 0,
+            margin: theme.spacing(1),
+        },
+        switchBase: {
+            padding: 1,
+            "&$checked": {
+                transform: "translateX(16px)",
+                color: theme.palette.common.white,
+                "& + $track": {
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    opacity: 1,
+                    border: "none",
+                },
+            },
+            "&$focusVisible $thumb": {
+                color: "rgba(0,0,0,0.5)",
+                border: "6px solid #fff",
             },
         },
-        "&$focusVisible $thumb": {
-            color: "#222",
-            border: "1px solid #FFF",
+        thumb: {
+            width: 24,
+            height: 24,
         },
-    },
-    thumb: {
-        width: 20,
-        height: 20,
-    },
-    track: {
-        borderRadius: 50 / 2,
-        border: `1px solid ${theme.palette.grey[400]}`,
+        track: {
+            borderRadius: 26 / 2,
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+            opacity: 1,
+            transition: theme.transitions.create([
+                "background-color",
+                "border",
+            ]),
+        },
+        checked: {},
+        focusVisible: {},
+    }));
 
-        backgroundColor: "rgba(0,0,0,0)",
-        opacity: 1,
-    },
-    checked: {},
-    focusVisible: {},
-}))(({ classes, ...props }) => {
+    const classes = useStyles();
+
     return (
         <Switch
             focusVisibleClassName={classes.focusVisible}
@@ -49,7 +56,6 @@ export const CSSwitch = withStyles((theme) => ({
                 track: classes.track,
                 checked: classes.checked,
             }}
-            {...props}
         />
     );
-});
+}

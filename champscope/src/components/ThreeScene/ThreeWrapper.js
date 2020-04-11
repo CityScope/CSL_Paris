@@ -8,8 +8,9 @@ class ThreeWrapper extends Component {
     render() {
         return (
             <React.Fragment>
-                {/* <ThreeScene menuInteraction={this.props.menuInteraction} />
-                {this.props.startScene ? <Menu /> : null} */}
+                <Menu />
+                {/* <ThreeScene menuInteraction={this.props.menuInteraction} /> */}
+                {/* {this.props.startScene ? <Menu /> : null}  */}
                 {/* <Audio play={this.props.startScene} /> */}
             </React.Fragment>
         );

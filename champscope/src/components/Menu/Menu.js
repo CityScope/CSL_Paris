@@ -68,7 +68,6 @@ function Menu(props) {
             ...toggleStates,
             [toggleName]: !toggleStates[toggleName],
         });
-
     return (
         <div>
             <IconButton
@@ -95,6 +94,7 @@ function Menu(props) {
                             value="scenario"
                             control={
                                 <CSSwitch
+                                    pixels={100}
                                     checked={toggleStates.scenarioSwitch}
                                     onChange={() =>
                                         handleToggle("scenarioSwitch")
