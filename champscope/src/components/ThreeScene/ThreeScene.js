@@ -205,6 +205,8 @@ class ThreeScene extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
+            console.log(this.props);
+
             let {
                 scenarioSwitch,
                 parks,
@@ -302,7 +304,8 @@ class ThreeScene extends Component {
     };
 
     render() {
-        let displayTHREEscene = this.props.startScene;
+        let displayTHREEscene = true;
+        // this.props.startScene;
 
         return (
             <React.Fragment>

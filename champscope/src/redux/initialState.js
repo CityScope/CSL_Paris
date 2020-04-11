@@ -14,6 +14,7 @@ const initialState = {
         pedestrians: true,
         animateCamera: true,
         quality: true,
+        cityModel: false,
     },
 };
 

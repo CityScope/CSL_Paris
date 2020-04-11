@@ -11,7 +11,6 @@ export default function Logo() {
             right: "1em",
             color: "white",
             fontSize: "4em",
-            boxShadow: "0em 0em 1em .1em #000",
         },
     }));
 

@@ -35,6 +35,7 @@ function Menu(props) {
     const useStyles = makeStyles(() => ({
         paper: {
             spacing: "0",
+            position: "absolute",
             color: "white",
             background: "rgba(0,0,0,0.5)",
             width: "100vw",
@@ -87,7 +88,6 @@ function Menu(props) {
                             <MenuOpenIcon className={classes.largeIcon} />
                         </IconButton>
                     </Tooltip>
-
                     <Collapse in={checked}>
                         <Paper className={classes.paper}>
                             <FormGroup row>
@@ -95,7 +95,6 @@ function Menu(props) {
                                     value="scenario"
                                     control={
                                         <CSSwitch
-                                            pixels={100}
                                             checked={
                                                 toggleStates.scenarioSwitch
                                             }
