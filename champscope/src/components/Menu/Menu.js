@@ -4,18 +4,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import SvgIcon from "@material-ui/core/SvgIcon";
-
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import HorizontalDivider from "./HorizontalDivider";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
 import IconButton from "@material-ui/core/IconButton";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
 import { listenToMenuUI } from "../../redux/actions";
 import { connect } from "react-redux";
 import Collapse from "@material-ui/core/Collapse";
+import Grid from "@material-ui/core/Grid";
+
+import Audio from "../Audio";
 
 // ! https://github.com/mui-org/material-ui/issues/9290
 
@@ -263,6 +264,17 @@ function Menu(props) {
                                 />
                                 <HorizontalDivider />
                             </FormGroup>
+                            <Grid container spacing={1} xs={2}>
+                                <Grid item>
+                                    <Audio />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Typography variant="caption">
+                                        "Aux champs Elysées", Arthur Des
+                                        Ligneris
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Paper>
                     </Collapse>
                 </div>

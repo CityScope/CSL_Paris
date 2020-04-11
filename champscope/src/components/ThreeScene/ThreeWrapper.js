@@ -2,7 +2,6 @@ import Menu from "../Menu/Menu";
 import React, { Component } from "react";
 import ThreeScene from "./ThreeScene";
 import { connect } from "react-redux";
-import Audio from "../Audio";
 
 class ThreeWrapper extends Component {
     render() {
@@ -11,7 +10,6 @@ class ThreeWrapper extends Component {
                 <Menu />
                 {/* <ThreeScene menuInteraction={this.props.menuInteraction} /> */}
                 {/* {this.props.startScene ? <Menu /> : null}  */}
-                {/* <Audio play={this.props.startScene} /> */}
             </React.Fragment>
         );
     }

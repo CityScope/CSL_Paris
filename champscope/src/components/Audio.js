@@ -5,14 +5,10 @@ import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import Button from "@material-ui/core/Button";
 
 const style = {
-    menuIconWrapper: {
+    audioIconWrapper: {
         color: "rgba(255,255,255)",
-        position: "fixed",
-        top: "2em",
-        right: "2em",
-        fontSize: "2em",
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
     },
 };
 
@@ -34,13 +30,15 @@ export default class Audio extends Component {
             if (this.state.playing) {
                 return (
                     <Button onClick={this.handlePause}>
-                        <PauseCircleOutlineIcon style={style.menuIconWrapper} />
+                        <PauseCircleOutlineIcon
+                            style={style.audioIconWrapper}
+                        />
                     </Button>
                 );
             } else {
                 return (
                     <Button onClick={this.handlePlay}>
-                        <PlayCircleOutlineIcon style={style.menuIconWrapper} />
+                        <PlayCircleOutlineIcon style={style.audioIconWrapper} />
                     </Button>
                 );
             }
@@ -51,13 +49,12 @@ export default class Audio extends Component {
                 {iconSelector()}
 
                 <ReactPlayer
-                    preload={"true"}
                     url={"resources/audio/ace.mp3"}
                     playing={this.state.playing}
                     controls={false}
                     loop
-                    width={"15em"}
-                    height={"2em"}
+                    width={"0em"}
+                    height={"0em"}
                 />
             </React.Fragment>
         );
