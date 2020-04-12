@@ -14,9 +14,11 @@ import React, { Component } from "react";
 import { setLoadingState } from "../../redux/actions";
 import { connect } from "react-redux";
 import * as THREE from "three";
+import TWEEN from "@tweenjs/tween.js";
 
 import {
     _setupBloom,
+    _addMetricsObject,
     _createFloor,
     _blockCamera,
     _setupAgents,
@@ -37,22 +39,20 @@ class ThreeScene extends Component {
             timeCounter: 0,
             simSpeed: 1,
             trips: {},
-            renderer: true,
+            renderer: false,
             past: true,
         };
         this.theta = 0;
         this.cameraSpeed = 0.5;
-        this.radius = 2;
+        this.radius = 4;
     }
 
     componentDidMount() {
         // get the div dims on init
-
         this.width = this.mountingDiv.clientWidth;
         this.height = this.mountingDiv.clientHeight;
         window.addEventListener("resize", this.handleWindowResize);
         // start the app setup
-
         setTimeout(() => {
             this._init();
         }, 500);
@@ -82,6 +82,11 @@ class ThreeScene extends Component {
                 await _addCustomSceneObjects().then((pedestalMesh) =>
                     this.scene.add(pedestalMesh)
                 ),
+
+                //  load the rest of the scene
+                await _addMetricsObject().then((metricsObject) =>
+                    this.scene.add(metricsObject)
+                ),
                 // load the public
                 await _pplLoader().then((ppl) => this.scene.add(ppl)),
 
@@ -97,6 +102,7 @@ class ThreeScene extends Component {
 
                 //  start the animation
                 this.startAnimationLoop()
+                //
             );
     };
 
@@ -110,12 +116,15 @@ class ThreeScene extends Component {
             0.01,
             1000
         );
-        this.camera.position.z = 0;
+        this.camera.position.z = -4;
         this.camera.position.x = 0;
-        this.camera.position.y = 4;
+        this.camera.position.y = 2;
+
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
         this.controls.maxDistance = 6;
         this.controls.minDistance = 1.5;
+        this.camera.lookAt(new THREE.Vector3(0, 2, 0));
+
         // renderer
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
@@ -124,7 +133,6 @@ class ThreeScene extends Component {
 
         this.renderer.dispose();
         this.renderer.setPixelRatio(window.devicePixelRatio);
-
         this.renderer.shadowMap.enabled = true;
         this.renderer.toneMapping = THREE.ReinhardToneMapping;
         this.renderer.setSize(this.width, this.height);
@@ -134,9 +142,14 @@ class ThreeScene extends Component {
          * Lights
          */
 
-        let whiteLight = new THREE.PointLight(0xffffff, 0.05, 100);
+        let whiteLight = new THREE.PointLight(0xffffff, 2, 1);
         whiteLight.name = "whiteLight";
-        whiteLight.position.set(0, 5, 0);
+        whiteLight.position.set(0, 2, -0.5);
+
+        let whiteLight2 = new THREE.PointLight(0xffffff, 2, 1);
+        whiteLight2.name = "whiteLight";
+        whiteLight2.position.set(0, 2, 0.5);
+
         //
         let orangeLight = new THREE.PointLight(0xf26101, 0.5, 100);
         orangeLight.name = "orangeLight";
@@ -153,7 +166,7 @@ class ThreeScene extends Component {
         //
         this.lightsWrapper = new THREE.Object3D();
         this.lightsWrapper.name = "lightsWrapper";
-        this.lightsWrapper.add(whiteLight, orangeLight, blueLight);
+        this.lightsWrapper.add(whiteLight, whiteLight2, orangeLight, blueLight);
 
         this.scene.add(this.lightsWrapper);
 
@@ -213,7 +226,14 @@ class ThreeScene extends Component {
                 bicycles,
                 pedestrians,
                 quality,
+                cityModelSwitch,
+                metricsObjSwitch,
             } = this.props.menuInteraction;
+
+            let cityModelObject = this.scene.getObjectByName("cityModel");
+            // lights
+            let blueLight = this.scene.getObjectByName("blueLight");
+            let orangeLight = this.scene.getObjectByName("orangeLight");
             let trips_car_before = this.scene.getObjectByName(
                 "trips_car_before"
             );
@@ -234,43 +254,161 @@ class ThreeScene extends Component {
             let parks_after = this.scene.getObjectByName("parks_after");
             let cultural_before = this.scene.getObjectByName("cultural_before");
             let cultural_after = this.scene.getObjectByName("cultural_after");
+            let metricsObj = this.scene.getObjectByName("metricsObj");
 
-            _objectDisplay(parks_before, parks);
-            _objectDisplay(parks_after, scenarioSwitch && parks);
-            _objectDisplay(cultural_before, culturalBuildings);
-            _objectDisplay(cultural_after, scenarioSwitch && culturalBuildings);
-            _objectDisplay(trips_car_before, !scenarioSwitch && cars);
-            _objectDisplay(trips_car_after, scenarioSwitch && cars);
-            _objectDisplay(trips_bike_before, !scenarioSwitch && bicycles);
-            _objectDisplay(trips_bike_after, scenarioSwitch && bicycles);
-            _objectDisplay(
-                trips_pedestrians_before,
-                !scenarioSwitch && pedestrians
-            );
-            _objectDisplay(
-                trips_pedestrians_after,
-                scenarioSwitch && pedestrians
-            );
+            for (const thisMenuItem in prevProps.menuInteraction) {
+                if (
+                    prevProps.menuInteraction[thisMenuItem] !==
+                    this.props.menuInteraction[thisMenuItem]
+                ) {
+                    switch (thisMenuItem) {
+                        case "scenarioSwitch":
+                            const lights = [blueLight, orangeLight];
 
-            this.setState({ renderer: quality });
-            let cityModel = this.scene.getObjectByName("cityModel");
-            // lights intensity
-            let blueLight = this.scene.getObjectByName("blueLight");
-            let orangeLight = this.scene.getObjectByName("orangeLight");
-            // if low quality render
-            if (!quality) {
-                _objectDisplay(cityModel, false);
-                blueLight.intensity = 2;
-                orangeLight.intensity = 2;
-            } else {
-                // higher qulaity
-                _objectDisplay(cityModel, true);
-                blueLight.intensity = 0.5;
-                orangeLight.intensity = 0.5;
+                            lights.forEach((thisLight) => {
+                                new TWEEN.Tween(thisLight.position)
+                                    .to(
+                                        {
+                                            x: -thisLight.position.x,
+                                            z: -thisLight.position.z,
+                                        },
+                                        2000
+                                    )
+                                    .easing(TWEEN.Easing.Quadratic.Out)
+                                    .onUpdate(() => {})
+                                    .start();
+                            });
+
+                            _objectDisplay(parks_before, parks);
+                            _objectDisplay(
+                                parks_after,
+                                scenarioSwitch && parks
+                            );
+
+                            _objectDisplay(cultural_before, culturalBuildings);
+                            _objectDisplay(
+                                cultural_after,
+                                scenarioSwitch && culturalBuildings
+                            );
+
+                            _objectDisplay(
+                                trips_car_before,
+                                !scenarioSwitch && cars
+                            );
+                            _objectDisplay(
+                                trips_car_after,
+                                scenarioSwitch && cars
+                            );
+
+                            _objectDisplay(
+                                trips_bike_before,
+                                !scenarioSwitch && bicycles
+                            );
+                            _objectDisplay(
+                                trips_bike_after,
+                                scenarioSwitch && bicycles
+                            );
+
+                            _objectDisplay(
+                                trips_pedestrians_before,
+                                !scenarioSwitch && pedestrians
+                            );
+                            _objectDisplay(
+                                trips_pedestrians_after,
+                                scenarioSwitch && pedestrians
+                            );
+
+                            break;
+
+                        case "metricsObjSwitch":
+                            _objectDisplay(metricsObj, metricsObjSwitch);
+                            break;
+
+                        case "parks":
+                            _objectDisplay(parks_before, parks);
+                            _objectDisplay(
+                                parks_after,
+                                scenarioSwitch && parks
+                            );
+                            break;
+
+                        case "culturalBuildings":
+                            _objectDisplay(cultural_before, culturalBuildings);
+                            _objectDisplay(
+                                cultural_after,
+                                scenarioSwitch && culturalBuildings
+                            );
+                            break;
+
+                        case "cars":
+                            _objectDisplay(
+                                trips_car_before,
+                                !scenarioSwitch && cars
+                            );
+                            _objectDisplay(
+                                trips_car_after,
+                                scenarioSwitch && cars
+                            );
+                            break;
+
+                        case "bicycles":
+                            _objectDisplay(
+                                trips_bike_before,
+                                !scenarioSwitch && bicycles
+                            );
+                            _objectDisplay(
+                                trips_bike_after,
+                                scenarioSwitch && bicycles
+                            );
+                            break;
+
+                        case "pedestrians":
+                            _objectDisplay(
+                                trips_pedestrians_before,
+                                !scenarioSwitch && pedestrians
+                            );
+                            _objectDisplay(
+                                trips_pedestrians_after,
+                                scenarioSwitch && pedestrians
+                            );
+                            break;
+
+                        case "quality":
+                            /**
+                             * Setup qulity
+                             */
+                            this.setState({ renderer: quality });
+                            // if low quality render
+                            if (!quality) {
+                                blueLight.intensity = 2.5;
+                                orangeLight.intensity = 2.5;
+                            } else {
+                                // higher qulaity
+                                blueLight.intensity = 0.7;
+                                orangeLight.intensity = 0.7;
+                            }
+                            break;
+
+                        case "cityModelSwitch":
+                            if (!cityModelSwitch) {
+                                //
+                                _objectDisplay(cityModelObject, false);
+                            } else {
+                                _objectDisplay(cityModelObject, true);
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
             }
         }
     }
 
+    /**
+     * Each frame, choose renderer quality based  on state
+     */
     _chooseRenderer = () => {
         if (this.state.renderer) {
             this.bloomComposer.render();
@@ -281,6 +419,9 @@ class ThreeScene extends Component {
     };
 
     startAnimationLoop = () => {
+        // control TWEEN event
+        TWEEN.update();
+        // animate the sim
         this._animateAgents();
 
         if (this.props.menuInteraction.animateCamera) {
@@ -290,7 +431,7 @@ class ThreeScene extends Component {
             this.camera.position.y = 1.5;
             this.camera.position.z =
                 this.radius * Math.cos(THREE.MathUtils.degToRad(this.theta));
-            this.camera.lookAt(this.scene.position);
+            this.camera.lookAt(new THREE.Vector3(0, 2, 0));
             this.camera.updateMatrixWorld();
         } else {
             _blockCamera(this.camera);
@@ -302,7 +443,8 @@ class ThreeScene extends Component {
     };
 
     render() {
-        let displayTHREEscene = this.props.startScene;
+        let displayTHREEscene = true;
+        // this.props.startScene;
 
         return (
             <React.Fragment>

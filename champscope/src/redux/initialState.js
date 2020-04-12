@@ -1,3 +1,6 @@
+import "../settings.json";
+import * as settings from "../settings.json";
+
 /**
  * ! INIT STATE
  */
@@ -5,16 +8,7 @@
 const initialState = {
     LOADING: true,
     START_SCENE: false,
-    MENU_INTERACTION: {
-        scenarioSwitch: false,
-        parks: true,
-        culturalBuildings: true,
-        cars: true,
-        bicycles: true,
-        pedestrians: true,
-        animateCamera: true,
-        quality: true,
-    },
+    MENU_INTERACTION: settings.initState,
 };
 
 export default initialState;

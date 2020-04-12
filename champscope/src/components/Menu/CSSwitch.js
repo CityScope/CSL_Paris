@@ -4,35 +4,33 @@ import Switch from "@material-ui/core/Switch";
 
 export const CSSwitch = withStyles((theme) => ({
     root: {
-        width: 42,
-        height: 23,
-        padding: 2,
+        width: 30,
+        height: 12,
+        padding: 0,
         margin: theme.spacing(1),
     },
     switchBase: {
-        padding: 2,
+        padding: 1,
         "&$checked": {
-            transform: "translateX(17px)",
+            transform: "translateX(16px)",
             color: theme.palette.common.white,
             "& + $track": {
-                backgroundColor: "rgba(0,0,0,0)",
+                backgroundColor: "#888",
                 opacity: 1,
             },
         },
         "&$focusVisible $thumb": {
-            color: "#222",
+            color: "#888",
             border: "1px solid #FFF",
         },
     },
     thumb: {
-        width: 20,
-        height: 20,
+        width: 10,
+        height: 10,
     },
     track: {
-        borderRadius: 50 / 2,
-        border: `1px solid ${theme.palette.grey[400]}`,
-
-        backgroundColor: "rgba(0,0,0,0)",
+        borderRadius: 30 / 2,
+        backgroundColor: "#FFF3",
         opacity: 1,
     },
     checked: {},

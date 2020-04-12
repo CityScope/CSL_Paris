@@ -1,4 +1,17 @@
 {
+    "initState": {
+        "scenarioSwitch": false,
+        "parks": true,
+        "culturalBuildings": true,
+        "cars": true,
+        "bicycles": true,
+        "pedestrians": true,
+        "animateCamera": false,
+        "quality": false,
+        "cityModelSwitch": true,
+        "metricsObjSwitch": true
+    },
+
     "simulationDuration": 500,
     "cityModelURL": "./resources/model/city/city_sml.obj",
     "landscapeModels": {
