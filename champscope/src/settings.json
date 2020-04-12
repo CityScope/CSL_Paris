@@ -12,6 +12,11 @@
         "metricsObjSwitch": true
     },
 
+    "lights": {
+        "orange": { "high": 1, "low": 3 },
+        "blue": { "high": 1, "low": 3 }
+    },
+
     "simulationDuration": 500,
     "cityModelURL": "./resources/model/city/city_sml.obj",
     "landscapeModels": {

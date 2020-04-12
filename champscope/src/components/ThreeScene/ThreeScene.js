@@ -152,13 +152,16 @@ class ThreeScene extends Component {
         whiteLight2.position.set(0, 2, 0.5);
 
         //
-        let orangeLight = new THREE.PointLight(0xf26101, 0.5, 100);
+        let orangeLight = new THREE.PointLight(0xf26101, 0, 100);
+        orangeLight.intensity = settings.lights.orange.low;
         orangeLight.name = "orangeLight";
         orangeLight.position.set(-1, 2, -1);
         orangeLight.castShadow = true;
         orangeLight.shadow.radius = 2;
         //
-        let blueLight = new THREE.PointLight(0x0071bc, 0.5, 100);
+        let blueLight = new THREE.PointLight(0x0071bc, 0, 100);
+        blueLight.intensity = settings.lights.blue.low;
+
         blueLight.name = "blueLight";
         blueLight.position.set(1, 2, 1);
         blueLight.castShadow = true;
@@ -381,12 +384,14 @@ class ThreeScene extends Component {
                             this.setState({ renderer: quality });
                             // if low quality render
                             if (!quality) {
-                                blueLight.intensity = 2.5;
-                                orangeLight.intensity = 2.5;
+                                blueLight.intensity = settings.lights.blue.low;
+                                orangeLight.intensity =
+                                    settings.lights.orange.low;
                             } else {
                                 // higher qulaity
-                                blueLight.intensity = 0.7;
-                                orangeLight.intensity = 0.7;
+                                blueLight.intensity = settings.lights.blue.high;
+                                orangeLight.intensity =
+                                    settings.lights.orange.high;
                             }
                             break;
 
@@ -443,6 +448,23 @@ class ThreeScene extends Component {
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
 
+    _onMouseUp(e) {
+        let mouse = new THREE.Vector2();
+        let ray = new THREE.Raycaster();
+
+        mouse.x = (e.clientX / this.width) * 2 - 1;
+        mouse.y = -(e.clientY / this.height) * 2 + 1;
+        ray.setFromCamera(mouse.clone(), this.camera);
+
+        var objects = ray.intersectObjects(this.scene.children);
+        if (objects[0] && objects[0].point) {
+            console.log(objects[0].object);
+            let rayPos = objects[0].point;
+            this.controls.target.set(rayPos);
+            this.controls.update();
+        }
+    }
+
     render() {
         let displayTHREEscene = true;
         // this.props.startScene;
@@ -450,6 +472,7 @@ class ThreeScene extends Component {
         return (
             <React.Fragment>
                 <div
+                    // onMouseUp={(e) => this._onMouseUp(e)}
                     style={
                         displayTHREEscene
                             ? {
