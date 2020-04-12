@@ -85,6 +85,39 @@ export const _addCustomSceneObjects = async () => {
     return pedestalMesh;
 };
 
+export const _addMetricsObject = async () => {
+    var metricTex = await _loadTexture("./resources/textures/skybox/1.jpg");
+    // pedestal  model material
+    let modelColor = new THREE.Color();
+    modelColor.setHSL(0, 0, 0.5);
+    let modelMaterial = new THREE.MeshPhongMaterial({
+        color: modelColor,
+        map: metricTex,
+    });
+    modelMaterial.side = THREE.DoubleSide;
+
+    // 6 sides material for pedestal
+    let materialArray = [
+        modelMaterial,
+        modelMaterial,
+        modelMaterial,
+        modelMaterial,
+        modelMaterial,
+        modelMaterial,
+    ];
+    // fix scaling issue
+    metricTex.minFilter = THREE.LinearFilter;
+    const cubeGeo = new THREE.BoxBufferGeometry(1.57, 1.57, 0.92);
+    cubeGeo.translate(0, 2, 0);
+    const metricsMesh = new THREE.Mesh(cubeGeo, materialArray);
+
+    metricsMesh.castShadow = false;
+    metricsMesh.receiveShadow = false;
+    metricsMesh.name = "metricsObj";
+
+    return metricsMesh;
+};
+
 export const _pplLoader = async () => {
     let URL = settings.pplModel.ppl;
     let pplCol = new THREE.Color();

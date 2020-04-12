@@ -18,6 +18,7 @@ import TWEEN from "@tweenjs/tween.js";
 
 import {
     _setupBloom,
+    _addMetricsObject,
     _createFloor,
     _blockCamera,
     _setupAgents,
@@ -80,6 +81,11 @@ class ThreeScene extends Component {
                 //  load the rest of the scene
                 await _addCustomSceneObjects().then((pedestalMesh) =>
                     this.scene.add(pedestalMesh)
+                ),
+
+                //  load the rest of the scene
+                await _addMetricsObject().then((metricsObject) =>
+                    this.scene.add(metricsObject)
                 ),
                 // load the public
                 await _pplLoader().then((ppl) => this.scene.add(ppl)),
