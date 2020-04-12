@@ -88,7 +88,7 @@ function Menu(props) {
                             <MenuOpenIcon className={classes.largeIcon} />
                         </IconButton>
                     </Tooltip>
-                    <Collapse in={checked}>
+                    <Collapse timeout={1} in={checked}>
                         <Paper className={classes.paper}>
                             <FormGroup row>
                                 <FormControlLabel

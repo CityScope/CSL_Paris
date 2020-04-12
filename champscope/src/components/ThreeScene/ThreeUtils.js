@@ -5,12 +5,30 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import * as settings from "../../settings.json";
+// import TWEEN from "@tweenjs/tween.js";
 
 /**
  *
  * @param {*}  object THREEjs obj
  * three-way display control
+ * 
+ * 
+ * 
+ *        
+ *  new TWEEN.Tween(object.position)
+            .to(
+                {
+                    y: object.position.y ,
+                },
+                1000
+            )
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start()
+            .onComplete(() =>
+
+
  */
+
 export const _objectDisplay = (object, bool) => {
     if (object) {
         object.traverse(function (child) {

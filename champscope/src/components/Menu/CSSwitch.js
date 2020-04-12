@@ -15,14 +15,13 @@ export const CSSwitch = withStyles((theme) => ({
             transform: "translateX(16px)",
             color: theme.palette.common.white,
             "& + $track": {
-                backgroundColor: "#555",
+                backgroundColor: "#888",
                 opacity: 1,
-                border: "1px solid #000",
             },
         },
         "&$focusVisible $thumb": {
-            color: "#222",
-            border: "1px solid #000",
+            color: "#888",
+            border: "1px solid #FFF",
         },
     },
     thumb: {
@@ -31,7 +30,7 @@ export const CSSwitch = withStyles((theme) => ({
     },
     track: {
         borderRadius: 30 / 2,
-        backgroundColor: "#FFF7",
+        backgroundColor: "#FFF3",
         opacity: 1,
     },
     checked: {},

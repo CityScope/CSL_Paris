@@ -12,7 +12,7 @@ const initialState = {
         cars: true,
         bicycles: true,
         pedestrians: true,
-        animateCamera: true,
+        animateCamera: false,
         quality: true,
         cityModel: false,
     },

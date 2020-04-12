@@ -14,6 +14,7 @@ import React, { Component } from "react";
 import { setLoadingState } from "../../redux/actions";
 import { connect } from "react-redux";
 import * as THREE from "three";
+import TWEEN from "@tweenjs/tween.js";
 
 import {
     _setupBloom,
@@ -37,7 +38,7 @@ class ThreeScene extends Component {
             timeCounter: 0,
             simSpeed: 1,
             trips: {},
-            renderer: true,
+            renderer: false,
             past: true,
         };
         this.theta = 0;
@@ -47,12 +48,10 @@ class ThreeScene extends Component {
 
     componentDidMount() {
         // get the div dims on init
-
         this.width = this.mountingDiv.clientWidth;
         this.height = this.mountingDiv.clientHeight;
         window.addEventListener("resize", this.handleWindowResize);
         // start the app setup
-
         setTimeout(() => {
             this._init();
         }, 500);
@@ -97,6 +96,7 @@ class ThreeScene extends Component {
 
                 //  start the animation
                 this.startAnimationLoop()
+                //
             );
     };
 
@@ -205,8 +205,6 @@ class ThreeScene extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
-            console.log(this.props);
-
             let {
                 scenarioSwitch,
                 parks,
@@ -215,7 +213,13 @@ class ThreeScene extends Component {
                 bicycles,
                 pedestrians,
                 quality,
+                cityModel: cityModelSwitch,
             } = this.props.menuInteraction;
+
+            let cityModelObject = this.scene.getObjectByName("cityModel");
+            // lights
+            let blueLight = this.scene.getObjectByName("blueLight");
+            let orangeLight = this.scene.getObjectByName("orangeLight");
             let trips_car_before = this.scene.getObjectByName(
                 "trips_car_before"
             );
@@ -254,25 +258,52 @@ class ThreeScene extends Component {
                 scenarioSwitch && pedestrians
             );
 
+            if (prevProps.menuInteraction.scenarioSwitch !== scenarioSwitch) {
+                const lights = [blueLight, orangeLight];
+
+                lights.forEach((thisLight) => {
+                    new TWEEN.Tween(thisLight.position)
+                        .to(
+                            {
+                                x: -thisLight.position.x,
+                                z: -thisLight.position.z,
+                            },
+                            2000
+                        )
+                        .easing(TWEEN.Easing.Quadratic.Out)
+                        .onUpdate(() => {})
+                        .start();
+                });
+            }
+
+            /**
+             * Setup qulity
+             */
+
             this.setState({ renderer: quality });
-            let cityModel = this.scene.getObjectByName("cityModel");
-            // lights intensity
-            let blueLight = this.scene.getObjectByName("blueLight");
-            let orangeLight = this.scene.getObjectByName("orangeLight");
+
             // if low quality render
+
             if (!quality) {
-                _objectDisplay(cityModel, false);
                 blueLight.intensity = 2;
                 orangeLight.intensity = 2;
             } else {
                 // higher qulaity
-                _objectDisplay(cityModel, true);
                 blueLight.intensity = 0.5;
                 orangeLight.intensity = 0.5;
+            }
+            if (!cityModelSwitch) {
+                //
+                _objectDisplay(cityModelObject, false);
+            } else {
+                _objectDisplay(cityModelObject, true);
             }
         }
     }
 
+    /**
+     * Each frame, choose renderer quality based  on state
+     */
     _chooseRenderer = () => {
         if (this.state.renderer) {
             this.bloomComposer.render();
@@ -283,6 +314,9 @@ class ThreeScene extends Component {
     };
 
     startAnimationLoop = () => {
+        // control TWEEN event
+        TWEEN.update();
+        // animate the sim
         this._animateAgents();
 
         if (this.props.menuInteraction.animateCamera) {
