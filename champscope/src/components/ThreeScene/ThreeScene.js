@@ -44,7 +44,7 @@ class ThreeScene extends Component {
         };
         this.theta = 0;
         this.cameraSpeed = 0.5;
-        this.radius = 2;
+        this.radius = 4;
     }
 
     componentDidMount() {
@@ -116,12 +116,15 @@ class ThreeScene extends Component {
             0.01,
             1000
         );
-        this.camera.position.z = 0;
+        this.camera.position.z = -4;
         this.camera.position.x = 0;
-        this.camera.position.y = 4;
+        this.camera.position.y = 2;
+
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
         this.controls.maxDistance = 6;
         this.controls.minDistance = 1.5;
+        this.camera.lookAt(new THREE.Vector3(0, 2, 0));
+
         // renderer
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
@@ -130,7 +133,6 @@ class ThreeScene extends Component {
 
         this.renderer.dispose();
         this.renderer.setPixelRatio(window.devicePixelRatio);
-
         this.renderer.shadowMap.enabled = true;
         this.renderer.toneMapping = THREE.ReinhardToneMapping;
         this.renderer.setSize(this.width, this.height);
@@ -140,9 +142,14 @@ class ThreeScene extends Component {
          * Lights
          */
 
-        let whiteLight = new THREE.PointLight(0xffffff, 0.05, 100);
+        let whiteLight = new THREE.PointLight(0xffffff, 2, 1);
         whiteLight.name = "whiteLight";
-        whiteLight.position.set(0, 5, 0);
+        whiteLight.position.set(0, 2, -0.5);
+
+        let whiteLight2 = new THREE.PointLight(0xffffff, 2, 1);
+        whiteLight2.name = "whiteLight";
+        whiteLight2.position.set(0, 2, 0.5);
+
         //
         let orangeLight = new THREE.PointLight(0xf26101, 0.5, 100);
         orangeLight.name = "orangeLight";
@@ -159,7 +166,7 @@ class ThreeScene extends Component {
         //
         this.lightsWrapper = new THREE.Object3D();
         this.lightsWrapper.name = "lightsWrapper";
-        this.lightsWrapper.add(whiteLight, orangeLight, blueLight);
+        this.lightsWrapper.add(whiteLight, whiteLight2, orangeLight, blueLight);
 
         this.scene.add(this.lightsWrapper);
 
@@ -219,7 +226,8 @@ class ThreeScene extends Component {
                 bicycles,
                 pedestrians,
                 quality,
-                cityModel: cityModelSwitch,
+                cityModelSwitch,
+                metricsObjSwitch,
             } = this.props.menuInteraction;
 
             let cityModelObject = this.scene.getObjectByName("cityModel");
@@ -246,63 +254,154 @@ class ThreeScene extends Component {
             let parks_after = this.scene.getObjectByName("parks_after");
             let cultural_before = this.scene.getObjectByName("cultural_before");
             let cultural_after = this.scene.getObjectByName("cultural_after");
+            let metricsObj = this.scene.getObjectByName("metricsObj");
 
-            _objectDisplay(parks_before, parks);
-            _objectDisplay(parks_after, scenarioSwitch && parks);
-            _objectDisplay(cultural_before, culturalBuildings);
-            _objectDisplay(cultural_after, scenarioSwitch && culturalBuildings);
-            _objectDisplay(trips_car_before, !scenarioSwitch && cars);
-            _objectDisplay(trips_car_after, scenarioSwitch && cars);
-            _objectDisplay(trips_bike_before, !scenarioSwitch && bicycles);
-            _objectDisplay(trips_bike_after, scenarioSwitch && bicycles);
-            _objectDisplay(
-                trips_pedestrians_before,
-                !scenarioSwitch && pedestrians
-            );
-            _objectDisplay(
-                trips_pedestrians_after,
-                scenarioSwitch && pedestrians
-            );
+            for (const thisMenuItem in prevProps.menuInteraction) {
+                if (
+                    prevProps.menuInteraction[thisMenuItem] !==
+                    this.props.menuInteraction[thisMenuItem]
+                ) {
+                    switch (thisMenuItem) {
+                        case "scenarioSwitch":
+                            const lights = [blueLight, orangeLight];
 
-            if (prevProps.menuInteraction.scenarioSwitch !== scenarioSwitch) {
-                const lights = [blueLight, orangeLight];
+                            lights.forEach((thisLight) => {
+                                new TWEEN.Tween(thisLight.position)
+                                    .to(
+                                        {
+                                            x: -thisLight.position.x,
+                                            z: -thisLight.position.z,
+                                        },
+                                        2000
+                                    )
+                                    .easing(TWEEN.Easing.Quadratic.Out)
+                                    .onUpdate(() => {})
+                                    .start();
+                            });
 
-                lights.forEach((thisLight) => {
-                    new TWEEN.Tween(thisLight.position)
-                        .to(
-                            {
-                                x: -thisLight.position.x,
-                                z: -thisLight.position.z,
-                            },
-                            2000
-                        )
-                        .easing(TWEEN.Easing.Quadratic.Out)
-                        .onUpdate(() => {})
-                        .start();
-                });
-            }
+                            _objectDisplay(parks_before, parks);
+                            _objectDisplay(
+                                parks_after,
+                                scenarioSwitch && parks
+                            );
 
-            /**
-             * Setup qulity
-             */
+                            _objectDisplay(cultural_before, culturalBuildings);
+                            _objectDisplay(
+                                cultural_after,
+                                scenarioSwitch && culturalBuildings
+                            );
 
-            this.setState({ renderer: quality });
+                            _objectDisplay(
+                                trips_car_before,
+                                !scenarioSwitch && cars
+                            );
+                            _objectDisplay(
+                                trips_car_after,
+                                scenarioSwitch && cars
+                            );
 
-            // if low quality render
+                            _objectDisplay(
+                                trips_bike_before,
+                                !scenarioSwitch && bicycles
+                            );
+                            _objectDisplay(
+                                trips_bike_after,
+                                scenarioSwitch && bicycles
+                            );
 
-            if (!quality) {
-                blueLight.intensity = 2;
-                orangeLight.intensity = 2;
-            } else {
-                // higher qulaity
-                blueLight.intensity = 0.5;
-                orangeLight.intensity = 0.5;
-            }
-            if (!cityModelSwitch) {
-                //
-                _objectDisplay(cityModelObject, false);
-            } else {
-                _objectDisplay(cityModelObject, true);
+                            _objectDisplay(
+                                trips_pedestrians_before,
+                                !scenarioSwitch && pedestrians
+                            );
+                            _objectDisplay(
+                                trips_pedestrians_after,
+                                scenarioSwitch && pedestrians
+                            );
+
+                            break;
+
+                        case "metricsObjSwitch":
+                            _objectDisplay(metricsObj, metricsObjSwitch);
+                            break;
+
+                        case "parks":
+                            _objectDisplay(parks_before, parks);
+                            _objectDisplay(
+                                parks_after,
+                                scenarioSwitch && parks
+                            );
+                            break;
+
+                        case "culturalBuildings":
+                            _objectDisplay(cultural_before, culturalBuildings);
+                            _objectDisplay(
+                                cultural_after,
+                                scenarioSwitch && culturalBuildings
+                            );
+                            break;
+
+                        case "cars":
+                            _objectDisplay(
+                                trips_car_before,
+                                !scenarioSwitch && cars
+                            );
+                            _objectDisplay(
+                                trips_car_after,
+                                scenarioSwitch && cars
+                            );
+                            break;
+
+                        case "bicycles":
+                            _objectDisplay(
+                                trips_bike_before,
+                                !scenarioSwitch && bicycles
+                            );
+                            _objectDisplay(
+                                trips_bike_after,
+                                scenarioSwitch && bicycles
+                            );
+                            break;
+
+                        case "pedestrians":
+                            _objectDisplay(
+                                trips_pedestrians_before,
+                                !scenarioSwitch && pedestrians
+                            );
+                            _objectDisplay(
+                                trips_pedestrians_after,
+                                scenarioSwitch && pedestrians
+                            );
+                            break;
+
+                        case "quality":
+                            /**
+                             * Setup qulity
+                             */
+                            this.setState({ renderer: quality });
+                            // if low quality render
+                            if (!quality) {
+                                blueLight.intensity = 2.5;
+                                orangeLight.intensity = 2.5;
+                            } else {
+                                // higher qulaity
+                                blueLight.intensity = 0.7;
+                                orangeLight.intensity = 0.7;
+                            }
+                            break;
+
+                        case "cityModelSwitch":
+                            if (!cityModelSwitch) {
+                                //
+                                _objectDisplay(cityModelObject, false);
+                            } else {
+                                _objectDisplay(cityModelObject, true);
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
             }
         }
     }
@@ -332,7 +431,7 @@ class ThreeScene extends Component {
             this.camera.position.y = 1.5;
             this.camera.position.z =
                 this.radius * Math.cos(THREE.MathUtils.degToRad(this.theta));
-            this.camera.lookAt(this.scene.position);
+            this.camera.lookAt(new THREE.Vector3(0, 2, 0));
             this.camera.updateMatrixWorld();
         } else {
             _blockCamera(this.camera);

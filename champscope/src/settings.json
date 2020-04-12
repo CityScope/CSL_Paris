@@ -6,9 +6,10 @@
         "cars": true,
         "bicycles": true,
         "pedestrians": true,
-        "animateCamera": true,
-        "quality": true,
-        "cityModel": true
+        "animateCamera": false,
+        "quality": false,
+        "cityModelSwitch": true,
+        "metricsObjSwitch": true
     },
 
     "simulationDuration": 500,

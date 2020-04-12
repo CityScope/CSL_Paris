@@ -111,6 +111,28 @@ function Menu(props) {
                                     }
                                     labelPlacement="top"
                                 />
+
+                                <FormControlLabel
+                                    value="metricsObjSwitch"
+                                    control={
+                                        <CSSwitch
+                                            checked={
+                                                toggleStates.metricsObjSwitch
+                                            }
+                                            onChange={() =>
+                                                handleToggle("metricsObjSwitch")
+                                            }
+                                            name="metricsObjSwitch"
+                                        />
+                                    }
+                                    label={
+                                        <Typography variant="caption">
+                                            stats
+                                        </Typography>
+                                    }
+                                    labelPlacement="top"
+                                />
+
                                 <HorizontalDivider />
                                 <FormControlLabel
                                     value="parks"
@@ -248,14 +270,16 @@ function Menu(props) {
                                 />
 
                                 <FormControlLabel
-                                    value="cityModel"
+                                    value="cityModelSwitch"
                                     control={
                                         <CSSwitch
-                                            checked={toggleStates.cityModel}
-                                            onChange={() =>
-                                                handleToggle("cityModel")
+                                            checked={
+                                                toggleStates.cityModelSwitch
                                             }
-                                            name="cityModel"
+                                            onChange={() =>
+                                                handleToggle("cityModelSwitch")
+                                            }
+                                            name="cityModelSwitch"
                                         />
                                     }
                                     label={
