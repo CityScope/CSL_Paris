@@ -44,7 +44,7 @@ class ThreeScene extends Component {
         };
         this.theta = 0;
         this.cameraSpeed = 0.5;
-        this.radius = 4;
+        this.radius = 2.5;
     }
 
     componentDidMount() {
@@ -124,7 +124,7 @@ class ThreeScene extends Component {
         this.controls.maxDistance = 7;
         this.controls.minDistance = 0.5;
         this.camera.lookAt(new THREE.Vector3(0, 1.25, 0));
-        this.controls.target.set(0, 1.25, 0);
+        this.controls.target.set(0, 0.9, 0);
 
         // renderer
         this.renderer = new THREE.WebGLRenderer({
@@ -437,7 +437,7 @@ class ThreeScene extends Component {
             this.camera.position.y = 1.5;
             this.camera.position.z =
                 this.radius * Math.cos(THREE.MathUtils.degToRad(this.theta));
-            this.camera.lookAt(new THREE.Vector3(0, 2, 0));
+            this.camera.lookAt(new THREE.Vector3(0, 1.25, 0));
             this.camera.updateMatrixWorld();
         } else {
             _blockCamera(this.camera);
@@ -466,8 +466,7 @@ class ThreeScene extends Component {
     }
 
     render() {
-        let displayTHREEscene = true;
-        // this.props.startScene;
+        let displayTHREEscene = this.props.startScene;
 
         return (
             <React.Fragment>

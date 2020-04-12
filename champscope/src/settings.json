@@ -13,8 +13,8 @@
     },
 
     "lights": {
-        "orange": { "high": 1, "low": 3 },
-        "blue": { "high": 1, "low": 3 }
+        "orange": { "high": 0.85, "low": 2.75 },
+        "blue": { "high": 0.85, "low": 2.75 }
     },
 
     "simulationDuration": 500,
