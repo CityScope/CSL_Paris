@@ -138,6 +138,8 @@ export const _pplLoader = async () => {
     model.name = "people";
     model.traverse(function (child) {
         child.material = pplMaterial;
+        child.scale.set(0.95, 0.95, 0.95);
+        child.position.set(0, 0.01, 0);
         child.castShadow = true;
     });
     return model;

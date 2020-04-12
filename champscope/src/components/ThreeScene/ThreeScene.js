@@ -121,9 +121,10 @@ class ThreeScene extends Component {
         this.camera.position.y = 2;
 
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
-        this.controls.maxDistance = 6;
-        this.controls.minDistance = 1.5;
-        this.camera.lookAt(new THREE.Vector3(0, 2, 0));
+        this.controls.maxDistance = 7;
+        this.controls.minDistance = 0.5;
+        this.camera.lookAt(new THREE.Vector3(0, 1.25, 0));
+        this.controls.target.set(0, 1.25, 0);
 
         // renderer
         this.renderer = new THREE.WebGLRenderer({
@@ -142,11 +143,11 @@ class ThreeScene extends Component {
          * Lights
          */
 
-        let whiteLight = new THREE.PointLight(0xffffff, 2, 1);
+        let whiteLight = new THREE.PointLight(0xffffff, 4, 1);
         whiteLight.name = "whiteLight";
         whiteLight.position.set(0, 2, -0.5);
 
-        let whiteLight2 = new THREE.PointLight(0xffffff, 2, 1);
+        let whiteLight2 = new THREE.PointLight(0xffffff, 4, 1);
         whiteLight2.name = "whiteLight";
         whiteLight2.position.set(0, 2, 0.5);
 
