@@ -6,7 +6,7 @@
         "cars": true,
         "bicycles": true,
         "pedestrians": true,
-        "animateCamera": false,
+        "animateCamera": true,
         "quality": false,
         "cityModelSwitch": true,
         "metricsObjSwitch": true
