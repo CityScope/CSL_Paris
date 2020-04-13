@@ -106,7 +106,7 @@ function Menu(props) {
                                 control={<Info />}
                                 label={
                                     <Typography variant="caption">
-                                        information{" "}
+                                        information
                                     </Typography>
                                 }
                                 labelPlacement="top"
