@@ -21,6 +21,14 @@ import Logo from "./Logo";
 // ! https://github.com/mui-org/material-ui/issues/9290
 
 function Menu(props) {
+    const switchColors = {
+        parks: "#84ff03",
+        cultural: "#03bafc",
+        cars: "#fc0303",
+        bicycles: "#94fc03",
+        pedestrians: "#FFF8",
+    };
+
     const theme = createMuiTheme({
         palette: {
             textPrimary: { main: "white" },
@@ -138,6 +146,7 @@ function Menu(props) {
                                     value="parks"
                                     control={
                                         <CSSwitch
+                                            knobcolor={switchColors.parks}
                                             checked={toggleStates.parks}
                                             onChange={() =>
                                                 handleToggle("parks")
@@ -156,6 +165,7 @@ function Menu(props) {
                                     value="cultural buildings"
                                     control={
                                         <CSSwitch
+                                            knobcolor={switchColors.cultural}
                                             checked={
                                                 toggleStates.culturalBuildings
                                             }
@@ -179,6 +189,7 @@ function Menu(props) {
                                     value="cars"
                                     control={
                                         <CSSwitch
+                                            knobcolor={switchColors.cars}
                                             checked={toggleStates.cars}
                                             onChange={() =>
                                                 handleToggle("cars")
@@ -197,6 +208,7 @@ function Menu(props) {
                                     value="bicycles"
                                     control={
                                         <CSSwitch
+                                            knobcolor={switchColors.bicycles}
                                             checked={toggleStates.bicycles}
                                             onChange={() =>
                                                 handleToggle("bicycles")
@@ -215,6 +227,7 @@ function Menu(props) {
                                     value="pedestrians"
                                     control={
                                         <CSSwitch
+                                            knobcolor={switchColors.pedestrians}
                                             checked={toggleStates.pedestrians}
                                             onChange={() =>
                                                 handleToggle("pedestrians")
