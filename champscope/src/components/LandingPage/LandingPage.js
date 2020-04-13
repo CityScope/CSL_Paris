@@ -37,26 +37,30 @@ function LandingPage(props) {
         },
         typography: {
             h2: {
-                fontFamily: ["Petit Formal Script", "cursive"].join(","),
+                fontFamily: ["Cormorant Garamond", "cursive"].join(","),
+                fontWeight: 400,
+                fontSize: "5em",
             },
             subtitle1: {
-                fontFamily: '"Open Sans", "sans-serif"',
+                fontFamily: '"Cormorant Garamond", "sans-serif"',
+                fontWeight: 300,
+                fontSize: "1.5em",
             },
             subtitle2: {
-                fontFamily: '"Open Sans", "sans-serif"',
+                fontFamily: '"Cormorant Garamond", "sans-serif"',
             },
             caption: {
-                fontFamily: '"Open Sans", "sans-serif"',
+                fontFamily: '"Cormorant Garamond", "sans-serif"',
+                fontSize: "1em",
             },
             h6: {
-                fontFamily: ["Petit Formal Script", "cursive"].join(","),
+                fontFamily: ["Cormorant Garamond", "cursive"].join(","),
             },
         },
     });
 
     const useStyles = makeStyles((theme) => ({
         box: {
-            borderColor: "white !important",
             background: "none",
             color: "#fff",
             padding: theme.spacing(3),
@@ -96,8 +100,8 @@ function LandingPage(props) {
                 <MuiThemeProvider theme={theme}>
                     <Box className={classes.box}>
                         <CssBaseline />
-                        <Box p={5}></Box>
-                        <Typography variant="h2">CityScope</Typography>
+                        <Box p={3}></Box>
+                        <Typography variant="h2">CITYSCOPE</Typography>
                         <Typography variant="h2">Champs-Élysées </Typography>
                         <Box p={2}></Box>
                         {props.readyState ? (
@@ -107,7 +111,7 @@ function LandingPage(props) {
                                 <EnterButton />
                             </div>
                         )}
-                        <Box p={5}>
+                        <Box p={3}>
                             <Typography variant="subtitle1">
                                 Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit, sed do eiusmod tempor
@@ -121,7 +125,7 @@ function LandingPage(props) {
                                 qui officia deserunt mollit anim id est laborum.
                             </Typography>
                         </Box>
-                        <Box p={5} />
+                        <Box p={3} />
                         <Typography variant="h6">
                             Exhabition in Pavillon de l'Arsenal
                         </Typography>
@@ -146,7 +150,7 @@ function LandingPage(props) {
                                 </Typography>
                             </div>
                         </div>
-                        <Box p={5} />
+                        <Box p={3} />
                         <Typography variant="h6">
                             Virtual Champs-Élysées
                         </Typography>
