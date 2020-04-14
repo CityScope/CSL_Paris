@@ -1,22 +1,21 @@
 import React from "react";
 import "./Video.css";
+import ReactPlayer from "react-player";
 
 // https://medium.com/@kevinsimper/full-width-youtube-embed-with-react-js-responsive-embed-509de7e7c3bf
 
 const Video = () => {
-    const videoSource =
-        "https://www.youtube.com/embed/iQMxxWdtyVc?start=10&end=60&loop=1&autoplay=1&rel=0&mute=1&controls=0&showinfo=0&playlist=iQMxxWdtyVc";
     return (
         <div className="video-background">
             <div className="video-foreground">
-                <iframe
-                    autoPlay="autoplay"
-                    loop="loop"
+                <ReactPlayer
+                    url={"https://vimeo.com/390936231"}
+                    playing={true}
+                    controls={false}
                     muted
-                    style={{ width: "100%", height: "100%", opacity: 0.6 }}
-                    src={videoSource}
-                    type="video/mp4"
-                    title="vid"
+                    loop
+                    width={"0em"}
+                    height={"0em"}
                 />
             </div>
         </div>

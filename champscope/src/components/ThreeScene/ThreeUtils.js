@@ -5,23 +5,67 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import * as settings from "../../settings.json";
+import TWEEN from "@tweenjs/tween.js";
 
 /**
  *
  * @param {*}  object THREEjs obj
  * three-way display control
+ * 
+ * 
+ * 
+ *        
+ *  new TWEEN.Tween(object.position)
+            .to(
+                {
+                    y: object.position.y ,
+                },
+                1000
+            )
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start()
+            .onComplete(() =>
+
+
  */
+
 export const _objectDisplay = (object, bool) => {
-    if (object) {
+    const _visability = (object, bool) => {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh || child instanceof THREE.Sprite) {
-                if (bool === true || bool === false) {
-                    child.visible = bool;
-                } else {
-                    child.visible = !child.visible;
-                }
+                child.visible = bool;
             }
         });
+    };
+
+    if (object) {
+        if (bool) {
+            _visability(object, bool);
+            object.position.y = object.position.y + 1;
+            new TWEEN.Tween(object.position)
+                .to(
+                    {
+                        y: object.position.y - 1,
+                    },
+                    1000
+                )
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
+        } else {
+            new TWEEN.Tween(object.position)
+                .to(
+                    {
+                        y: object.position.y + 1,
+                    },
+                    1000
+                )
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start()
+                .onComplete(() => {
+                    _visability(object, bool);
+                    object.position.y = object.position.y - 1;
+                });
+        }
     }
 };
 
@@ -67,6 +111,47 @@ export const _addCustomSceneObjects = async () => {
     return pedestalMesh;
 };
 
+export const _addMetricsObject = async () => {
+    var metricTex = await _loadTexture("./resources/textures/skybox/1.jpg");
+    var envMap = await _loadTexture("./resources/textures/skybox/envMap.jpg");
+
+    // pedestal  model material
+    let modelColor = new THREE.Color();
+    modelColor.setHSL(0, 0, 0.5);
+
+    var modelMaterial = new THREE.MeshStandardMaterial({
+        color: modelColor,
+        map: metricTex,
+        metalness: 0.2,
+        roughness: 10,
+        envMap: envMap,
+        envMapIntensity: 100,
+    });
+
+    modelMaterial.side = THREE.DoubleSide;
+
+    // 6 sides material for pedestal
+    let materialArray = [
+        false,
+        modelMaterial,
+        false,
+        false,
+        modelMaterial,
+        modelMaterial,
+    ];
+    // fix scaling issue
+    metricTex.minFilter = THREE.LinearFilter;
+    const cubeGeo = new THREE.BoxBufferGeometry(1.57, 1.57, 0.01);
+    cubeGeo.translate(0, 1.8, 0);
+    const metricsMesh = new THREE.Mesh(cubeGeo, materialArray);
+
+    metricsMesh.castShadow = false;
+    metricsMesh.receiveShadow = false;
+    metricsMesh.name = "metricsObj";
+
+    return metricsMesh;
+};
+
 export const _pplLoader = async () => {
     let URL = settings.pplModel.ppl;
     let pplCol = new THREE.Color();
@@ -79,6 +164,8 @@ export const _pplLoader = async () => {
     model.name = "people";
     model.traverse(function (child) {
         child.material = pplMaterial;
+        child.scale.set(0.95, 0.95, 0.95);
+        child.position.set(0, 0.01, 0);
         child.castShadow = true;
     });
     return model;

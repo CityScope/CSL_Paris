@@ -4,7 +4,6 @@ import configureStore from "./redux/store";
 import Provider from "./redux/Provider";
 import LandingPage from "./components/LandingPage/LandingPage";
 import ThreeWrapper from "./components/ThreeScene/ThreeWrapper";
-import Audio from "./components/Audio";
 
 const store = configureStore();
 
@@ -12,9 +11,8 @@ export default class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <LandingPage />
+                {/* <LandingPage /> */}
                 <ThreeWrapper />
-                <Audio />
             </Provider>
         );
     }

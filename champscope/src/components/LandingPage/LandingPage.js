@@ -10,6 +10,7 @@ import EnterButton from "../LandingPage/EnterButton";
 import Box from "@material-ui/core/Box";
 import Video from "./Video";
 import { setStartSceneState } from "../../redux/actions";
+import AppleIcon from "@material-ui/icons/Apple";
 
 function LandingPage(props) {
     const theme = createMuiTheme({
@@ -36,35 +37,38 @@ function LandingPage(props) {
         },
         typography: {
             h2: {
-                fontFamily: ["Petit Formal Script", "cursive"].join(","),
+                fontFamily: ["Cormorant Garamond", "cursive"].join(","),
+                fontWeight: 400,
+                fontSize: "5em",
             },
             subtitle1: {
-                fontFamily: '"Open Sans", "sans-serif"',
+                fontFamily: '"Cormorant Garamond", "sans-serif"',
+                fontWeight: 300,
+                fontSize: "1.5em",
             },
             subtitle2: {
-                fontFamily: '"Open Sans", "sans-serif"',
+                fontFamily: '"Cormorant Garamond", "sans-serif"',
             },
             caption: {
-                fontFamily: '"Open Sans", "sans-serif"',
+                fontFamily: '"Cormorant Garamond", "sans-serif"',
+                fontSize: "1em",
             },
             h6: {
-                fontFamily: ["Petit Formal Script", "cursive"].join(","),
+                fontFamily: ["Cormorant Garamond", "cursive"].join(","),
             },
         },
     });
 
     const useStyles = makeStyles((theme) => ({
         box: {
-            borderColor: "white !important",
             background: "none",
             color: "#fff",
             padding: theme.spacing(3),
-
             [theme.breakpoints.down("sm")]: {
-                maxWidth: "95vw",
+                maxWidth: "90vw",
             },
             [theme.breakpoints.up("md")]: {
-                maxWidth: "75vw",
+                maxWidth: "50vw",
             },
             [theme.breakpoints.up("lg")]: {
                 maxWidth: "50vw",
@@ -96,11 +100,10 @@ function LandingPage(props) {
                 <MuiThemeProvider theme={theme}>
                     <Box className={classes.box}>
                         <CssBaseline />
-                        <Box p={5}></Box>
-                        <Typography variant="h2">CityScope</Typography>
+                        <Box p={3}></Box>
+                        <Typography variant="h2">CITYSCOPE</Typography>
                         <Typography variant="h2">Champs-Élysées </Typography>
                         <Box p={2}></Box>
-
                         {props.readyState ? (
                             <LoadingSprite />
                         ) : (
@@ -108,66 +111,54 @@ function LandingPage(props) {
                                 <EnterButton />
                             </div>
                         )}
-
-                        <Box p={5}>
+                        <Box p={3}>
                             <Typography variant="subtitle1">
-                                CityScope Champs-Élysées is an interactive
-                                platform to improve decision-making related to
-                                the revitalization of the Champs Élysées
-                                CityScope Champs-Élysée is a tangible interface
-                                that explores the experimental articulation
-                                between the diagnosis of existing conditions and
-                                the proposed interventions of PCA-STREAM for the
-                                Champs Élysées in 2024. The project, exposed at
-                                the Pavillon de l'Arsenal, illustrates
-                                interventions on the use of new mobility, the
-                                strengthening of nature along the avenue and
-                                finally the creation of new dynamic and modular
-                                spaces in the city.
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut
+                                enim ad minim veniam, quis nostrud exercitation
+                                ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate velit esse cillum
+                                dolore eu fugiat nulla pariatur. Excepteur sint
+                                occaecat cupidatat non proident, sunt in culpa
+                                qui officia deserunt mollit anim id est laborum.
                             </Typography>
                         </Box>
-
-                        <Box p={2}>
-                            <Typography variant="h6">
-                                Pavillon de l'Arsenal (??)
-                            </Typography>
-
-                            <Typography variant="caption">
-                                [PCA Stream]{" "}
-                            </Typography>
-
-                            <Typography variant="caption">
-                                name name, name name, name name{" "}
-                            </Typography>
-
-                            <Typography variant="caption">
-                                [MIT City Science]{" "}
-                            </Typography>
-
-                            <Typography variant="caption">
-                                Arnaud Grignard, Nicolas Ayoub, Luis Alonso,
-                                Ariel Noyman, Markus Elkatsha, Kent Larson{" "}
-                            </Typography>
-
-                            <Typography variant="caption">
-                                [Gama Platform]{" "}
-                            </Typography>
-
-                            <Typography variant="caption">
-                                Tri Nguyen-Huu (IRD) Patrick Taillandier (INRA)
-                                Alexis Drogoul (IRD)
-                            </Typography>
-                        </Box>
-
-                        <Box p={2}>
-                            <Typography variant="h6">
-                                Virtual Champs-Élysées (??)
-                            </Typography>
-                            <Typography variant="caption">
-                                Ariel Noyman, Arnaud Grignard, Nicolas Ayoub,
-                                Kent Larson
-                            </Typography>
-                        </Box>
+                        <Box p={3} />
+                        <Typography variant="h6">
+                            Exhabition in Pavillon de l'Arsenal
+                        </Typography>
+                        <Box p={1} />
+                        <div>
+                            <AppleIcon />
+                            <div>
+                                <Typography variant="caption">PCA</Typography>
+                            </div>
+                        </div>
+                        <div>
+                            <AppleIcon />
+                            <div>
+                                <Typography variant="caption">GAMA</Typography>
+                            </div>
+                        </div>
+                        <div>
+                            <AppleIcon />
+                            <div>
+                                <Typography variant="caption">
+                                    MIT City Science
+                                </Typography>
+                            </div>
+                        </div>
+                        <Box p={3} />
+                        <Typography variant="h6">
+                            Virtual Champs-Élysées
+                        </Typography>
+                        <Box p={1} />
+                        <Typography variant="caption">
+                            Ariel Noyman, Arnaud Grignard, Nicolas Ayoub, Luis
+                            Alonso, Kent Larson
+                        </Typography>
                     </Box>
                 </MuiThemeProvider>
                 <Video youtubeId={"MVhauHKiEPA"} />
