@@ -143,34 +143,41 @@ class ThreeScene extends Component {
          * Lights
          */
 
-        let whiteLight = new THREE.PointLight(0xffffff, 4, 1);
-        whiteLight.name = "whiteLight";
-        whiteLight.position.set(0, 2, -0.5);
+        this.whiteLight1 = new THREE.PointLight(0xffffff, 4, 1);
+        this.whiteLight1.name = "whiteLight";
+        this.whiteLight1.position.set(0, 2, -0.5);
+        this.whiteLight1.intensity = settings.lights.w1.low;
 
-        let whiteLight2 = new THREE.PointLight(0xffffff, 4, 1);
-        whiteLight2.name = "whiteLight";
-        whiteLight2.position.set(0, 2, 0.5);
+        this.whiteLight2 = new THREE.PointLight(0xffffff, 4, 1);
+        this.whiteLight2.name = "whiteLight";
+        this.whiteLight2.position.set(0, 2, 0.5);
+        this.whiteLight2.intensity = settings.lights.w2.low;
 
         //
-        let orangeLight = new THREE.PointLight(0xf26101, 0, 100);
-        orangeLight.intensity = settings.lights.orange.low;
-        orangeLight.name = "orangeLight";
-        orangeLight.position.set(-1, 2, -1);
-        orangeLight.castShadow = true;
-        orangeLight.shadow.radius = 2;
+        this.orangeLight = new THREE.PointLight(0xf26101, 0, 100);
+        this.orangeLight.intensity = settings.lights.orange.low;
+        this.orangeLight.name = "orangeLight";
+        this.orangeLight.position.set(-1, 2, -1);
+        this.orangeLight.castShadow = true;
+        this.orangeLight.shadow.radius = 2;
         //
-        let blueLight = new THREE.PointLight(0x0071bc, 0, 100);
-        blueLight.intensity = settings.lights.blue.low;
+        this.blueLight = new THREE.PointLight(0x0071bc, 0, 100);
+        this.blueLight.intensity = settings.lights.blue.low;
 
-        blueLight.name = "blueLight";
-        blueLight.position.set(1, 2, 1);
-        blueLight.castShadow = true;
-        blueLight.shadow.radius = 2;
+        this.blueLight.name = "this.blueLight";
+        this.blueLight.position.set(1, 2, 1);
+        this.blueLight.castShadow = true;
+        this.blueLight.shadow.radius = 2;
 
         //
         this.lightsWrapper = new THREE.Object3D();
         this.lightsWrapper.name = "lightsWrapper";
-        this.lightsWrapper.add(whiteLight, whiteLight2, orangeLight, blueLight);
+        this.lightsWrapper.add(
+            this.whiteLight1,
+            this.whiteLight2,
+            this.orangeLight,
+            this.blueLight
+        );
 
         this.scene.add(this.lightsWrapper);
 
@@ -235,9 +242,8 @@ class ThreeScene extends Component {
             } = this.props.menuInteraction;
 
             let cityModelObject = this.scene.getObjectByName("cityModel");
-            // lights
-            let blueLight = this.scene.getObjectByName("blueLight");
-            let orangeLight = this.scene.getObjectByName("orangeLight");
+
+            //
             let trips_car_before = this.scene.getObjectByName(
                 "trips_car_before"
             );
@@ -267,7 +273,7 @@ class ThreeScene extends Component {
                 ) {
                     switch (thisMenuItem) {
                         case "scenarioSwitch":
-                            const lights = [blueLight, orangeLight];
+                            const lights = [this.blueLight, this.orangeLight];
 
                             lights.forEach((thisLight) => {
                                 new TWEEN.Tween(thisLight.position)
@@ -384,14 +390,24 @@ class ThreeScene extends Component {
                             this.setState({ renderer: quality });
                             // if low quality render
                             if (!quality) {
-                                blueLight.intensity = settings.lights.blue.low;
-                                orangeLight.intensity =
+                                this.blueLight.intensity =
+                                    settings.lights.blue.low;
+                                this.orangeLight.intensity =
                                     settings.lights.orange.low;
+                                this.whiteLight1.intensity =
+                                    settings.lights.w1.low;
+                                this.whiteLight2.intensity =
+                                    settings.lights.w2.low;
                             } else {
                                 // higher qulaity
-                                blueLight.intensity = settings.lights.blue.high;
-                                orangeLight.intensity =
+                                this.blueLight.intensity =
+                                    settings.lights.blue.high;
+                                this.orangeLight.intensity =
                                     settings.lights.orange.high;
+                                this.whiteLight1.intensity =
+                                    settings.lights.w1.high;
+                                this.whiteLight2.intensity =
+                                    settings.lights.w2.high;
                             }
                             break;
 
