@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
 import InfoIcon from "@material-ui/icons/Info";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,10 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
 import { Paper } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
 
 const theme = createMuiTheme({
     overrides: {

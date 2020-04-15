@@ -60,7 +60,6 @@ function Menu(props) {
             bottom: "2em",
             left: "2em",
             fontSize: "2em",
-            boxShadow: "0em 0em 1em .1em #000",
         },
         largeIcon: {
             width: 40,

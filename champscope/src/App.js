@@ -1,19 +1,29 @@
 import React, { Component } from "react";
 
-import configureStore from "./redux/store";
-import Provider from "./redux/Provider";
 import LandingPage from "./components/LandingPage/LandingPage";
-import ThreeWrapper from "./components/ThreeScene/ThreeWrapper";
 
-const store = configureStore();
+import Menu from "./components/Menu/Menu";
+import ThreeScene from "./components/ThreeScene/ThreeScene";
+import { connect } from "react-redux";
+// import ThreeWrapper from "./components/ThreeScene/ThreeWrapper";
 
-export default class App extends Component {
+class App extends Component {
     render() {
         return (
-            <Provider store={store}>
-                {/* <LandingPage /> */}
-                <ThreeWrapper />
-            </Provider>
+            <React.Fragment>
+                <ThreeScene menuInteraction={this.props.menuInteraction} />
+                {this.props.showMenu ? <Menu /> : null}
+                <LandingPage />
+            </React.Fragment>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        menuInteraction: state.MENU_INTERACTION,
+        showMenu: state.START_SCENE,
+    };
+};
+
+export default connect(mapStateToProps, null)(App);
