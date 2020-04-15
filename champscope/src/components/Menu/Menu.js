@@ -50,6 +50,10 @@ function Menu(props) {
                 fontSize: "1.6em",
                 fontWeight: "400",
             },
+            h3: {
+                fontFamily: '"Roboto", "sans-serif"',
+                fontSize: "1.5em",
+            },
             caption: {
                 fontFamily: '"Roboto", "sans-serif"',
                 fontSize: "1em",
@@ -141,7 +145,7 @@ function Menu(props) {
                                         }
                                         name="scenarioSwitch"
                                     />
-                                    <Typography variant="h6">
+                                    <Typography variant="h3">
                                         2020-2040
                                     </Typography>
                                 </ListItem>
@@ -154,7 +158,7 @@ function Menu(props) {
                                         }
                                         name="metricsObjSwitch"
                                     />
-                                    <Typography variant="h6">
+                                    <Typography variant="h3">
                                         design metrics
                                     </Typography>
                                 </ListItem>
@@ -164,7 +168,7 @@ function Menu(props) {
                                         <Info />
                                     </IconButton>
 
-                                    <Typography variant="h6">
+                                    <Typography variant="h3">
                                         information
                                     </Typography>
                                 </ListItem>
@@ -267,7 +271,7 @@ function Menu(props) {
                                             onChange={cameraRadio}
                                         >
                                             <FormControlLabel
-                                                value="cam0"
+                                                value="Triomphe"
                                                 control={
                                                     <Radio
                                                         classes={{
@@ -279,12 +283,12 @@ function Menu(props) {
                                                 }
                                                 label={
                                                     <Typography variant="caption">
-                                                        cam1
+                                                        Triomphe
                                                     </Typography>
                                                 }
                                             />
                                             <FormControlLabel
-                                                value="cam1"
+                                                value="Champs"
                                                 control={
                                                     <Radio
                                                         classes={{
@@ -296,12 +300,12 @@ function Menu(props) {
                                                 }
                                                 label={
                                                     <Typography variant="caption">
-                                                        cam1
+                                                        Champs
                                                     </Typography>
                                                 }
                                             />
                                             <FormControlLabel
-                                                value="cam2"
+                                                value="Palais"
                                                 control={
                                                     <Radio
                                                         classes={{
@@ -313,7 +317,25 @@ function Menu(props) {
                                                 }
                                                 label={
                                                     <Typography variant="caption">
-                                                        cam1
+                                                        Palais
+                                                    </Typography>
+                                                }
+                                            />
+
+                                            <FormControlLabel
+                                                value="Concorde"
+                                                control={
+                                                    <Radio
+                                                        classes={{
+                                                            root: classes.radio,
+                                                            checked:
+                                                                classes.checked,
+                                                        }}
+                                                    />
+                                                }
+                                                label={
+                                                    <Typography variant="caption">
+                                                        Concorde
                                                     </Typography>
                                                 }
                                             />
@@ -338,18 +360,6 @@ function Menu(props) {
                                     </Typography>
                                 </ListItem>
 
-                                <ListItem>
-                                    <CSSwitch
-                                        checked={toggleStates.animateCamera}
-                                        onChange={() =>
-                                            handleToggle("animateCamera")
-                                        }
-                                        name="animateCamera"
-                                    />
-                                    <Typography variant="caption">
-                                        spin camera
-                                    </Typography>
-                                </ListItem>
                                 <ListItem>
                                     <CSSwitch
                                         checked={toggleStates.quality}

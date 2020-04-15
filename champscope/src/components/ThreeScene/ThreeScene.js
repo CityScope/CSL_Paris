@@ -41,6 +41,7 @@ class ThreeScene extends Component {
             trips: {},
             renderer: false,
             past: true,
+            camLookAt: new THREE.Vector3(0, 1.25, 0),
         };
         this.theta = 0;
         this.cameraSpeed = 0.5;
@@ -229,7 +230,7 @@ class ThreeScene extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
-            console.log(this.props);
+            console.log(this.props.menuInteraction);
 
             let {
                 scenarioSwitch,
@@ -268,6 +269,7 @@ class ThreeScene extends Component {
             let cultural_after = this.scene.getObjectByName("cultural_after");
             let metricsObj = this.scene.getObjectByName("metricsObj");
 
+            // find which menu item has changed
             for (const thisMenuItem in prevProps.menuInteraction) {
                 if (
                     prevProps.menuInteraction[thisMenuItem] !==
@@ -422,6 +424,28 @@ class ThreeScene extends Component {
                             }
                             break;
 
+                        case "cameraScene":
+                            let slectedScene = this.props.menuInteraction
+                                .cameraScene;
+                            let newCamPos =
+                                settings.cameraScenesPositions[slectedScene];
+
+                            // fly camera to new postion
+                            new TWEEN.Tween(this.camera.position)
+                                .to(
+                                    {
+                                        x: newCamPos[0],
+                                        y: newCamPos[1],
+                                        z: newCamPos[2],
+                                    },
+                                    1000
+                                )
+                                .easing(TWEEN.Easing.Quadratic.Out)
+                                .onUpdate(() => {})
+                                .start();
+
+                            break;
+
                         default:
                             break;
                     }
@@ -442,13 +466,8 @@ class ThreeScene extends Component {
         }
     };
 
-    startAnimationLoop = () => {
-        // control TWEEN event
-        TWEEN.update();
-        // animate the sim
-        this._animateAgents();
-
-        if (this.props.menuInteraction.animateCamera) {
+    _cameraState = () => {
+        if (this.props.menuInteraction.cameraScene === "animateCamera") {
             this.theta += this.cameraSpeed;
             this.camera.position.x =
                 this.radius * Math.sin(THREE.MathUtils.degToRad(this.theta));
@@ -458,9 +477,22 @@ class ThreeScene extends Component {
             this.camera.lookAt(new THREE.Vector3(0, 1.25, 0));
             this.camera.updateMatrixWorld();
         } else {
+            // force camera lookAt
+
+            this.camera.lookAt(this.state.camLookAt);
             _blockCamera(this.camera);
         }
+    };
 
+    startAnimationLoop = () => {
+        this._cameraState();
+
+        // control TWEEN event
+        TWEEN.update();
+        // animate the sim
+        this._animateAgents();
+
+        //    choose the renderer quality
         this._chooseRenderer();
 
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
@@ -484,7 +516,8 @@ class ThreeScene extends Component {
     }
 
     render() {
-        let displayTHREEscene = this.props.startScene;
+        let displayTHREEscene = true;
+        // this.props.startScene;
 
         return (
             <React.Fragment>

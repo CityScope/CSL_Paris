@@ -6,10 +6,17 @@
         "cars": true,
         "bicycles": true,
         "pedestrians": true,
-        "animateCamera": false,
+        "cameraScene": "animateCamera",
         "quality": false,
         "cityModelSwitch": true,
         "metricsObjSwitch": true
+    },
+
+    "cameraScenesPositions": {
+        "Triomphe": [1, 1, 1],
+        "Champs": [1, 1.5, 1],
+        "Palais": [1, 1.3, 1],
+        "Concorde": [3, 1, 1]
     },
 
     "lights": {
