@@ -44,7 +44,7 @@ class ThreeScene extends Component {
         };
         this.theta = 0;
         this.cameraSpeed = 0.5;
-        this.radius = 4;
+        this.radius = 2.5;
     }
 
     componentDidMount() {
@@ -121,9 +121,10 @@ class ThreeScene extends Component {
         this.camera.position.y = 2;
 
         this.controls = new OrbitControls(this.camera, this.mountingDiv);
-        this.controls.maxDistance = 6;
-        this.controls.minDistance = 1.5;
-        this.camera.lookAt(new THREE.Vector3(0, 2, 0));
+        this.controls.maxDistance = 7;
+        this.controls.minDistance = 0.5;
+        this.camera.lookAt(new THREE.Vector3(0, 1.25, 0));
+        this.controls.target.set(0, 0.9, 0);
 
         // renderer
         this.renderer = new THREE.WebGLRenderer({
@@ -142,31 +143,41 @@ class ThreeScene extends Component {
          * Lights
          */
 
-        let whiteLight = new THREE.PointLight(0xffffff, 2, 1);
-        whiteLight.name = "whiteLight";
-        whiteLight.position.set(0, 2, -0.5);
+        this.whiteLight1 = new THREE.PointLight(0xffffff, 4, 1);
+        this.whiteLight1.name = "whiteLight";
+        this.whiteLight1.position.set(0, 2, -0.5);
+        this.whiteLight1.intensity = settings.lights.w1.low;
 
-        let whiteLight2 = new THREE.PointLight(0xffffff, 2, 1);
-        whiteLight2.name = "whiteLight";
-        whiteLight2.position.set(0, 2, 0.5);
+        this.whiteLight2 = new THREE.PointLight(0xffffff, 4, 1);
+        this.whiteLight2.name = "whiteLight";
+        this.whiteLight2.position.set(0, 2, 0.5);
+        this.whiteLight2.intensity = settings.lights.w2.low;
 
         //
-        let orangeLight = new THREE.PointLight(0xf26101, 0.5, 100);
-        orangeLight.name = "orangeLight";
-        orangeLight.position.set(-1, 2, -1);
-        orangeLight.castShadow = true;
-        orangeLight.shadow.radius = 2;
+        this.orangeLight = new THREE.PointLight(0xf26101, 0, 100);
+        this.orangeLight.intensity = settings.lights.orange.low;
+        this.orangeLight.name = "orangeLight";
+        this.orangeLight.position.set(-1, 2, -1);
+        this.orangeLight.castShadow = true;
+        this.orangeLight.shadow.radius = 2;
         //
-        let blueLight = new THREE.PointLight(0x0071bc, 0.5, 100);
-        blueLight.name = "blueLight";
-        blueLight.position.set(1, 2, 1);
-        blueLight.castShadow = true;
-        blueLight.shadow.radius = 2;
+        this.blueLight = new THREE.PointLight(0x0071bc, 0, 100);
+        this.blueLight.intensity = settings.lights.blue.low;
+
+        this.blueLight.name = "this.blueLight";
+        this.blueLight.position.set(1, 2, 1);
+        this.blueLight.castShadow = true;
+        this.blueLight.shadow.radius = 2;
 
         //
         this.lightsWrapper = new THREE.Object3D();
         this.lightsWrapper.name = "lightsWrapper";
-        this.lightsWrapper.add(whiteLight, whiteLight2, orangeLight, blueLight);
+        this.lightsWrapper.add(
+            this.whiteLight1,
+            this.whiteLight2,
+            this.orangeLight,
+            this.blueLight
+        );
 
         this.scene.add(this.lightsWrapper);
 
@@ -231,9 +242,8 @@ class ThreeScene extends Component {
             } = this.props.menuInteraction;
 
             let cityModelObject = this.scene.getObjectByName("cityModel");
-            // lights
-            let blueLight = this.scene.getObjectByName("blueLight");
-            let orangeLight = this.scene.getObjectByName("orangeLight");
+
+            //
             let trips_car_before = this.scene.getObjectByName(
                 "trips_car_before"
             );
@@ -263,7 +273,7 @@ class ThreeScene extends Component {
                 ) {
                     switch (thisMenuItem) {
                         case "scenarioSwitch":
-                            const lights = [blueLight, orangeLight];
+                            const lights = [this.blueLight, this.orangeLight];
 
                             lights.forEach((thisLight) => {
                                 new TWEEN.Tween(thisLight.position)
@@ -380,12 +390,24 @@ class ThreeScene extends Component {
                             this.setState({ renderer: quality });
                             // if low quality render
                             if (!quality) {
-                                blueLight.intensity = 2.5;
-                                orangeLight.intensity = 2.5;
+                                this.blueLight.intensity =
+                                    settings.lights.blue.low;
+                                this.orangeLight.intensity =
+                                    settings.lights.orange.low;
+                                this.whiteLight1.intensity =
+                                    settings.lights.w1.low;
+                                this.whiteLight2.intensity =
+                                    settings.lights.w2.low;
                             } else {
                                 // higher qulaity
-                                blueLight.intensity = 0.7;
-                                orangeLight.intensity = 0.7;
+                                this.blueLight.intensity =
+                                    settings.lights.blue.high;
+                                this.orangeLight.intensity =
+                                    settings.lights.orange.high;
+                                this.whiteLight1.intensity =
+                                    settings.lights.w1.high;
+                                this.whiteLight2.intensity =
+                                    settings.lights.w2.high;
                             }
                             break;
 
@@ -431,7 +453,7 @@ class ThreeScene extends Component {
             this.camera.position.y = 1.5;
             this.camera.position.z =
                 this.radius * Math.cos(THREE.MathUtils.degToRad(this.theta));
-            this.camera.lookAt(new THREE.Vector3(0, 2, 0));
+            this.camera.lookAt(new THREE.Vector3(0, 1.25, 0));
             this.camera.updateMatrixWorld();
         } else {
             _blockCamera(this.camera);
@@ -442,13 +464,30 @@ class ThreeScene extends Component {
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
 
+    _onMouseUp(e) {
+        let mouse = new THREE.Vector2();
+        let ray = new THREE.Raycaster();
+
+        mouse.x = (e.clientX / this.width) * 2 - 1;
+        mouse.y = -(e.clientY / this.height) * 2 + 1;
+        ray.setFromCamera(mouse.clone(), this.camera);
+
+        var objects = ray.intersectObjects(this.scene.children);
+        if (objects[0] && objects[0].point) {
+            console.log(objects[0].object);
+            let rayPos = objects[0].point;
+            this.controls.target.set(rayPos);
+            this.controls.update();
+        }
+    }
+
     render() {
-        let displayTHREEscene = true;
-        // this.props.startScene;
+        let displayTHREEscene = this.props.startScene;
 
         return (
             <React.Fragment>
                 <div
+                    // onMouseUp={(e) => this._onMouseUp(e)}
                     style={
                         displayTHREEscene
                             ? {

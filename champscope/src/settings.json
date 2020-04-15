@@ -6,10 +6,17 @@
         "cars": true,
         "bicycles": true,
         "pedestrians": true,
-        "animateCamera": false,
+        "animateCamera": true,
         "quality": false,
         "cityModelSwitch": true,
         "metricsObjSwitch": true
+    },
+
+    "lights": {
+        "orange": { "high": 0.85, "low": 2.75 },
+        "blue": { "high": 0.85, "low": 2.75 },
+        "w1": { "high": 3, "low": 9 },
+        "w2": { "high": 3, "low": 9 }
     },
 
     "simulationDuration": 500,
@@ -48,37 +55,37 @@
         "trips_car_before": {
             "dataObj": "trips_car_before",
             "color": { "h": 1, "s": 1, "l": 0.5 },
-            "URL": "resources/trips/long/trips_car_before_long.json"
+            "URL": "resources/trips/real/trips_car_before.json"
         },
 
         "trips_car_after": {
             "dataObj": "trips_car_after",
             "color": { "h": 1, "s": 1, "l": 0.5 },
-            "URL": "resources/trips/long/trips_car_after_long.json"
+            "URL": "resources/trips/real/trips_car_after.json"
         },
 
         "trips_pedestrians_before": {
             "dataObj": "trips_pedestrians_before",
             "color": { "h": 0, "s": 0, "l": 0.8 },
-            "URL": "resources/trips/long/trips_people_before_long.json"
+            "URL": "resources/trips/real/trips_people_before.json"
         },
 
         "trips_pedestrians_after": {
             "dataObj": "trips_pedestrians_after",
             "color": { "h": 0, "s": 0, "l": 0.8 },
-            "URL": "resources/trips/long/trips_people_after_long.json"
+            "URL": "resources/trips/real/trips_people_after.json"
         },
 
         "trips_bike_before": {
             "dataObj": "trips_bike_before",
             "color": { "h": 0.3, "s": 1, "l": 0.5 },
-            "URL": "resources/trips/long/trips_bike_before_long.json"
+            "URL": "resources/trips/real/trips_bike_before.json"
         },
 
         "trips_bike_after": {
             "dataObj": "trips_bike_after",
             "color": { "h": 0.3, "s": 1, "l": 0.5 },
-            "URL": "resources/trips/long/trips_bike_after_long.json"
+            "URL": "resources/trips/real/trips_bike_after.json"
         }
     }
 }

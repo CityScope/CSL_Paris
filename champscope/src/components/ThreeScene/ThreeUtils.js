@@ -5,7 +5,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import * as settings from "../../settings.json";
-// import TWEEN from "@tweenjs/tween.js";
+import TWEEN from "@tweenjs/tween.js";
 
 /**
  *
@@ -30,16 +30,42 @@ import * as settings from "../../settings.json";
  */
 
 export const _objectDisplay = (object, bool) => {
-    if (object) {
+    const _visability = (object, bool) => {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh || child instanceof THREE.Sprite) {
-                if (bool === true || bool === false) {
-                    child.visible = bool;
-                } else {
-                    child.visible = !child.visible;
-                }
+                child.visible = bool;
             }
         });
+    };
+
+    if (object) {
+        if (bool) {
+            _visability(object, bool);
+            object.position.y = object.position.y + 1;
+            new TWEEN.Tween(object.position)
+                .to(
+                    {
+                        y: object.position.y - 1,
+                    },
+                    1000
+                )
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
+        } else {
+            new TWEEN.Tween(object.position)
+                .to(
+                    {
+                        y: object.position.y + 1,
+                    },
+                    1000
+                )
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start()
+                .onComplete(() => {
+                    _visability(object, bool);
+                    object.position.y = object.position.y - 1;
+                });
+        }
     }
 };
 
@@ -138,6 +164,8 @@ export const _pplLoader = async () => {
     model.name = "people";
     model.traverse(function (child) {
         child.material = pplMaterial;
+        child.scale.set(0.95, 0.95, 0.95);
+        child.position.set(0, 0.01, 0);
         child.castShadow = true;
     });
     return model;

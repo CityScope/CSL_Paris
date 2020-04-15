@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
 import SvgIcon from "@material-ui/core/SvgIcon";
 
 export default function Logo() {
@@ -17,7 +16,14 @@ export default function Logo() {
     const classes = useStyles();
 
     return (
-        <SvgIcon className={classes.CSlogo}>
+        <SvgIcon
+            className={classes.CSlogo}
+            onClick={() =>
+                window.open("http://cityscope.media.mit.edu/", "_blank")
+            }
+
+            // window.open("http://cityscope.media.mit.edu/")}
+        >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
                 <path
                     fill="#FFF"
