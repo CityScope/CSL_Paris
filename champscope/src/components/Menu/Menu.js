@@ -16,15 +16,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Audio from "../Audio";
 import Info from "./Info";
 import Logo from "./Logo";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
-import { Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 // ! https://github.com/mui-org/material-ui/issues/9290
 
@@ -43,22 +40,32 @@ function Menu(props) {
         },
 
         typography: {
+            h5: {
+                fontFamily: '"Cormorant Garamond", "sans-serif"',
+                fontSize: "2.5em",
+                fontWeight: "300",
+            },
             h6: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
-                fontSize: "2em",
+                fontSize: "1.6em",
                 fontWeight: "400",
             },
             caption: {
-                fontFamily: '"Cormorant Garamond", "sans-serif"',
+                fontFamily: '"Roboto", "sans-serif"',
                 fontSize: "1em",
             },
         },
     });
 
     const useStyles = makeStyles(() => ({
-        menuButton: {
-            marginRight: theme.spacing(2),
+        radio: {
+            "&$checked": {
+                color: "#fff",
+            },
         },
+        checked: {},
+
+        menuButton: {},
         title: {
             flexGrow: 1,
         },
@@ -66,6 +73,7 @@ function Menu(props) {
             spacing: "0",
             color: "white",
             background: "rgba(0,0,0,0.7)",
+            width: "100vw",
         },
         menuIconWrapper: {
             color: "rgba(255,255,255)",
@@ -78,17 +86,18 @@ function Menu(props) {
             width: 40,
             height: 40,
         },
-
-        label: {
-            width: "50%",
-            paddingBottom: "5px",
-        },
     }));
 
     const handleToggle = (toggleName) =>
         listenToMenuUI({
             ...toggleStates,
             [toggleName]: !toggleStates[toggleName],
+        });
+
+    const cameraRadio = (e) =>
+        listenToMenuUI({
+            ...toggleStates,
+            cameraScene: e.target.value,
         });
 
     const classes = useStyles();
@@ -115,165 +124,259 @@ function Menu(props) {
                         <MenuOpenIcon className={classes.largeIcon} />
                     </IconButton>
                 </Tooltip>
+                {/*  */}
                 <Collapse timeout={500} in={checked}>
                     {/*  */}
-
                     <AppBar position="static" className={classes.menuBar}>
                         <Toolbar>
-                            <Grid item xs={12} sm={6} md={4} lg={3} container>
+                            <Grid item xs={3} sm={3} md={3} lg={3} container>
+                                <Typography variant="h5">
+                                    present & future
+                                </Typography>
                                 <ListItem>
-                                    <ListItemIcon>
-                                        <CSSwitch
-                                            checked={
-                                                toggleStates.scenarioSwitch
-                                            }
-                                            onChange={() =>
-                                                handleToggle("scenarioSwitch")
-                                            }
-                                            name="scenarioSwitch"
-                                        />
-                                    </ListItemIcon>
-
-                                    <ListItemText>
-                                        <Typography variant="h6">
-                                            2020-2040
-                                        </Typography>
-                                    </ListItemText>
+                                    <CSSwitch
+                                        checked={toggleStates.scenarioSwitch}
+                                        onChange={() =>
+                                            handleToggle("scenarioSwitch")
+                                        }
+                                        name="scenarioSwitch"
+                                    />
+                                    <Typography variant="h6">
+                                        2020-2040
+                                    </Typography>
                                 </ListItem>
 
                                 <ListItem>
-                                    <ListItemIcon>
+                                    <CSSwitch
+                                        checked={toggleStates.metricsObjSwitch}
+                                        onChange={() =>
+                                            handleToggle("metricsObjSwitch")
+                                        }
+                                        name="metricsObjSwitch"
+                                    />
+                                    <Typography variant="h6">
+                                        design metrics
+                                    </Typography>
+                                </ListItem>
+
+                                <ListItem>
+                                    <IconButton>
                                         <Info />
-                                    </ListItemIcon>
-                                    <ListItemText>
-                                        <Typography variant="caption">
-                                            information
-                                        </Typography>
-                                    </ListItemText>
+                                    </IconButton>
+
+                                    <Typography variant="h6">
+                                        information
+                                    </Typography>
+                                </ListItem>
+                            </Grid>
+                            {/*  */}
+                            <HorizontalDivider />
+                            {/*  */}
+                            <Grid item xs={3} sm={3} md={3} lg={3} container>
+                                <ListItem>
+                                    <Typography variant="h6">
+                                        spatial design
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <CSSwitch
+                                        knobcolor={switchColors.parks}
+                                        checked={toggleStates.parks}
+                                        onChange={() => handleToggle("parks")}
+                                        name="parks"
+                                    />
+                                    <Typography variant="caption">
+                                        parks
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <CSSwitch
+                                        knobcolor={switchColors.cultural}
+                                        checked={toggleStates.culturalBuildings}
+                                        onChange={() =>
+                                            handleToggle("culturalBuildings")
+                                        }
+                                        name="culturalBuildings"
+                                    />
+                                    <Typography variant="caption">
+                                        cultural
+                                    </Typography>
+                                </ListItem>
+                            </Grid>
+                            {/*  */}
+                            <HorizontalDivider />
+                            {/*  */}
+                            <Grid item xs={3} sm={3} md={3} lg={3} container>
+                                <ListItem>
+                                    <Typography variant="h6">
+                                        mobility
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <CSSwitch
+                                        knobcolor={switchColors.cars}
+                                        checked={toggleStates.cars}
+                                        onChange={() => handleToggle("cars")}
+                                        name="cars"
+                                    />
+                                    <Typography variant="caption">
+                                        cars
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <CSSwitch
+                                        knobcolor={switchColors.bicycles}
+                                        checked={toggleStates.bicycles}
+                                        onChange={() =>
+                                            handleToggle("bicycles")
+                                        }
+                                        name="bicycles"
+                                    />
+                                    <Typography variant="caption">
+                                        bicycles
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <CSSwitch
+                                        knobcolor={switchColors.pedestrians}
+                                        checked={toggleStates.pedestrians}
+                                        onChange={() =>
+                                            handleToggle("pedestrians")
+                                        }
+                                        name="pedestrians"
+                                    />
+                                    <Typography variant="caption">
+                                        pedestrians
+                                    </Typography>
+                                </ListItem>
+                            </Grid>
+                            {/*  */}
+                            <HorizontalDivider />
+                            {/*  */}
+                            <Grid item xs={3} sm={3} md={3} lg={3} container>
+                                <ListItem>
+                                    <Typography variant="h6">
+                                        select scene
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <FormControl component="fieldset">
+                                        <RadioGroup
+                                            aria-label="camera"
+                                            name="camera"
+                                            onChange={cameraRadio}
+                                        >
+                                            <FormControlLabel
+                                                value="cam0"
+                                                control={
+                                                    <Radio
+                                                        classes={{
+                                                            root: classes.radio,
+                                                            checked:
+                                                                classes.checked,
+                                                        }}
+                                                    />
+                                                }
+                                                label={
+                                                    <Typography variant="caption">
+                                                        cam1
+                                                    </Typography>
+                                                }
+                                            />
+                                            <FormControlLabel
+                                                value="cam1"
+                                                control={
+                                                    <Radio
+                                                        classes={{
+                                                            root: classes.radio,
+                                                            checked:
+                                                                classes.checked,
+                                                        }}
+                                                    />
+                                                }
+                                                label={
+                                                    <Typography variant="caption">
+                                                        cam1
+                                                    </Typography>
+                                                }
+                                            />
+                                            <FormControlLabel
+                                                value="cam2"
+                                                control={
+                                                    <Radio
+                                                        classes={{
+                                                            root: classes.radio,
+                                                            checked:
+                                                                classes.checked,
+                                                        }}
+                                                    />
+                                                }
+                                                label={
+                                                    <Typography variant="caption">
+                                                        cam1
+                                                    </Typography>
+                                                }
+                                            />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </ListItem>
+                            </Grid>
+                            {/*  */}
+                            <HorizontalDivider />
+                            {/*  */}
+                            <Grid item xs={3} sm={3} md={3} lg={3} container>
+                                <ListItem>
+                                    <Typography variant="h6">
+                                        settings
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Audio />
+                                    <Typography variant="caption">
+                                        "Aux Champs Elysées" by Arthur Des
+                                        Ligneris
+                                    </Typography>
                                 </ListItem>
 
                                 <ListItem>
-                                    <ListItemIcon>
-                                        <CSSwitch
-                                            checked={
-                                                toggleStates.metricsObjSwitch
-                                            }
-                                            onChange={() =>
-                                                handleToggle("metricsObjSwitch")
-                                            }
-                                            name="metricsObjSwitch"
-                                        />
-                                    </ListItemIcon>
-                                    <ListItemText>
-                                        <Typography variant="caption">
-                                            design metrics
-                                        </Typography>
-                                    </ListItemText>
+                                    <CSSwitch
+                                        checked={toggleStates.animateCamera}
+                                        onChange={() =>
+                                            handleToggle("animateCamera")
+                                        }
+                                        name="animateCamera"
+                                    />
+                                    <Typography variant="caption">
+                                        spin camera
+                                    </Typography>
                                 </ListItem>
-                            </Grid>
-                            <HorizontalDivider />
-                            <Grid item xs={12} sm={6} md={4} lg={3} container>
-                                <CSSwitch
-                                    knobcolor={switchColors.parks}
-                                    checked={toggleStates.parks}
-                                    onChange={() => handleToggle("parks")}
-                                    name="parks"
-                                />
-                                <Typography variant="caption">parks</Typography>
-                                <CSSwitch
-                                    knobcolor={switchColors.cultural}
-                                    checked={toggleStates.culturalBuildings}
-                                    onChange={() =>
-                                        handleToggle("culturalBuildings")
-                                    }
-                                    name="culturalBuildings"
-                                />
-                                <Typography variant="caption">
-                                    cultural
-                                </Typography>
-                            </Grid>
-                            <HorizontalDivider />
-                            <Grid item xs={12} sm={6} md={4} lg={3} container>
-                                <CSSwitch
-                                    knobcolor={switchColors.cars}
-                                    checked={toggleStates.cars}
-                                    onChange={() => handleToggle("cars")}
-                                    name="cars"
-                                />
-                                <Typography variant="caption">cars</Typography>
-                                <CSSwitch
-                                    knobcolor={switchColors.bicycles}
-                                    checked={toggleStates.bicycles}
-                                    onChange={() => handleToggle("bicycles")}
-                                    name="bicycles"
-                                />
-                                <Typography variant="caption">
-                                    bicycles
-                                </Typography>
-                                <CSSwitch
-                                    knobcolor={switchColors.pedestrians}
-                                    checked={toggleStates.pedestrians}
-                                    onChange={() => handleToggle("pedestrians")}
-                                    name="pedestrians"
-                                />
-                                <Typography variant="caption">
-                                    pedestrians
-                                </Typography>
-                            </Grid>
-                            <HorizontalDivider />
-                            <Grid item xs={12} sm={6} md={4} lg={3} container>
-                                <React.Fragment>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={"cam1"}
-                                        onChange={(e) => console.log(e)}
-                                    >
-                                        <MenuItem value={1}>Arch</MenuItem>
-                                    </Select>
-                                </React.Fragment>
-                                <Typography variant="caption">
-                                    camera view
-                                </Typography>
-                                <CSSwitch
-                                    checked={toggleStates.animateCamera}
-                                    onChange={() =>
-                                        handleToggle("animateCamera")
-                                    }
-                                    name="animateCamera"
-                                />
-                                <Typography variant="caption">
-                                    spin camera
-                                </Typography>
-                                <CSSwitch
-                                    checked={toggleStates.quality}
-                                    onChange={() => handleToggle("quality")}
-                                    name="quality"
-                                />
-                                <Typography variant="caption">
-                                    quality
-                                </Typography>
-                                <CSSwitch
-                                    checked={toggleStates.cityModelSwitch}
-                                    onChange={() =>
-                                        handleToggle("cityModelSwitch")
-                                    }
-                                    name="cityModelSwitch"
-                                />
-                                <Typography variant="caption">
-                                    3D model
-                                </Typography>
-                            </Grid>
-                            <HorizontalDivider />
-                            <Grid item xs={12} sm={6} md={4} lg={3} container>
-                                <Audio />
-                                <Typography variant="caption">
-                                    "Aux champs Elysées", Arthur Des Ligneris
-                                </Typography>
+                                <ListItem>
+                                    <CSSwitch
+                                        checked={toggleStates.quality}
+                                        onChange={() => handleToggle("quality")}
+                                        name="quality"
+                                    />
+                                    <Typography variant="caption">
+                                        render quality (for fast devices)
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <CSSwitch
+                                        checked={toggleStates.cityModelSwitch}
+                                        onChange={() =>
+                                            handleToggle("cityModelSwitch")
+                                        }
+                                        name="cityModelSwitch"
+                                    />
+                                    <Typography variant="caption">
+                                        toggle 3D model
+                                    </Typography>
+                                </ListItem>
                             </Grid>
                         </Toolbar>
                     </AppBar>
                 </Collapse>
+                {/*  */}
             </MuiThemeProvider>
         </React.Fragment>
     );

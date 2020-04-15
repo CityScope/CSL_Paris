@@ -9,6 +9,7 @@ const style = {
         color: "rgba(255,255,255)",
         width: 30,
         height: 30,
+        padding: 0,
     },
 };
 

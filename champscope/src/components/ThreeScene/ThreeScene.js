@@ -229,6 +229,8 @@ class ThreeScene extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
+            console.log(this.props);
+
             let {
                 scenarioSwitch,
                 parks,
