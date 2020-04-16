@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
         background: "rgba(0,0,0,0.9)",
         marginBottom: "0em",
         overflow: "auto",
+        padding: "3em",
     },
 }));
 

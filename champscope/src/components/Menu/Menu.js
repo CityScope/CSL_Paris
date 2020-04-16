@@ -140,9 +140,11 @@ function Menu(props) {
                             }}
                         >
                             <Grid item xs={3} sm={3} md={3} lg={3}>
-                                <Typography variant="h6">
-                                    present & future
-                                </Typography>
+                                <ListItem>
+                                    <Typography variant="h6">
+                                        present & future
+                                    </Typography>
+                                </ListItem>
                                 <ListItem>
                                     <CSSwitch
                                         checked={toggleStates.scenarioSwitch}
