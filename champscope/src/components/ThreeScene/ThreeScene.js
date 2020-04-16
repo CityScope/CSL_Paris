@@ -428,8 +428,12 @@ class ThreeScene extends Component {
                             let slectedScene = this.props.menuInteraction
                                 .cameraScene;
                             let newCamPos =
-                                settings.cameraScenesPositions[slectedScene];
-
+                                settings.cameraScenesPositions[slectedScene]
+                                    .camPos;
+                            let l =
+                                settings.cameraScenesPositions[slectedScene]
+                                    .lookAt;
+                            let newLookAt = new THREE.Vector3(l[0], l[1], l[2]);
                             // fly camera to new postion
                             new TWEEN.Tween(this.camera.position)
                                 .to(
@@ -441,7 +445,9 @@ class ThreeScene extends Component {
                                     1000
                                 )
                                 .easing(TWEEN.Easing.Quadratic.Out)
-                                .onUpdate(() => {})
+                                .onUpdate(() => {
+                                    this.camera.lookAt(newLookAt);
+                                })
                                 .start();
 
                             break;
@@ -479,7 +485,6 @@ class ThreeScene extends Component {
         } else {
             // force camera lookAt
 
-            this.camera.lookAt(this.state.camLookAt);
             _blockCamera(this.camera);
         }
     };

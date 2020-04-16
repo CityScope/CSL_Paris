@@ -9,10 +9,10 @@ class App extends Component {
     render() {
         return (
             <React.Fragment>
-                {/* <ThreeScene menuInteraction={this.props.menuInteraction} /> */}
+                <ThreeScene menuInteraction={this.props.menuInteraction} />
                 {/* {this.props.showMenu ? <Menu /> : null} */}
                 <Menu />
-                {/* <LandingPage /> */}
+                <LandingPage />
             </React.Fragment>
         );
     }
