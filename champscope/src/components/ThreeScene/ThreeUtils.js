@@ -112,8 +112,9 @@ export const _addCustomSceneObjects = async () => {
 };
 
 export const _addMetricsObject = async () => {
-    var metricTex = await _loadTexture("./resources/textures/skybox/1.jpg");
-    var envMap = await _loadTexture("./resources/textures/skybox/envMap.jpg");
+    var metricTex = await _loadTexture(
+        "./resources/textures/radar/radar_before.jpg"
+    );
 
     // pedestal  model material
     let modelColor = new THREE.Color();
@@ -124,8 +125,6 @@ export const _addMetricsObject = async () => {
         map: metricTex,
         metalness: 0.2,
         roughness: 10,
-        envMap: envMap,
-        envMapIntensity: 100,
     });
 
     modelMaterial.side = THREE.DoubleSide;

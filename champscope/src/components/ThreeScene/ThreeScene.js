@@ -516,13 +516,11 @@ class ThreeScene extends Component {
     }
 
     render() {
-        let displayTHREEscene = true;
-        // this.props.startScene;
+        let displayTHREEscene = this.props.startScene;
 
         return (
             <React.Fragment>
                 <div
-                    // onMouseUp={(e) => this._onMouseUp(e)}
                     style={
                         displayTHREEscene
                             ? {

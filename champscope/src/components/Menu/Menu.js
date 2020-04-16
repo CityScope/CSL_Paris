@@ -15,6 +15,8 @@ import Collapse from "@material-ui/core/Collapse";
 import Tooltip from "@material-ui/core/Tooltip";
 import Audio from "../Audio";
 import Info from "./Info";
+import Paper from "@material-ui/core/Paper";
+
 import Logo from "./Logo";
 import ListItem from "@material-ui/core/ListItem";
 import Grid from "@material-ui/core/Grid";
@@ -68,12 +70,12 @@ function Menu(props) {
             },
         },
         checked: {},
-
+        toolBar: { alignItems: "end" },
         menuButton: {},
         title: {
-            flexGrow: 1,
+            flexGrow: 2,
         },
-        menuBar: {
+        appBar: {
             spacing: "0",
             color: "white",
             background: "rgba(0,0,0,0.7)",
@@ -131,10 +133,14 @@ function Menu(props) {
                 {/*  */}
                 <Collapse timeout={500} in={checked}>
                     {/*  */}
-                    <AppBar position="static" className={classes.menuBar}>
-                        <Toolbar>
-                            <Grid item xs={3} sm={3} md={3} lg={3} container>
-                                <Typography variant="h5">
+                    <AppBar position="static" className={classes.appBar}>
+                        <Toolbar
+                            classes={{
+                                root: classes.toolBar,
+                            }}
+                        >
+                            <Grid item xs={3} sm={3} md={3} lg={3}>
+                                <Typography variant="h6">
                                     present & future
                                 </Typography>
                                 <ListItem>
@@ -145,21 +151,8 @@ function Menu(props) {
                                         }
                                         name="scenarioSwitch"
                                     />
-                                    <Typography variant="h3">
+                                    <Typography variant="caption">
                                         2020-2040
-                                    </Typography>
-                                </ListItem>
-
-                                <ListItem>
-                                    <CSSwitch
-                                        checked={toggleStates.metricsObjSwitch}
-                                        onChange={() =>
-                                            handleToggle("metricsObjSwitch")
-                                        }
-                                        name="metricsObjSwitch"
-                                    />
-                                    <Typography variant="h3">
-                                        design metrics
                                     </Typography>
                                 </ListItem>
 
@@ -168,15 +161,46 @@ function Menu(props) {
                                         <Info />
                                     </IconButton>
 
-                                    <Typography variant="h3">
+                                    <Typography variant="caption">
                                         information
+                                    </Typography>
+                                </ListItem>
+
+                                <ListItem>
+                                    <Typography variant="h6">
+                                        display
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <CSSwitch
+                                        checked={toggleStates.metricsObjSwitch}
+                                        onChange={() =>
+                                            handleToggle("metricsObjSwitch")
+                                        }
+                                        name="metricsObjSwitch"
+                                    />
+                                    <Typography variant="caption">
+                                        design metrics
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <CSSwitch
+                                        checked={toggleStates.cityModelSwitch}
+                                        onChange={() =>
+                                            handleToggle("cityModelSwitch")
+                                        }
+                                        name="cityModelSwitch"
+                                    />
+                                    <Typography variant="caption">
+                                        toggle 3D model
                                     </Typography>
                                 </ListItem>
                             </Grid>
                             {/*  */}
+
                             <HorizontalDivider />
                             {/*  */}
-                            <Grid item xs={3} sm={3} md={3} lg={3} container>
+                            <Grid item xs={3} sm={3} md={3} lg={3}>
                                 <ListItem>
                                     <Typography variant="h6">
                                         spatial design
@@ -206,11 +230,6 @@ function Menu(props) {
                                         cultural
                                     </Typography>
                                 </ListItem>
-                            </Grid>
-                            {/*  */}
-                            <HorizontalDivider />
-                            {/*  */}
-                            <Grid item xs={3} sm={3} md={3} lg={3} container>
                                 <ListItem>
                                     <Typography variant="h6">
                                         mobility
@@ -257,7 +276,7 @@ function Menu(props) {
                             {/*  */}
                             <HorizontalDivider />
                             {/*  */}
-                            <Grid item xs={3} sm={3} md={3} lg={3} container>
+                            <Grid item xs={3} sm={3} md={3} lg={3}>
                                 <ListItem>
                                     <Typography variant="h6">
                                         select scene
@@ -346,7 +365,7 @@ function Menu(props) {
                             {/*  */}
                             <HorizontalDivider />
                             {/*  */}
-                            <Grid item xs={3} sm={3} md={3} lg={3} container>
+                            <Grid item xs={3} sm={3} md={3} lg={3}>
                                 <ListItem>
                                     <Typography variant="h6">
                                         settings
@@ -359,7 +378,6 @@ function Menu(props) {
                                         Ligneris
                                     </Typography>
                                 </ListItem>
-
                                 <ListItem>
                                     <CSSwitch
                                         checked={toggleStates.quality}
@@ -368,18 +386,6 @@ function Menu(props) {
                                     />
                                     <Typography variant="caption">
                                         render quality (for fast devices)
-                                    </Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <CSSwitch
-                                        checked={toggleStates.cityModelSwitch}
-                                        onChange={() =>
-                                            handleToggle("cityModelSwitch")
-                                        }
-                                        name="cityModelSwitch"
-                                    />
-                                    <Typography variant="caption">
-                                        toggle 3D model
                                     </Typography>
                                 </ListItem>
                             </Grid>
