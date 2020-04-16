@@ -15,8 +15,6 @@ import Collapse from "@material-ui/core/Collapse";
 import Tooltip from "@material-ui/core/Tooltip";
 import Audio from "../Audio";
 import Info from "./Info";
-import Paper from "@material-ui/core/Paper";
-
 import Logo from "./Logo";
 import ListItem from "@material-ui/core/ListItem";
 import Grid from "@material-ui/core/Grid";
