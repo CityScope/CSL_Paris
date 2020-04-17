@@ -23,6 +23,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 
+import OverlayMertics from "./OverlayMertics/OverlayMertics";
+
 // ! https://github.com/mui-org/material-ui/issues/9290
 
 function Menu(props) {
@@ -137,6 +139,8 @@ function Menu(props) {
                                 root: classes.toolBar,
                             }}
                         >
+                            <OverlayMertics />
+
                             <Grid item xs={3} sm={3} md={3} lg={3}>
                                 <ListItem>
                                     <Typography variant="h6">
