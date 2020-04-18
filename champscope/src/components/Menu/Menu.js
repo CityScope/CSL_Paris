@@ -121,9 +121,11 @@ function Menu(props) {
     return (
         <React.Fragment>
             <Logo />
-            <OverlayMertics thisToggleName={toggleStates.thisToggleName} />
+
             <CssBaseline />
             <MuiThemeProvider theme={theme}>
+                <OverlayMertics thisToggleName={toggleStates.thisToggleName} />
+
                 <Tooltip title="Toggle Options" placement="top">
                     <IconButton
                         className={classes.menuIconWrapper}
