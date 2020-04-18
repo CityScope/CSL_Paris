@@ -266,7 +266,6 @@ class ThreeScene extends Component {
             let cultural_before = this.scene.getObjectByName("cultural_before");
             let cultural_after = this.scene.getObjectByName("cultural_after");
             let metricsObj = this.scene.getObjectByName("metricsObj");
-
             // find which menu item has changed
             for (const thisMenuItem in prevProps.menuInteraction) {
                 if (
@@ -329,6 +328,32 @@ class ThreeScene extends Component {
                                 trips_pedestrians_after,
                                 scenarioSwitch && pedestrians
                             );
+
+                            // change radar texture
+
+                            new TWEEN.Tween(metricsObj.rotation)
+                                .to(
+                                    {
+                                        x: 0,
+                                        y: scenarioSwitch ? -3.14159 : 3.14159,
+                                        z: 0,
+                                    },
+                                    2000
+                                )
+                                .easing(TWEEN.Easing.Cubic.InOut)
+                                .start()
+                                .onStart(() => {
+                                    metricsObj.material.forEach((material) => {
+                                        if (material) {
+                                            material.map = scenarioSwitch
+                                                ? material.userData
+                                                      .radarAfterText
+                                                : material.userData
+                                                      .radarBeforeText;
+                                            material.map.needsUpdate = true;
+                                        }
+                                    });
+                                });
 
                             break;
 

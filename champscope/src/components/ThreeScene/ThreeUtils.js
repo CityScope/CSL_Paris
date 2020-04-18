@@ -124,6 +124,7 @@ export const _addMetricsObject = async () => {
     modelColor.setHSL(0, 0, 0.5);
 
     var modelMaterial = new THREE.MeshStandardMaterial({
+        name: "radarMaterial",
         color: modelColor,
         userData: {
             radarBeforeText: radarBeforeText,
