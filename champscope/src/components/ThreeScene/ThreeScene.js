@@ -146,12 +146,12 @@ class ThreeScene extends Component {
 
         this.whiteLight1 = new THREE.PointLight(0xffffff, 4, 1);
         this.whiteLight1.name = "whiteLight";
-        this.whiteLight1.position.set(0, 2, -0.5);
+        this.whiteLight1.position.set(0, 1.5, -0.5);
         this.whiteLight1.intensity = settings.lights.w1.low;
 
         this.whiteLight2 = new THREE.PointLight(0xffffff, 4, 1);
         this.whiteLight2.name = "whiteLight";
-        this.whiteLight2.position.set(0, 2, 0.5);
+        this.whiteLight2.position.set(0, 1.5, 0.5);
         this.whiteLight2.intensity = settings.lights.w2.low;
 
         //

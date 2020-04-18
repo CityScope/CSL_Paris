@@ -112,8 +112,11 @@ export const _addCustomSceneObjects = async () => {
 };
 
 export const _addMetricsObject = async () => {
-    var metricTex = await _loadTexture(
-        "./resources/textures/radar/radar_before.jpg"
+    var radarBeforeText = await _loadTexture(
+        "./resources/textures/radar/rb.jpg"
+    );
+    var radarAfterText = await _loadTexture(
+        "./resources/textures/radar/ra.jpg"
     );
 
     // pedestal  model material
@@ -122,7 +125,11 @@ export const _addMetricsObject = async () => {
 
     var modelMaterial = new THREE.MeshStandardMaterial({
         color: modelColor,
-        map: metricTex,
+        userData: {
+            radarBeforeText: radarBeforeText,
+            radarAfterText: radarAfterText,
+        },
+        map: radarBeforeText,
         metalness: 0.2,
         roughness: 10,
     });
@@ -139,8 +146,8 @@ export const _addMetricsObject = async () => {
         modelMaterial,
     ];
     // fix scaling issue
-    metricTex.minFilter = THREE.LinearFilter;
-    const cubeGeo = new THREE.BoxBufferGeometry(1.57, 1.57, 0.01);
+    radarBeforeText.minFilter = THREE.LinearFilter;
+    const cubeGeo = new THREE.BoxBufferGeometry(1.57, 1.57, 0.002);
     cubeGeo.translate(0, 1.8, 0);
     const metricsMesh = new THREE.Mesh(cubeGeo, materialArray);
 
@@ -253,8 +260,6 @@ export const _setupBloom = (width, height, scene, camera, renderer) => {
 
 export const _blockCamera = (camera) => {
     if (camera) {
-        console.log(camera);
-
         let p = camera.position;
         if (p.y < 0.3) p.y = 0.3;
         if (p.y > 4) p.y = 4;

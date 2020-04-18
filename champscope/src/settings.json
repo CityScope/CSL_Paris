@@ -47,13 +47,13 @@
         },
         "cultural_before": {
             "URL": "resources/model/culture/culture_before.obj",
-            "color": "(200, 0%, 85%)",
+            "color": "(312, 50%, 50%)",
             "position": [0.3, 0.695, 0.08],
             "scale": 0.0355
         },
         "cultural_after": {
             "URL": "resources/model/culture/culture_after.obj",
-            "color": "(200, 0%, 100%)",
+            "color": "(312, 100%, 50%)",
             "position": [0.3, 0.69, 0.08],
             "scale": 0.0355
         }

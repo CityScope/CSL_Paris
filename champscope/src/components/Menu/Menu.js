@@ -30,7 +30,7 @@ import OverlayMertics from "./OverlayMertics/OverlayMertics";
 function Menu(props) {
     const switchColors = {
         parks: "#84ff03",
-        cultural: "#FFF7",
+        cultural: "#fe01fe",
         cars: "#fc0303",
         bicycles: "#03bafc",
         pedestrians: "#FFF7",
