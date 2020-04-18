@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./OverlayMertics.scss";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,34 +7,37 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
     root: {
-        width: "10em",
+        position: "fixed",
+        bottom: "5em",
+        right: "5em ",
     },
 });
 
-export default function OverlayMertics() {
+export default function OverlayMertics(props) {
     const classes = useStyles();
-    const [showMetrics, setValue] = React.useState(false);
+    const [bool, setValue] = React.useState(props);
 
-    const handleMetricsDisplay = (e) => {
-        setValue(true);
+    useEffect(() => {
+        handleMetricsDisplay();
+    }, [props.thisToggleName]);
 
-        setTimeout(() => {
-            setValue(false);
-        }, 1000);
+    const handleMetricsDisplay = () => {
+        if (props.thisToggleName) {
+            setValue(true);
+
+            setTimeout(() => {
+                setValue(false);
+            }, 3000);
+        }
     };
 
     return (
         <React.Fragment>
-            <button onClick={handleMetricsDisplay}>click</button>
-
-            <Typography
-                className={
-                    classes.root +
-                    `alert alert-success ${showMetrics ? "show" : "hide"}`
-                }
-            >
-                Volume
-            </Typography>
+            <div className={`${bool ? "show" : "hide"}`}>
+                <Typography variant="h5" className={classes.root}>
+                    {props.thisToggleName}
+                </Typography>
+            </div>
         </React.Fragment>
     );
 }

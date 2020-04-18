@@ -40,7 +40,6 @@ function Menu(props) {
         palette: {
             textPrimary: { main: "white" },
         },
-
         typography: {
             h5: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
@@ -94,22 +93,26 @@ function Menu(props) {
         },
     }));
 
-    const handleToggle = (toggleName) =>
+    const [checked, setChecked] = React.useState(true);
+
+    const handleToggle = (toggleName) => {
         listenToMenuUI({
             ...toggleStates,
             [toggleName]: !toggleStates[toggleName],
+            // add only toggle name if it was turned on
+            thisToggleName: !toggleStates[toggleName] ? toggleName : null,
         });
+    };
 
-    const cameraRadio = (e) =>
+    const cameraRadio = (e) => {
         listenToMenuUI({
             ...toggleStates,
             cameraScene: e.target.value,
         });
-
+    };
     const classes = useStyles();
-    const [checked, setChecked] = React.useState(true);
 
-    const handleChange = () => {
+    const handleMenuIconClick = () => {
         setChecked((prev) => !prev);
     };
 
@@ -118,14 +121,14 @@ function Menu(props) {
     return (
         <React.Fragment>
             <Logo />
-
+            <OverlayMertics thisToggleName={toggleStates.thisToggleName} />
             <CssBaseline />
             <MuiThemeProvider theme={theme}>
                 <Tooltip title="Toggle Options" placement="top">
                     <IconButton
                         className={classes.menuIconWrapper}
                         variant="outlined"
-                        onClick={handleChange}
+                        onClick={handleMenuIconClick}
                     >
                         <MenuOpenIcon className={classes.largeIcon} />
                     </IconButton>
@@ -139,8 +142,6 @@ function Menu(props) {
                                 root: classes.toolBar,
                             }}
                         >
-                            <OverlayMertics />
-
                             <Grid item xs={3} sm={3} md={3} lg={3}>
                                 <ListItem>
                                     <Typography variant="h6">

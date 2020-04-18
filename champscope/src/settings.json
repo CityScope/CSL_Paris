@@ -9,7 +9,8 @@
         "cameraScene": "animateCamera",
         "quality": false,
         "cityModelSwitch": true,
-        "metricsObjSwitch": true
+        "metricsObjSwitch": true,
+        "thisToggleName": ""
     },
 
     "cameraScenesPositions": {
