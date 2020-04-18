@@ -309,7 +309,7 @@ function Menu(props) {
                                                 }
                                                 label={
                                                     <Typography variant="caption">
-                                                        Triomphe
+                                                        Arc de Triomphe
                                                     </Typography>
                                                 }
                                             />
@@ -326,7 +326,8 @@ function Menu(props) {
                                                 }
                                                 label={
                                                     <Typography variant="caption">
-                                                        Champs
+                                                        Avenue des
+                                                        Champs-Élysées
                                                     </Typography>
                                                 }
                                             />
@@ -343,7 +344,7 @@ function Menu(props) {
                                                 }
                                                 label={
                                                     <Typography variant="caption">
-                                                        Palais
+                                                        Grand & Petit Palais
                                                     </Typography>
                                                 }
                                             />
@@ -361,7 +362,7 @@ function Menu(props) {
                                                 }
                                                 label={
                                                     <Typography variant="caption">
-                                                        Concorde
+                                                        Place de la Concorde
                                                     </Typography>
                                                 }
                                             />

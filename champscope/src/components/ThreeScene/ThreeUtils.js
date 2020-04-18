@@ -253,6 +253,8 @@ export const _setupBloom = (width, height, scene, camera, renderer) => {
 
 export const _blockCamera = (camera) => {
     if (camera) {
+        console.log(camera);
+
         let p = camera.position;
         if (p.y < 0.3) p.y = 0.3;
         if (p.y > 4) p.y = 4;
