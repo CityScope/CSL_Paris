@@ -44,13 +44,13 @@
         },
         "cultural_before": {
             "URL": "resources/model/culture/culture_before.obj",
-            "color": "(200, 100%, 40%)",
+            "color": "(200, 0%, 85%)",
             "position": [0.3, 0.695, 0.08],
             "scale": 0.0355
         },
         "cultural_after": {
             "URL": "resources/model/culture/culture_after.obj",
-            "color": "(200, 100%, 60%)",
+            "color": "(200, 0%, 100%)",
             "position": [0.3, 0.69, 0.08],
             "scale": 0.0355
         }
@@ -62,7 +62,7 @@
     "trips": {
         "trips_car_before": {
             "dataObj": "trips_car_before",
-            "color": { "h": 1, "s": 1, "l": 0.5 },
+            "color": { "h": 1, "s": 1, "l": 0.3 },
             "URL": "resources/trips/real/trips_car_before.json"
         },
 
@@ -74,25 +74,25 @@
 
         "trips_pedestrians_before": {
             "dataObj": "trips_pedestrians_before",
-            "color": { "h": 0, "s": 0, "l": 0.8 },
+            "color": { "h": 0, "s": 0, "l": 0.85 },
             "URL": "resources/trips/real/trips_people_before.json"
         },
 
         "trips_pedestrians_after": {
             "dataObj": "trips_pedestrians_after",
-            "color": { "h": 0, "s": 0, "l": 0.8 },
+            "color": { "h": 0, "s": 0, "l": 1 },
             "URL": "resources/trips/real/trips_people_after.json"
         },
 
         "trips_bike_before": {
             "dataObj": "trips_bike_before",
-            "color": { "h": 0.3, "s": 1, "l": 0.5 },
+            "color": { "h": 0.55, "s": 1, "l": 0.3 },
             "URL": "resources/trips/real/trips_bike_before.json"
         },
 
         "trips_bike_after": {
             "dataObj": "trips_bike_after",
-            "color": { "h": 0.3, "s": 1, "l": 0.5 },
+            "color": { "h": 0.55, "s": 1, "l": 0.5 },
             "URL": "resources/trips/real/trips_bike_after.json"
         }
     }

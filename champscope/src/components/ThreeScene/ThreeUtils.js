@@ -293,7 +293,7 @@ export const _setupAgents = async () => {
 };
 
 const _makeAgents = (trips, tripName) => {
-    let scale = 0.02;
+    let scale = 0.03;
     let color = new THREE.Color();
     color.setHSL(
         settings.trips[tripName].color.h,
@@ -326,7 +326,7 @@ export const _handelCityModel = async () => {
     let model = await _loadOBJmodel(settings.cityModelURL);
     // global model material
     let modelColor = new THREE.Color();
-    modelColor.setHSL(0, 0, 0.5);
+    modelColor.setHSL(0, 0, 0.3);
     let modelMaterial = new THREE.MeshPhongMaterial({
         color: modelColor,
     });

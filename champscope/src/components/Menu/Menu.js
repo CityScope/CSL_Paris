@@ -30,10 +30,10 @@ import OverlayMertics from "./OverlayMertics/OverlayMertics";
 function Menu(props) {
     const switchColors = {
         parks: "#84ff03",
-        cultural: "#03bafc",
+        cultural: "#FFF7",
         cars: "#fc0303",
-        bicycles: "#94fc03",
-        pedestrians: "#FFF8",
+        bicycles: "#03bafc",
+        pedestrians: "#FFF7",
     };
 
     const theme = createMuiTheme({

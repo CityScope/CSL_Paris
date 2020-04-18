@@ -16,7 +16,7 @@ export default function OverlayMertics(props) {
     const useStyles = makeStyles({
         root: {
             position: "fixed",
-            bottom: "3em",
+            bottom: "25em",
             right: "3em",
             zIndex: 9999,
         },
