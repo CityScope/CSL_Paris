@@ -112,20 +112,27 @@ export const _addCustomSceneObjects = async () => {
 };
 
 export const _addMetricsObject = async () => {
-    var metricTex = await _loadTexture("./resources/textures/skybox/1.jpg");
-    var envMap = await _loadTexture("./resources/textures/skybox/envMap.jpg");
+    var radarBeforeText = await _loadTexture(
+        "./resources/textures/radar/rb.jpg"
+    );
+    var radarAfterText = await _loadTexture(
+        "./resources/textures/radar/ra.jpg"
+    );
 
     // pedestal  model material
     let modelColor = new THREE.Color();
     modelColor.setHSL(0, 0, 0.5);
 
     var modelMaterial = new THREE.MeshStandardMaterial({
+        name: "radarMaterial",
         color: modelColor,
-        map: metricTex,
+        userData: {
+            radarBeforeText: radarBeforeText,
+            radarAfterText: radarAfterText,
+        },
+        map: radarBeforeText,
         metalness: 0.2,
         roughness: 10,
-        envMap: envMap,
-        envMapIntensity: 100,
     });
 
     modelMaterial.side = THREE.DoubleSide;
@@ -140,8 +147,8 @@ export const _addMetricsObject = async () => {
         modelMaterial,
     ];
     // fix scaling issue
-    metricTex.minFilter = THREE.LinearFilter;
-    const cubeGeo = new THREE.BoxBufferGeometry(1.57, 1.57, 0.01);
+    radarBeforeText.minFilter = THREE.LinearFilter;
+    const cubeGeo = new THREE.BoxBufferGeometry(1.57, 1.57, 0.002);
     cubeGeo.translate(0, 1.8, 0);
     const metricsMesh = new THREE.Mesh(cubeGeo, materialArray);
 
@@ -294,7 +301,7 @@ export const _setupAgents = async () => {
 };
 
 const _makeAgents = (trips, tripName) => {
-    let scale = 0.02;
+    let scale = 0.03;
     let color = new THREE.Color();
     color.setHSL(
         settings.trips[tripName].color.h,
@@ -327,7 +334,7 @@ export const _handelCityModel = async () => {
     let model = await _loadOBJmodel(settings.cityModelURL);
     // global model material
     let modelColor = new THREE.Color();
-    modelColor.setHSL(0, 0, 0.5);
+    modelColor.setHSL(0, 0, 0.3);
     let modelMaterial = new THREE.MeshPhongMaterial({
         color: modelColor,
     });

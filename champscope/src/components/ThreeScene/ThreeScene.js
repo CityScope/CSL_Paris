@@ -41,6 +41,7 @@ class ThreeScene extends Component {
             trips: {},
             renderer: false,
             past: true,
+            camLookAt: new THREE.Vector3(0, 1.25, 0),
         };
         this.theta = 0;
         this.cameraSpeed = 0.5;
@@ -145,12 +146,12 @@ class ThreeScene extends Component {
 
         this.whiteLight1 = new THREE.PointLight(0xffffff, 4, 1);
         this.whiteLight1.name = "whiteLight";
-        this.whiteLight1.position.set(0, 2, -0.5);
+        this.whiteLight1.position.set(0, 1.5, -0.5);
         this.whiteLight1.intensity = settings.lights.w1.low;
 
         this.whiteLight2 = new THREE.PointLight(0xffffff, 4, 1);
         this.whiteLight2.name = "whiteLight";
-        this.whiteLight2.position.set(0, 2, 0.5);
+        this.whiteLight2.position.set(0, 1.5, 0.5);
         this.whiteLight2.intensity = settings.lights.w2.low;
 
         //
@@ -265,7 +266,7 @@ class ThreeScene extends Component {
             let cultural_before = this.scene.getObjectByName("cultural_before");
             let cultural_after = this.scene.getObjectByName("cultural_after");
             let metricsObj = this.scene.getObjectByName("metricsObj");
-
+            // find which menu item has changed
             for (const thisMenuItem in prevProps.menuInteraction) {
                 if (
                     prevProps.menuInteraction[thisMenuItem] !==
@@ -327,6 +328,32 @@ class ThreeScene extends Component {
                                 trips_pedestrians_after,
                                 scenarioSwitch && pedestrians
                             );
+
+                            // change radar texture
+
+                            new TWEEN.Tween(metricsObj.rotation)
+                                .to(
+                                    {
+                                        x: 0,
+                                        y: scenarioSwitch ? -3.14159 : 3.14159,
+                                        z: 0,
+                                    },
+                                    2000
+                                )
+                                .easing(TWEEN.Easing.Cubic.InOut)
+                                .start()
+                                .onStart(() => {
+                                    metricsObj.material.forEach((material) => {
+                                        if (material) {
+                                            material.map = scenarioSwitch
+                                                ? material.userData
+                                                      .radarAfterText
+                                                : material.userData
+                                                      .radarBeforeText;
+                                            material.map.needsUpdate = true;
+                                        }
+                                    });
+                                });
 
                             break;
 
@@ -420,6 +447,34 @@ class ThreeScene extends Component {
                             }
                             break;
 
+                        case "cameraScene":
+                            let slectedScene = this.props.menuInteraction
+                                .cameraScene;
+                            let newCamPos =
+                                settings.cameraScenesPositions[slectedScene]
+                                    .camPos;
+                            let l =
+                                settings.cameraScenesPositions[slectedScene]
+                                    .lookAt;
+                            let newLookAt = new THREE.Vector3(l[0], l[1], l[2]);
+                            // fly camera to new postion
+                            new TWEEN.Tween(this.camera.position)
+                                .to(
+                                    {
+                                        x: newCamPos[0],
+                                        y: newCamPos[1],
+                                        z: newCamPos[2],
+                                    },
+                                    1000
+                                )
+                                .easing(TWEEN.Easing.Quadratic.Out)
+                                .onUpdate(() => {
+                                    this.camera.lookAt(newLookAt);
+                                })
+                                .start();
+
+                            break;
+
                         default:
                             break;
                     }
@@ -440,13 +495,8 @@ class ThreeScene extends Component {
         }
     };
 
-    startAnimationLoop = () => {
-        // control TWEEN event
-        TWEEN.update();
-        // animate the sim
-        this._animateAgents();
-
-        if (this.props.menuInteraction.animateCamera) {
+    _cameraState = () => {
+        if (this.props.menuInteraction.cameraScene === "animateCamera") {
             this.theta += this.cameraSpeed;
             this.camera.position.x =
                 this.radius * Math.sin(THREE.MathUtils.degToRad(this.theta));
@@ -456,9 +506,21 @@ class ThreeScene extends Component {
             this.camera.lookAt(new THREE.Vector3(0, 1.25, 0));
             this.camera.updateMatrixWorld();
         } else {
+            // force camera lookAt
+
             _blockCamera(this.camera);
         }
+    };
 
+    startAnimationLoop = () => {
+        this._cameraState();
+
+        // control TWEEN event
+        TWEEN.update();
+        // animate the sim
+        this._animateAgents();
+
+        //    choose the renderer quality
         this._chooseRenderer();
 
         this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
@@ -482,12 +544,12 @@ class ThreeScene extends Component {
     }
 
     render() {
-        let displayTHREEscene = this.props.startScene;
+        let displayTHREEscene = true;
+        // this.props.startScene;
 
         return (
             <React.Fragment>
                 <div
-                    // onMouseUp={(e) => this._onMouseUp(e)}
                     style={
                         displayTHREEscene
                             ? {

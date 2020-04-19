@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
-import Button from "@material-ui/core/Button";
+import { IconButton } from "@material-ui/core";
 
 const style = {
     audioIconWrapper: {
         color: "rgba(255,255,255)",
         width: 30,
         height: 30,
+        padding: 0,
     },
 };
 
@@ -29,17 +30,17 @@ export default class Audio extends Component {
         const iconSelector = () => {
             if (this.state.playing) {
                 return (
-                    <Button onClick={this.handlePause}>
+                    <IconButton onClick={this.handlePause}>
                         <PauseCircleOutlineIcon
                             style={style.audioIconWrapper}
                         />
-                    </Button>
+                    </IconButton>
                 );
             } else {
                 return (
-                    <Button onClick={this.handlePlay}>
+                    <IconButton onClick={this.handlePlay}>
                         <PlayCircleOutlineIcon style={style.audioIconWrapper} />
-                    </Button>
+                    </IconButton>
                 );
             }
         };

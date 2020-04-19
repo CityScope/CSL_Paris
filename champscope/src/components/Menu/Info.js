@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         background: "rgba(0,0,0,0.9)",
         marginBottom: "0em",
         overflow: "auto",
-        padding: "2em",
+        padding: "3em",
     },
 }));
 
@@ -61,9 +61,13 @@ export default function Info() {
     };
 
     return (
-        <div>
-            <InfoIcon type="button" onClick={handleOpen} />
-            <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider theme={theme}>
+            <div>
+                <InfoIcon
+                    type="button"
+                    style={{ color: "white" }}
+                    onClick={handleOpen}
+                />
                 <CssBaseline />
                 <Dialog open={open} onClose={handleClose} id={"modal"}>
                     <Paper className={classes.paper}>
@@ -111,7 +115,7 @@ export default function Info() {
                         </Typography>
                     </Paper>
                 </Dialog>
-            </MuiThemeProvider>
-        </div>
+            </div>
+        </MuiThemeProvider>
     );
 }

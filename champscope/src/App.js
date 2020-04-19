@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-
 import LandingPage from "./components/LandingPage/LandingPage";
-
 import Menu from "./components/Menu/Menu";
 import ThreeScene from "./components/ThreeScene/ThreeScene";
 import { connect } from "react-redux";
@@ -12,8 +10,9 @@ class App extends Component {
         return (
             <React.Fragment>
                 <ThreeScene menuInteraction={this.props.menuInteraction} />
-                {this.props.showMenu ? <Menu /> : null}
-                <LandingPage />
+                {/* {this.props.showMenu ? <Menu /> : null} */}
+                <Menu />
+                {/* <LandingPage /> */}
             </React.Fragment>
         );
     }
