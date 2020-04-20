@@ -1,11 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { CSSwitch } from "./CSSwitch";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import HorizontalDivider from "./HorizontalDivider";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import IconButton from "@material-ui/core/IconButton";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
@@ -17,17 +15,23 @@ import Audio from "../Audio";
 import Info from "./Info";
 import Logo from "./Logo";
 import ListItem from "@material-ui/core/ListItem";
-import Grid from "@material-ui/core/Grid";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
+import clsx from "clsx";
+import MenuIcon from "@material-ui/icons/Menu";
+import Drawer from "@material-ui/core/Drawer";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 import OverlayMertics from "./OverlayMertics/OverlayMertics";
 
 // ! https://github.com/mui-org/material-ui/issues/9290
 
 function Menu(props) {
+    const drawerWidth = 240;
+
     const switchColors = {
         parks: "#84ff03",
         cultural: "#fe01fe",
@@ -75,11 +79,14 @@ function Menu(props) {
             flexGrow: 2,
         },
         appBar: {
-            spacing: "0",
             color: "white",
             background: "rgba(0,0,0,0.7)",
-            width: "100vw",
+            transition: theme.transitions.create(["margin", "width"], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
         },
+
         menuIconWrapper: {
             color: "rgba(255,255,255)",
             position: "fixed",
@@ -91,9 +98,53 @@ function Menu(props) {
             width: 40,
             height: 40,
         },
-    }));
 
-    const [checked, setChecked] = React.useState(true);
+        appBarShift: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: drawerWidth,
+            transition: theme.transitions.create(["margin", "width"], {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+        },
+        menuButton: {
+            marginRight: theme.spacing(2),
+        },
+        hide: {
+            display: "none",
+        },
+        drawer: {
+            width: drawerWidth,
+            flexShrink: 0,
+        },
+        drawerPaper: {
+            width: drawerWidth,
+        },
+        drawerHeader: {
+            display: "flex",
+            alignItems: "center",
+            padding: theme.spacing(0, 1),
+            // necessary for content to be below app bar
+            ...theme.mixins.toolbar,
+            justifyContent: "flex-end",
+        },
+        content: {
+            flexGrow: 1,
+            padding: theme.spacing(3),
+            transition: theme.transitions.create("margin", {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+            marginLeft: -drawerWidth,
+        },
+        contentShift: {
+            transition: theme.transitions.create("margin", {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+            marginLeft: 0,
+        },
+    }));
 
     const handleToggle = (toggleName) => {
         listenToMenuUI({
@@ -110,41 +161,67 @@ function Menu(props) {
             cameraScene: e.target.value,
         });
     };
-    const classes = useStyles();
 
-    const handleMenuIconClick = () => {
-        setChecked((prev) => !prev);
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const [checked, setChecked] = React.useState(true);
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
     };
 
     const { toggleStates, listenToMenuUI } = props;
 
     return (
         <React.Fragment>
+            {/*  */}
             <Logo />
-
+            {/*  */}
             <CssBaseline />
+            {/*  */}
             <MuiThemeProvider theme={theme}>
+                {/*  */}
                 <OverlayMertics thisToggleName={toggleStates.thisToggleName} />
-
+                {/*  */}
                 <Tooltip title="Toggle Options" placement="top">
                     <IconButton
                         className={classes.menuIconWrapper}
                         variant="outlined"
-                        onClick={handleMenuIconClick}
+                        onClick={handleDrawerOpen}
                     >
                         <MenuOpenIcon className={classes.largeIcon} />
                     </IconButton>
                 </Tooltip>
                 {/*  */}
-                <Collapse timeout={500} in={checked}>
-                    {/*  */}
-                    <AppBar position="static" className={classes.appBar}>
-                        <Toolbar
-                            classes={{
-                                root: classes.toolBar,
-                            }}
-                        >
-                            <Grid item xs={3} sm={3} md={3} lg={3}>
+
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="left"
+                    open={open}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <div className={classes.drawerHeader}>
+                        <IconButton onClick={handleDrawerClose}>
+                            {theme.direction === "ltr" ? (
+                                <ChevronLeftIcon />
+                            ) : (
+                                <ChevronRightIcon />
+                            )}
+                        </IconButton>
+                        <Collapse timeout={500} in={checked}>
+                            {/*  */}
+
+                            <AppBar
+                                position="static"
+                                className={classes.appBar}
+                            >
                                 <ListItem>
                                     <Typography variant="h6">
                                         present & future
@@ -202,12 +279,7 @@ function Menu(props) {
                                         toggle 3D model
                                     </Typography>
                                 </ListItem>
-                            </Grid>
-                            {/*  */}
 
-                            <HorizontalDivider />
-                            {/*  */}
-                            <Grid item xs={3} sm={3} md={3} lg={3}>
                                 <ListItem>
                                     <Typography variant="h6">
                                         spatial design
@@ -279,11 +351,7 @@ function Menu(props) {
                                         pedestrians
                                     </Typography>
                                 </ListItem>
-                            </Grid>
-                            {/*  */}
-                            <HorizontalDivider />
-                            {/*  */}
-                            <Grid item xs={3} sm={3} md={3} lg={3}>
+
                                 <ListItem>
                                     <Typography variant="h6">
                                         select scene
@@ -369,11 +437,7 @@ function Menu(props) {
                                         </RadioGroup>
                                     </FormControl>
                                 </ListItem>
-                            </Grid>
-                            {/*  */}
-                            <HorizontalDivider />
-                            {/*  */}
-                            <Grid item xs={3} sm={3} md={3} lg={3}>
+
                                 <ListItem>
                                     <Typography variant="h6">
                                         settings
@@ -396,10 +460,12 @@ function Menu(props) {
                                         render quality (for fast devices)
                                     </Typography>
                                 </ListItem>
-                            </Grid>
-                        </Toolbar>
-                    </AppBar>
-                </Collapse>
+                            </AppBar>
+                        </Collapse>
+                        {/*  */}
+                    </div>
+                </Drawer>
+
                 {/*  */}
             </MuiThemeProvider>
         </React.Fragment>
