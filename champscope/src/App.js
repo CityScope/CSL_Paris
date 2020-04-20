@@ -12,6 +12,29 @@ class App extends Component {
                 {this.props.showMenu ? <Menu /> : null}
                 {/* <Menu /> */}
                 <LandingPage />
+                <div
+                    style={{
+                        position: "fixed",
+                        left: "50%",
+                        top: "50%",
+                        transform: "translate(-50%, -50%)",
+                        backgroundColor: "transparent",
+                        opacity: 0.5,
+                    }}
+                >
+                    <h1
+                        style={{
+                            fontSize: "15em",
+                            backgroundColor: "rgba(0,0,0,0)",
+
+                            textShadow:
+                                "-3px -3px 0 #FFF, 3px -3px 0 #FFF, -3px 3px 0 #FFF, 3px 3px 0 #FFF",
+                        }}
+                    >
+                        DRAFT
+                    </h1>
+                </div>
+                ;
             </React.Fragment>
         );
     }
