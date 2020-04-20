@@ -44,8 +44,6 @@ export default function OverlayMertics(props) {
     useEffect(() => {
         // only show when toggled on
         if (props.thisToggleName) {
-            console.log(props.thisToggleName);
-
             setValue(true);
             setTimeout(() => {
                 setValue(false);

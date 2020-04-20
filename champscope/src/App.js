@@ -3,16 +3,15 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import Menu from "./components/Menu/Menu";
 import ThreeScene from "./components/ThreeScene/ThreeScene";
 import { connect } from "react-redux";
-// import ThreeWrapper from "./components/ThreeScene/ThreeWrapper";
 
 class App extends Component {
     render() {
         return (
             <React.Fragment>
                 <ThreeScene menuInteraction={this.props.menuInteraction} />
-                {/* {this.props.showMenu ? <Menu /> : null} */}
-                <Menu />
-                {/* <LandingPage /> */}
+                {this.props.showMenu ? <Menu /> : null}
+                {/* <Menu /> */}
+                <LandingPage />
             </React.Fragment>
         );
     }

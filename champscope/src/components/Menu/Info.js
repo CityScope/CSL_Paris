@@ -76,42 +76,47 @@ export default function Info() {
                         </Typography>
                         <Box p={3} />
                         <Typography variant="subtitle1">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore
-                            eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum. Lorem ipsum
-                            dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore
-                            eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum. Lorem ipsum
-                            dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore
-                            eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum. Lorem ipsum
-                            dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore
-                            eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum.
+<p> A collaboration between PCA-STREAM and MIT Media Lab City Science </p>
+CityScope Champs-Elysée is a tangible interface that explores the experimental articulation between the diagnosis of existing conditions and the proposed interventions of PCA for the Champs Elysées in 2024.
+The project illustrates interventions on the use of new mobility, the strengthening of nature along the avenue and finally the creation of new dynamic and modular spaces in the city. 
+The City Scope platform, a tangible urban simulation tool, allows users to visualize and understand the impact of interventions on complex urban data to support decision making in a dynamic, iterative, and evidence-based process.
+CityScope Champs Elysées  explores the use of agent based simulation, an algorithmic paradigm which consists in revealing global phenomena from individual behaviors and interactions, using the Gama Platform. This provides an alternative to the classical static design proposal to an immersive, interactive and dynamic one. The aesthetics of the constantly evolving forms reflect a rational process inviting the viewer to wonder about the reality behind each intervention. Although this conceptual visualization uses synthetic data, future iterations can make use of real-world data and analytics.
+                        </Typography>
+                        <Box p={3} />
+                      <Typography variant="subtitle1">
+<p>
+<b><u>CityScope Champs-Elysées</u></b>
+</p>
+<p>
+CityScope is developed by City Science - MIT Media Lab
+www.media.mit.edu/groups/city-science
+github.com/CityScope/cityscope.github.io
+</p>
+<p>
+Gama Platform is developed by the  l’IRD/UMMISCO and its partners
+gama-platform.github.io
+</p>
+<p>
+<b>MIT City Science Team:</b>
+</p>
+<p>
+Project leader : Arnaud Grignard 
+Research Assistant : Nicolas Ayoub 
+Collaborating Researcher : Luis Alonso, Ariel Noyman, Markus Elkatsha, Maggie Church
+Principal Investigator : Kent Larson
+</p>
+<p>
+<b>Gama Platform Team:</b> 
+Tri Nguyen-Huu (IRD), Patrick Taillandier (INRA), Alexis Drogoul (IRD)
+</p>
+<b><u>Virtual CityScope Champs-Elysées</u></b>
+<p>
+Developed by MIT Media Lab City Science
+</p>
+<p>
+Virtual Champs Elysées is a virtual representation of the physical CityScope Champs-Elysées deployed at the Pavillon de l'Arsenal.
+</p>
+Ariel Noyman, Arnaud Grignard, Nicolas Ayoub, Luis Alonso, Tri Nguyen-Huu, Kent Larson
                         </Typography>
                     </Paper>
                 </Dialog>
