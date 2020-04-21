@@ -31,7 +31,7 @@
     },
 
     "simulationDuration": 500,
-    "cityModelURL": "./resources/model/city/city_sml.obj",
+    "cityModelURL": "./resources/model/city/city.obj",
     "landscapeModels": {
         "parks_before": {
             "URL": "resources/model/park/parks_before.obj",
