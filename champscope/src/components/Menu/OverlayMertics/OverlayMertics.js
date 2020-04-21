@@ -4,11 +4,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import CommuteOutlinedIcon from "@material-ui/icons/CommuteOutlined";
-import DirectionsBikeOutlinedIcon from "@material-ui/icons/DirectionsBikeOutlined";
-import AccountBalanceOutlinedIcon from "@material-ui/icons/AccountBalanceOutlined";
-import NaturePeopleOutlinedIcon from "@material-ui/icons/NaturePeopleOutlined";
-import EmojiPeopleOutlinedIcon from "@material-ui/icons/EmojiPeopleOutlined";
 
 // ! https://codepen.io/rishatmuhametshin/pen/BWRzGB
 

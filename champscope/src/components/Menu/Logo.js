@@ -5,9 +5,6 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 export default function Logo() {
     const useStyles = makeStyles(() => ({
         CSlogo: {
-            position: "fixed",
-            bottom: "1em",
-            right: "1em",
             color: "white",
             fontSize: "4em",
         },
