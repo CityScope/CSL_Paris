@@ -14,6 +14,7 @@ class App extends Component {
                 <LandingPage />
                 <div
                     style={{
+                        pointerEvents: "none",
                         position: "fixed",
                         left: "50%",
                         top: "50%",
@@ -34,7 +35,6 @@ class App extends Component {
                         DRAFT
                     </h1>
                 </div>
-                ;
             </React.Fragment>
         );
     }
