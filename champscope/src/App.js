@@ -12,7 +12,7 @@ class App extends Component {
                 {this.props.showMenu ? <Menu /> : null}
                 {/* <Menu /> */}
                 <LandingPage />
-                <div
+                {/* <div
                     style={{
                         pointerEvents: "none",
                         position: "fixed",
@@ -20,7 +20,7 @@ class App extends Component {
                         top: "50%",
                         transform: "translate(-50%, -50%)",
                         backgroundColor: "transparent",
-                        opacity: 0.5,
+                        opacity: 0.2,
                     }}
                 >
                     <h1
@@ -34,7 +34,7 @@ class App extends Component {
                     >
                         DRAFT
                     </h1>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

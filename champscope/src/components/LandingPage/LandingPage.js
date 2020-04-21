@@ -10,7 +10,6 @@ import EnterButton from "../LandingPage/EnterButton";
 import Box from "@material-ui/core/Box";
 import Video from "./Video";
 import { setStartSceneState } from "../../redux/actions";
-import AppleIcon from "@material-ui/icons/Apple";
 
 function LandingPage(props) {
     const theme = createMuiTheme({
@@ -113,16 +112,21 @@ function LandingPage(props) {
                         )}
                         <Box p={3}>
                             <Typography variant="subtitle1">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa
-                                qui officia deserunt mollit anim id est laborum.
+                                CityScope Champs-Élysée is a Tangible User
+                                Interface for urban planning and
+                                decision-making, that was installed as part of
+                                an exhibition in Pavillon de l'Arsenal, Paris.
+                                The exhibition by PCA-STREAM, explored new plans
+                                and future interventions for Champs Élysées
+                                Boulevard. These include reduced traffic,
+                                encouraged walkability, cycling and pedestrian
+                                movement in the famous street. As well, the
+                                project suggested improved access to cultural
+                                landmarks and amenities along the Boulevard. Due
+                                to COVID19, we have decided to move this
+                                exhibition online. This website allow users to
+                                explore MIT CityScope Champs-Élysée in an
+                                interactive and immersive way.
                             </Typography>
                         </Box>
                         <Box p={3} />
@@ -131,34 +135,35 @@ function LandingPage(props) {
                         </Typography>
                         <Box p={1} />
                         <div>
-                            <AppleIcon />
                             <div>
-                                <Typography variant="caption">PCA</Typography>
+                                <Typography variant="caption">
+                                    PCA-STREAM
+                                </Typography>
                             </div>
                         </div>
                         <div>
-                            <AppleIcon />
-                            <div>
-                                <Typography variant="caption">GAMA</Typography>
-                            </div>
-                        </div>
-                        <div>
-                            <AppleIcon />
                             <div>
                                 <Typography variant="caption">
                                     MIT City Science
                                 </Typography>
                             </div>
                         </div>
+                        <div>
+                            <div>
+                                <Typography variant="caption">GAMA</Typography>
+                            </div>
+                        </div>
+
                         <Box p={3} />
                         <Typography variant="h6">
                             Virtual Champs-Élysées
                         </Typography>
-                        <Box p={1} />
+                        <Box p={0.5} />
                         <Typography variant="caption">
                             Ariel Noyman, Arnaud Grignard, Nicolas Ayoub, Luis
                             Alonso, Kent Larson
                         </Typography>
+                        <Box p={2} />
                     </Box>
                 </MuiThemeProvider>
                 <Video youtubeId={"MVhauHKiEPA"} />
