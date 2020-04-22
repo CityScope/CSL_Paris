@@ -67,10 +67,10 @@ function LandingPage(props) {
                 maxWidth: "90vw",
             },
             [theme.breakpoints.up("md")]: {
-                maxWidth: "50vw",
+                maxWidth: "70vw",
             },
             [theme.breakpoints.up("lg")]: {
-                maxWidth: "50vw",
+                maxWidth: "60vw",
             },
 
             textAlign: "center",
@@ -99,7 +99,7 @@ function LandingPage(props) {
                 <MuiThemeProvider theme={theme}>
                     <Box className={classes.box}>
                         <CssBaseline />
-                        <Box p={3}></Box>
+                        <Box p={1.5}></Box>
                         <Typography variant="h2">CITYSCOPE</Typography>
                         <Typography variant="h2">Champs-Élysées </Typography>
                         <Box p={2}></Box>
