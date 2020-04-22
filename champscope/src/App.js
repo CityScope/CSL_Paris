@@ -9,9 +9,9 @@ class App extends Component {
         return (
             <React.Fragment>
                 <ThreeScene menuInteraction={this.props.menuInteraction} />
-                {this.props.showMenu ? <Menu /> : null}
-                {/* <Menu /> */}
-                <LandingPage />
+                {/* {this.props.showMenu ? <Menu /> : null} */}
+                <Menu />
+                {/* <LandingPage /> */}
                 {/* <div
                     style={{
                         pointerEvents: "none",
