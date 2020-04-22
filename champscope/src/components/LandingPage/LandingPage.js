@@ -112,21 +112,21 @@ function LandingPage(props) {
                         )}
                         <Box p={3}>
                             <Typography variant="subtitle1">
-                                CityScope Champs-Élysée is a Tangible User
+                                CityScope Champs-Élysées is a Tangible User
                                 Interface for urban planning and
-                                decision-making, that was installed as part of
-                                an exhibition in Pavillon de l'Arsenal, Paris.
-                                The exhibition by PCA-STREAM, explored new plans
-                                and future interventions for Champs Élysées
-                                Boulevard. These include reduced traffic,
-                                encouraged walkability, cycling and pedestrian
-                                movement in the famous street. As well, the
-                                project suggested improved access to cultural
-                                landmarks and amenities along the Boulevard. Due
-                                to COVID19, we have decided to move this
-                                exhibition online. This website allow users to
-                                explore MIT CityScope Champs-Élysée in an
-                                interactive and immersive way.
+                                decision-making. It was designed and installed
+                                as part of an exhibition in the Pavillon de
+                                l'Arsenal, Paris. Composed by PCA-STREAM, this
+                                exhibition explored new plans and future
+                                interventions for Champs Élysées Avenue. These
+                                include reduced traffic, encouraged walkability,
+                                cycling and pedestrian movement, as well as
+                                improved access to cultural landmarks and
+                                amenities along the Avenue. Due to COVID-19, we
+                                have decided to move this exhibition online.
+                                This website allows users to explore MIT
+                                CityScope Champs-Élysées in an interactive and
+                                immersive way.
                             </Typography>
                         </Box>
                         <Box p={3} />
