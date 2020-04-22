@@ -2,12 +2,14 @@ import React, { useState } from "react";
 
 import "./BigSwitch.scss";
 
-export default function BigSwitch() {
+export default function BigSwitch(props) {
     const [checked, updateChecked] = useState(false);
 
     return (
         <label className={`Toggle ${checked ? "Toggle--checked" : ""}`}>
             <input
+                name={props.name}
+                id={props.name}
                 type="checkbox"
                 value={checked}
                 onChange={() => updateChecked(!checked)}

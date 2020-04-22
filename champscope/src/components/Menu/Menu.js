@@ -212,27 +212,26 @@ function Menu(props) {
                                 </Typography>
                             </ListItem>
                             <ListItem>
-                                {/* <CSSwitch
-                                    checked={toggleStates.scenarioSwitch}
-                                    onChange={() =>
-                                        handleToggle("scenarioSwitch")
-                                    }
+                                <div
+                                    onChange={() => {
+                                        handleToggle("scenarioSwitch");
+                                    }}
                                     name="scenarioSwitch"
-                                /> */}
-
-                                <BigSwitch
                                     checked={toggleStates.scenarioSwitch}
-                                    onChange={() =>
-                                        handleToggle("scenarioSwitch")
-                                    }
-                                    name="scenarioSwitch"
-                                ></BigSwitch>
+                                >
+                                    <BigSwitch
+                                        onChange={() => {
+                                            handleToggle("scenarioSwitch");
+                                        }}
+                                        name="scenarioSwitch"
+                                        checked={toggleStates.scenarioSwitch}
+                                    />
+                                </div>
                             </ListItem>
                             <ListItem>
                                 <IconButton>
                                     <Info />
                                 </IconButton>
-
                                 <Typography variant="caption">
                                     information
                                 </Typography>
