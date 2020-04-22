@@ -22,6 +22,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Drawer from "@material-ui/core/Drawer";
 import OverlayMertics from "./OverlayMertics/OverlayMertics";
 import Box from "@material-ui/core/Box";
+import BigSwitch from "./BigSwitch/BigSwitch";
 
 import Divider from "@material-ui/core/Divider";
 
@@ -211,16 +212,21 @@ function Menu(props) {
                                 </Typography>
                             </ListItem>
                             <ListItem>
-                                <CSSwitch
+                                {/* <CSSwitch
                                     checked={toggleStates.scenarioSwitch}
                                     onChange={() =>
                                         handleToggle("scenarioSwitch")
                                     }
                                     name="scenarioSwitch"
-                                />
-                                <Typography variant="caption">
-                                    2020-2040
-                                </Typography>
+                                /> */}
+
+                                <BigSwitch
+                                    checked={toggleStates.scenarioSwitch}
+                                    onChange={() =>
+                                        handleToggle("scenarioSwitch")
+                                    }
+                                    name="scenarioSwitch"
+                                ></BigSwitch>
                             </ListItem>
                             <ListItem>
                                 <IconButton>

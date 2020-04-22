@@ -100,7 +100,6 @@ class ThreeScene extends Component {
             .then(
                 this.setState({ loading: false }),
                 this.props.setLoadingState(this.state.loading),
-
                 //  start the animation
                 this.startAnimationLoop()
                 //
@@ -229,6 +228,10 @@ class ThreeScene extends Component {
     };
 
     componentDidUpdate(prevProps) {
+        this._handleVis(prevProps);
+    }
+
+    _handleVis = (prevProps) => {
         if (prevProps !== this.props) {
             let {
                 scenarioSwitch,
@@ -490,7 +493,7 @@ class ThreeScene extends Component {
                 }
             }
         }
-    }
+    };
 
     /**
      * Each frame, choose renderer quality based  on state
