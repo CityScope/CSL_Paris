@@ -164,10 +164,10 @@ function Menu(props) {
             {/*  */}
             <MuiThemeProvider theme={theme}>
                 {/*  */}
-                {/* <OverlayMertics
+                <OverlayMertics
                     thisToggleName={toggleStates.thisToggleName}
                     scenarioSwitch={toggleStates.scenarioSwitch}
-                /> */}
+                />
                 {/*  */}
                 <Tooltip title="Toggle Options" placement="top">
                     <IconButton
