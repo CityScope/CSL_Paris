@@ -30,8 +30,8 @@ class App extends Component {
             <React.Fragment>
                 {/* <ThreeScene menuInteraction={this.props.menuInteraction} /> */}
                 {/* {this.props.showMenu ? <Menu /> : null} */}
-                {/* <Menu /> */}
-                <LandingPage />
+                <Menu />
+                {/* <LandingPage /> */}
                 {/* <div
                     style={{
                         pointerEvents: "none",
