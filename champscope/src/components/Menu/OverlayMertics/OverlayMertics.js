@@ -14,6 +14,7 @@ export default function OverlayMertics(props) {
             bottom: "10em",
             right: "3em",
             zIndex: 9999,
+            maxWidth: "20em",
         },
     });
 
@@ -169,8 +170,10 @@ export default function OverlayMertics(props) {
         <React.Fragment>
             <CssBaseline />
             <MuiThemeProvider theme={theme}>
-                <div className={classes.root + ` ${bool ? "show" : "hide"}`}>
-                    <OverlayContent />
+                <div className={` ${bool ? "show" : "hide"}`}>
+                    <div className={classes.root}>
+                        <OverlayContent />
+                    </div>
                 </div>
             </MuiThemeProvider>
         </React.Fragment>
