@@ -10,6 +10,7 @@ import EnterButton from "../LandingPage/EnterButton";
 import Box from "@material-ui/core/Box";
 import Video from "./Video";
 import { setStartSceneState } from "../../redux/actions";
+import Grid from "@material-ui/core/Grid";
 
 function LandingPage(props) {
     const theme = createMuiTheme({
@@ -42,17 +43,20 @@ function LandingPage(props) {
             },
             subtitle1: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
-                fontWeight: 300,
-                fontSize: "1.5em",
+                fontWeight: 400,
+                fontSize: "1.8em",
             },
             subtitle2: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
             },
             caption: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
-                fontSize: "1em",
+                fontSize: "1.3em",
             },
             h6: {
+                fontSize: "2em",
+                fontWeight: 400,
+
                 fontFamily: ["Cormorant Garamond", "cursive"].join(","),
             },
         },
@@ -130,39 +134,41 @@ function LandingPage(props) {
                             </Typography>
                         </Box>
                         <Box p={3} />
-                        <Typography variant="h6">
-                            Exhabition in Pavillon de l'Arsenal
-                        </Typography>
-                        <Box p={1} />
-                        <div>
-                            <div>
-                                <Typography variant="caption">
-                                    PCA-STREAM
-                                </Typography>
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <Typography variant="caption">
-                                    MIT City Science
-                                </Typography>
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <Typography variant="caption">GAMA</Typography>
-                            </div>
-                        </div>
 
-                        <Box p={3} />
-                        <Typography variant="h6">
-                            Virtual Champs-Élysées
-                        </Typography>
-                        <Box p={0.5} />
-                        <Typography variant="caption">
-                            Ariel Noyman, Arnaud Grignard, Nicolas Ayoub, Luis
-                            Alonso, Kent Larson
-                        </Typography>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} md={6} lg={6}>
+                                <Typography variant="h6">
+                                    Exhabition in Pavillon de l'Arsenal
+                                </Typography>
+                                <Box p={1} />
+                                <div>
+                                    <Typography variant="caption">
+                                        Arnaud Grignard, Nicolas Ayoub, Luis
+                                        Alonso, Ariel Noyman, Markus Elkatsha,
+                                        Maggie Church, Kent Larson
+                                    </Typography>
+                                </div>
+                                <div>
+                                    <Typography variant="caption">
+                                        Gama Platform: Tri Nguyen-Huu (IRD),
+                                        Patrick Taillandier (INRA), Alexis
+                                        Drogoul (IRD)
+                                    </Typography>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={6}>
+                                <Typography variant="h6">
+                                    Virtual Champs-Élysées
+                                </Typography>
+                                <Box p={1} />
+                                <Typography variant="caption">
+                                    Ariel Noyman, Arnaud Grignard, Nicolas
+                                    Ayoub, Tri Nguyen-Huu, Luis Alonso, Kent
+                                    Larson
+                                </Typography>
+                            </Grid>
+                        </Grid>
+
                         <Box p={2} />
                     </Box>
                 </MuiThemeProvider>

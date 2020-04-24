@@ -3,15 +3,35 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import Menu from "./components/Menu/Menu";
 import ThreeScene from "./components/ThreeScene/ThreeScene";
 import { connect } from "react-redux";
+import ReactGA from "react-ga";
+
+/**
+ * 
+ <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-164555260-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-164555260-1');
+</script>
+
+ 
+ */
 
 class App extends Component {
+    componentDidMount() {
+        ReactGA.initialize("UA-164555260-1");
+    }
+
     render() {
         return (
             <React.Fragment>
                 {/* <ThreeScene menuInteraction={this.props.menuInteraction} /> */}
                 {/* {this.props.showMenu ? <Menu /> : null} */}
-                <Menu />
-                {/* <LandingPage /> */}
+                {/* <Menu /> */}
+                <LandingPage />
                 {/* <div
                     style={{
                         pointerEvents: "none",
