@@ -143,7 +143,10 @@ function Menu(props) {
         });
     };
 
+    const [radioValue, setRadioValue] = React.useState("animateCamera");
+
     const cameraRadio = (e) => {
+        setRadioValue(e.target.value);
         listenToMenuUI({
             ...toggleStates,
             cameraScene: e.target.value,
@@ -230,6 +233,8 @@ function Menu(props) {
                                     />
                                 </div>
                             </ListItem>
+                            <Box p={1} />
+
                             <Divider classes={{ root: classes.dividerColor }} />
 
                             {/*  */}
@@ -246,6 +251,7 @@ function Menu(props) {
                                         aria-label="camera"
                                         name="camera"
                                         onChange={cameraRadio}
+                                        value={radioValue}
                                     >
                                         <FormControlLabel
                                             value="animateCamera"
