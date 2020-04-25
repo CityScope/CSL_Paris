@@ -44,6 +44,10 @@ function Menu(props) {
             textPrimary: { main: "white" },
         },
         typography: {
+            body1: {
+                fontFamily: '"Roboto", "sans-serif"',
+                fontSize: "1em",
+            },
             h5: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
                 fontSize: "3em",
@@ -253,7 +257,7 @@ function Menu(props) {
                                                 />
                                             }
                                             label={
-                                                <Typography variant="caption">
+                                                <Typography>
                                                     Animate Camera
                                                 </Typography>
                                             }
@@ -269,7 +273,7 @@ function Menu(props) {
                                                 />
                                             }
                                             label={
-                                                <Typography variant="caption">
+                                                <Typography>
                                                     Arc de Triomphe
                                                 </Typography>
                                             }
@@ -284,7 +288,7 @@ function Menu(props) {
                                                 />
                                             }
                                             label={
-                                                <Typography variant="caption">
+                                                <Typography>
                                                     Avenue des Champs-Élysées
                                                 </Typography>
                                             }
@@ -299,7 +303,7 @@ function Menu(props) {
                                                 />
                                             }
                                             label={
-                                                <Typography variant="caption">
+                                                <Typography>
                                                     Grand & Petit Palais
                                                 </Typography>
                                             }
@@ -314,7 +318,7 @@ function Menu(props) {
                                                 />
                                             }
                                             label={
-                                                <Typography variant="caption">
+                                                <Typography>
                                                     Place de la Concorde
                                                 </Typography>
                                             }
