@@ -22,7 +22,11 @@ import ReactGA from "react-ga";
 
 class App extends Component {
     componentDidMount() {
-        ReactGA.initialize("UA-164555260-1");
+        ReactGA.initialize("UA-164555260-1", {
+            debug: true,
+            siteSpeedSampleRate: 100,
+        });
+        ReactGA.pageview(window.location.pathname + window.location.search);
     }
 
     render() {
