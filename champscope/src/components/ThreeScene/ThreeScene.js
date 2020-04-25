@@ -453,7 +453,6 @@ class ThreeScene extends Component {
                         case "cameraScene":
                             let slectedScene = this.props.menuInteraction
                                 .cameraScene;
-                            console.log(slectedScene);
 
                             if (slectedScene === "animateCamera") {
                                 break;
@@ -509,17 +508,23 @@ class ThreeScene extends Component {
 
     _cameraState = () => {
         if (this.props.menuInteraction.cameraScene === "animateCamera") {
-            this.theta += this.cameraSpeed;
+            if (this.theta < 36000) {
+                this.theta += this.cameraSpeed;
+            } else {
+                this.theta = 0;
+            }
+
             this.camera.position.x =
+                Math.sin(this.theta / 100) +
                 this.radius * Math.sin(THREE.MathUtils.degToRad(this.theta));
             this.camera.position.y = 1.5;
             this.camera.position.z =
+                Math.sin(this.theta / 100) +
                 this.radius * Math.cos(THREE.MathUtils.degToRad(this.theta));
             this.camera.lookAt(new THREE.Vector3(0, 1.25, 0));
             this.camera.updateMatrixWorld();
         } else {
             // force camera lookAt
-
             _blockCamera(this.camera);
         }
     };
@@ -557,7 +562,7 @@ class ThreeScene extends Component {
 
     render() {
         let displayTHREEscene =
-            // true;
+            //  true;
             this.props.startScene;
 
         return (

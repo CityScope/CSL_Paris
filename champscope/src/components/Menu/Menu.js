@@ -44,14 +44,18 @@ function Menu(props) {
             textPrimary: { main: "white" },
         },
         typography: {
+            body1: {
+                fontFamily: '"Roboto", "sans-serif"',
+                fontSize: "1em",
+            },
             h5: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
-                fontSize: "2.5em",
+                fontSize: "3em",
                 fontWeight: "300",
             },
             h6: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
-                fontSize: "1.6em",
+                fontSize: "1.8em",
                 fontWeight: "400",
             },
             h3: {
@@ -66,6 +70,9 @@ function Menu(props) {
     });
 
     const useStyles = makeStyles(() => ({
+        dividerColor: {
+            backgroundColor: "white",
+        },
         checked: {},
         radio: {
             "&$checked": {
@@ -136,7 +143,10 @@ function Menu(props) {
         });
     };
 
+    const [radioValue, setRadioValue] = React.useState("animateCamera");
+
     const cameraRadio = (e) => {
+        setRadioValue(e.target.value);
         listenToMenuUI({
             ...toggleStates,
             cameraScene: e.target.value,
@@ -201,16 +211,11 @@ function Menu(props) {
                                 <Typography variant="h5">CityScope</Typography>
                             </ListItem>
                             <ListItem>
-                                <Typography variant="caption">
+                                <Typography variant="h6">
                                     Champs-Élysées
                                 </Typography>
                             </ListItem>
-                            <Box p={1} />
-                            <ListItem>
-                                <Typography variant="h6">
-                                    present & future
-                                </Typography>
-                            </ListItem>
+
                             <ListItem>
                                 <div
                                     onChange={() => {
@@ -228,45 +233,113 @@ function Menu(props) {
                                     />
                                 </div>
                             </ListItem>
-                            <ListItem>
-                                <IconButton>
-                                    <Info />
-                                </IconButton>
-                                <Typography variant="caption">
-                                    information
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography variant="h6">display</Typography>
-                            </ListItem>
-                            <ListItem>
-                                <CSSwitch
-                                    checked={toggleStates.metricsObjSwitch}
-                                    onChange={() =>
-                                        handleToggle("metricsObjSwitch")
-                                    }
-                                    name="metricsObjSwitch"
-                                />
-                                <Typography variant="caption">
-                                    design metrics
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <CSSwitch
-                                    checked={toggleStates.cityModelSwitch}
-                                    onChange={() =>
-                                        handleToggle("cityModelSwitch")
-                                    }
-                                    name="cityModelSwitch"
-                                />
-                                <Typography variant="caption">
-                                    toggle 3D model
-                                </Typography>
-                            </ListItem>
-                            <Divider />
+                            <Box p={1} />
+
+                            <Divider classes={{ root: classes.dividerColor }} />
+
+                            {/*  */}
+
                             <ListItem>
                                 <Typography variant="h6">
-                                    spatial design
+                                    select view
+                                </Typography>
+                            </ListItem>
+
+                            <ListItem>
+                                <FormControl component="fieldset">
+                                    <RadioGroup
+                                        aria-label="camera"
+                                        name="camera"
+                                        onChange={cameraRadio}
+                                        value={radioValue}
+                                    >
+                                        <FormControlLabel
+                                            value="animateCamera"
+                                            control={
+                                                <Radio
+                                                    classes={{
+                                                        root: classes.radio,
+                                                    }}
+                                                />
+                                            }
+                                            label={
+                                                <Typography>
+                                                    Animate Camera
+                                                </Typography>
+                                            }
+                                        />
+
+                                        <FormControlLabel
+                                            value="Triomphe"
+                                            control={
+                                                <Radio
+                                                    classes={{
+                                                        root: classes.radio,
+                                                    }}
+                                                />
+                                            }
+                                            label={
+                                                <Typography>
+                                                    Arc de Triomphe
+                                                </Typography>
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            value="Champs"
+                                            control={
+                                                <Radio
+                                                    classes={{
+                                                        root: classes.radio,
+                                                    }}
+                                                />
+                                            }
+                                            label={
+                                                <Typography>
+                                                    Avenue des Champs-Élysées
+                                                </Typography>
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            value="Palais"
+                                            control={
+                                                <Radio
+                                                    classes={{
+                                                        root: classes.radio,
+                                                    }}
+                                                />
+                                            }
+                                            label={
+                                                <Typography>
+                                                    Grand & Petit Palais
+                                                </Typography>
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            value="Concorde"
+                                            control={
+                                                <Radio
+                                                    classes={{
+                                                        root: classes.radio,
+                                                    }}
+                                                />
+                                            }
+                                            label={
+                                                <Typography>
+                                                    Place de la Concorde
+                                                </Typography>
+                                            }
+                                        />
+                                    </RadioGroup>
+                                </FormControl>
+                            </ListItem>
+
+                            {/*  */}
+                            <Divider classes={{ root: classes.dividerColor }} />
+
+                            {/*  */}
+                            <ListItem>
+                                <Typography variant="h6">
+                                    data layers
                                 </Typography>
                             </ListItem>
                             <ListItem>
@@ -291,9 +364,7 @@ function Menu(props) {
                                     cultural
                                 </Typography>
                             </ListItem>
-                            <ListItem>
-                                <Typography variant="h6">mobility</Typography>
-                            </ListItem>
+
                             <ListItem>
                                 <CSSwitch
                                     knobcolor={switchColors.cars}
@@ -325,106 +396,45 @@ function Menu(props) {
                                     pedestrians
                                 </Typography>
                             </ListItem>
-                            <ListItem>
-                                <Typography variant="h6">
-                                    select scene
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <FormControl component="fieldset">
-                                    <RadioGroup
-                                        aria-label="camera"
-                                        name="camera"
-                                        onChange={cameraRadio}
-                                    >
-                                        <FormControlLabel
-                                            value="Triomphe"
-                                            control={
-                                                <Radio
-                                                    classes={{
-                                                        root: classes.radio,
-                                                    }}
-                                                />
-                                            }
-                                            label={
-                                                <Typography variant="caption">
-                                                    Arc de Triomphe
-                                                </Typography>
-                                            }
-                                        />
-                                        <FormControlLabel
-                                            value="Champs"
-                                            control={
-                                                <Radio
-                                                    classes={{
-                                                        root: classes.radio,
-                                                    }}
-                                                />
-                                            }
-                                            label={
-                                                <Typography variant="caption">
-                                                    Avenue des Champs-Élysées
-                                                </Typography>
-                                            }
-                                        />
-                                        <FormControlLabel
-                                            value="Palais"
-                                            control={
-                                                <Radio
-                                                    classes={{
-                                                        root: classes.radio,
-                                                    }}
-                                                />
-                                            }
-                                            label={
-                                                <Typography variant="caption">
-                                                    Grand & Petit Palais
-                                                </Typography>
-                                            }
-                                        />
-                                        <FormControlLabel
-                                            value="Concorde"
-                                            control={
-                                                <Radio
-                                                    classes={{
-                                                        root: classes.radio,
-                                                    }}
-                                                />
-                                            }
-                                            label={
-                                                <Typography variant="caption">
-                                                    Place de la Concorde
-                                                </Typography>
-                                            }
-                                        />
-
-                                        <FormControlLabel
-                                            value="animateCamera"
-                                            control={
-                                                <Radio
-                                                    classes={{
-                                                        root: classes.radio,
-                                                    }}
-                                                />
-                                            }
-                                            label={
-                                                <Typography variant="caption">
-                                                    Animate Camera
-                                                </Typography>
-                                            }
-                                        />
-                                    </RadioGroup>
-                                </FormControl>
-                            </ListItem>
+                            {/*  */}
+                            <Divider classes={{ root: classes.dividerColor }} />
+                            {/*  */}
                             <ListItem>
                                 <Typography variant="h6">settings</Typography>
                             </ListItem>
+
                             <ListItem>
                                 <Audio />
                                 <Typography variant="caption">
                                     "Aux Champs Elysées" by Arthur Des Ligneris
                                 </Typography>
                             </ListItem>
+
+                            <ListItem>
+                                <CSSwitch
+                                    checked={toggleStates.metricsObjSwitch}
+                                    onChange={() =>
+                                        handleToggle("metricsObjSwitch")
+                                    }
+                                    name="metricsObjSwitch"
+                                />
+                                <Typography variant="caption">
+                                    toggle metrics
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <CSSwitch
+                                    checked={toggleStates.cityModelSwitch}
+                                    onChange={() =>
+                                        handleToggle("cityModelSwitch")
+                                    }
+                                    name="cityModelSwitch"
+                                />
+                                <Typography variant="caption">
+                                    toggle 3D model
+                                </Typography>
+                            </ListItem>
+
                             <ListItem>
                                 <CSSwitch
                                     checked={toggleStates.quality}
@@ -433,6 +443,15 @@ function Menu(props) {
                                 />
                                 <Typography variant="caption">
                                     render quality (for fast devices)
+                                </Typography>
+                            </ListItem>
+
+                            <ListItem>
+                                <IconButton>
+                                    <Info />
+                                </IconButton>
+                                <Typography variant="caption">
+                                    information
                                 </Typography>
                             </ListItem>
                             <Box p={5} />

@@ -43,7 +43,7 @@ export default function OverlayMertics(props) {
             setValue(true);
             setTimeout(() => {
                 setValue(false);
-            }, 3000);
+            }, 5000);
         }
     }, [props.thisToggleName]);
 
