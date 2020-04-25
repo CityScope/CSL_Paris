@@ -561,8 +561,9 @@ class ThreeScene extends Component {
     }
 
     render() {
-        let displayTHREEscene = true;
-        // this.props.startScene;
+        let displayTHREEscene =
+            //  true;
+            this.props.startScene;
 
         return (
             <React.Fragment>

@@ -119,21 +119,25 @@ function LandingPage(props) {
                         <Typography variant="subtitle1">
                             CityScope Champs-Élysées is a Tangible User
                             Interface for urban planning and decision-making. It
-                            was designed and installed as part of an exhibition
-                            in the Pavillon de l'Arsenal, Paris. Composed by
+                            was designed as part of an exhibition in the
+                            Pavillon de l'Arsenal, Paris. Composed by
                             PCA-STREAM, this exhibition explored new plans and
-                            future interventions for Champs Élysées Avenue.
+                            future interventions for the Champs Élysées Avenue.
                             These include reduced traffic, encouraged
                             walkability, cycling and pedestrian movement, as
                             well as improved access to cultural landmarks and
-                            amenities along the Avenue. Due to COVID-19, we have
-                            decided to move this exhibition online. This website
-                            allows users to explore MIT CityScope Champs-Élysées
-                            in an interactive and immersive way.
+                            amenities along the Avenue. Due to COVID-19 and the
+                            forced shutdown of the exhibition, we have decided
+                            to move this exhibition online.{" "}
+                            <b>
+                                Virtual CityScope Champs-Élysées presents an
+                                interactive and immersive way to explore the
+                                future of Paris most important street.
+                            </b>
                         </Typography>
                         <Box p={3} />
 
-                        <Grid container spacing={2}>
+                        <Grid container spacing={5}>
                             <Grid item xs={12} md={6} lg={6}>
                                 <Typography variant="h6">
                                     CityScope Champs-Elysées
@@ -162,6 +166,7 @@ function LandingPage(props) {
                                 <Typography variant="h6">
                                     Virtual CityScope
                                 </Typography>
+
                                 <Box p={1} />
                                 <Typography variant="caption">
                                     Ariel Noyman, Arnaud Grignard, Nicolas
