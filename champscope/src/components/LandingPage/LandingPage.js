@@ -11,6 +11,7 @@ import Box from "@material-ui/core/Box";
 import Video from "./Video";
 import { setStartSceneState } from "../../redux/actions";
 import Grid from "@material-ui/core/Grid";
+import Logo from "../../components/Menu/Logo";
 
 function LandingPage(props) {
     const theme = createMuiTheme({
@@ -177,6 +178,7 @@ function LandingPage(props) {
                         </Grid>
 
                         <Box p={2} />
+                        <Logo />
                     </Box>
                 </MuiThemeProvider>
                 <Video youtubeId={"MVhauHKiEPA"} />

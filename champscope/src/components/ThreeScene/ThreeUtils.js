@@ -41,11 +41,11 @@ export const _objectDisplay = (object, bool) => {
     if (object) {
         if (bool) {
             _visability(object, bool);
-            object.position.y = object.position.y + 1;
+            object.position.y = object.Y_Value * 2;
             new TWEEN.Tween(object.position)
                 .to(
                     {
-                        y: object.position.y - 1,
+                        y: object.Y_Value,
                     },
                     1000
                 )
@@ -55,7 +55,7 @@ export const _objectDisplay = (object, bool) => {
             new TWEEN.Tween(object.position)
                 .to(
                     {
-                        y: object.position.y + 1,
+                        y: object.Y_Value * 2,
                     },
                     1000
                 )
@@ -63,7 +63,7 @@ export const _objectDisplay = (object, bool) => {
                 .start()
                 .onComplete(() => {
                     _visability(object, bool);
-                    object.position.y = object.position.y - 1;
+                    object.position.y = object.Y_Value;
                 });
         }
     }
@@ -192,7 +192,7 @@ export const _landscapeModelsLoader = async () => {
             landscapeModelsWrapper.add(model);
             model.name = modelName;
             model.scale.set(modelscale, modelscale, modelscale);
-
+            model.Y_Value = modelPos[1];
             model.rotation.set(0, 0.4625123, 0);
             model.traverse(function (child) {
                 child.material = new THREE.MeshPhongMaterial({
@@ -202,7 +202,6 @@ export const _landscapeModelsLoader = async () => {
             });
         });
     }
-
     return landscapeModelsWrapper;
 };
 
@@ -286,6 +285,9 @@ export const _setupAgents = async () => {
                 // THREEE obj so we can run anim from inside
                 // this oject itself
                 thisTripsAgents.trips = tripsData;
+                thisTripsAgents.position.y = 0.705;
+                // !not safe "magic number"
+                thisTripsAgents.Y_Value = 0.705;
                 agentsWrapper.add(thisTripsAgents);
             })
             .catch((err) => console.error(err));
@@ -342,7 +344,10 @@ export const _handelCityModel = async () => {
     model.name = "cityModel";
     model.scale.set(0.000505, 0.000505, 0.000505);
     model.position.set(-0.0055, 0.7, 0);
+    model.Y_Value = 0.7;
+
     model.rotation.set(0, 0.4625123, 0);
+
     model.traverse(function (child) {
         // child.castShadow = true;
         child.material = modelMaterial;

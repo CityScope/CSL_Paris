@@ -338,9 +338,7 @@ function Menu(props) {
 
                             {/*  */}
                             <ListItem>
-                                <Typography variant="h6">
-                                    data layers
-                                </Typography>
+                                <Typography variant="h6">layers</Typography>
                             </ListItem>
                             <ListItem>
                                 <CSSwitch
