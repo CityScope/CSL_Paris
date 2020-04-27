@@ -30,9 +30,14 @@ const theme = createMuiTheme({
             fontFamily: '"Cormorant Garamond", "sans-serif"',
             fontSize: "3em",
         },
-        subtitle1: {
+
+        h3: {
             fontFamily: '"Cormorant Garamond", "sans-serif"',
-            fontSize: "1.5em",
+            fontSize: "2em",
+        },
+        subtitle1: {
+            fontFamily: '"Roboto","Cormorant Garamond", "sans-serif"',
+            fontSize: "1.25em",
         },
     },
 });
@@ -76,66 +81,49 @@ export default function Info() {
                         </Typography>
                         <Box p={3} />
                         <Typography variant="subtitle1">
-                            <p>
-                                A collaboration between PCA-STREAM and MIT Media
-                                Lab City Science
-                            </p>
-                            CityScope Champs-Élysée is a Tangible User Interface
-                            for urban planning and decision-making, that was
-                            installed as part of an exhibition in Pavillon de
-                            l'Arsenal, Paris. The exhibition by PCA-STREAM,
-                            explored new plans and future interventions for
-                            Champs Élysées Boulevard. These include reduced
-                            traffic, encouraged walkability, cycling and
-                            pedestrian movement in the famous street. As well,
-                            the project suggested improved access to cultural
-                            landmarks and amenities along the Boulevard. Due to
-                            COVID19, we have decided to move this exhibition
-                            online. This website allow users to explore MIT
-                            CityScope Champs-Élysée in an interactive and
-                            immersive way.
+                            <b>
+                                Virtual CityScope Champs-Élysées is an
+                                interactive and immersive platform to explore
+                                the future of Paris’ most important street.{" "}
+                            </b>
+                            CityScope Champs-Élysées is a tangible user
+                            interface for urban planning and decision-making. It
+                            was designed as part of an exhibition at the
+                            Pavillon de l'Arsenal in Paris, France. The
+                            exhibition, curated by PCA-STREAM, explores new
+                            plans and future interventions for the Champs
+                            Élysées Avenue. These plans include options for
+                            reduced traffic, encouraged walkability, improved
+                            cycling and pedestrian mobility, and improved access
+                            to cultural landmarks and amenities along the
+                            avenue. Due to COVID-19 and the forced shutdown of
+                            the exhibition, we have decided to move this
+                            exhibition online.
                         </Typography>
                         <Box p={3} />
                         <Typography variant="subtitle1">
                             <p>
-                                <b>
-                                    <u>CityScope Champs-Elysées</u>
-                                </b>
+                                <Typography variant="h3">
+                                    CityScope Champs-Elysées
+                                </Typography>
                             </p>
                             <p>
-                                CityScope is developed by City Science - MIT
-                                Media Lab www.media.mit.edu/groups/city-science
-                                github.com/CityScope/cityscope.github.io
+                                MIT City Science Team: Arnaud Grignard, Nicolas
+                                Ayoub, Luis Alonso, Ariel Noyman, Markus
+                                Elkatsha, Maggie Church, Kent Larson
                             </p>
                             <p>
-                                Gama Platform is developed by the l’IRD/UMMISCO
-                                and its partners gama-platform.github.io
+                                Gama Platform Team: Tri Nguyen-Huu (IRD),
+                                Patrick Taillandier (INRA), Alexis Drogoul (IRD)
                             </p>
+                            <Typography variant="h3">
+                                Virtual CityScope Champs-Elysées
+                            </Typography>
                             <p>
-                                <b>MIT City Science Team:</b>
+                                Ariel Noyman, Arnaud Grignard, Nicolas Ayoub,
+                                Luis Alonso, Tri Nguyen-Huu, Kent Larson
                             </p>
-                            <p>
-                                Arnaud Grignard, Nicolas Ayoub, Luis Alonso,
-                                Ariel Noyman, Markus Elkatsha, Maggie Church,
-                                Kent Larson
-                            </p>
-                            <p>
-                                <b>Gama Platform Team:</b>
-                                Tri Nguyen-Huu (IRD), Patrick Taillandier
-                                (INRA), Alexis Drogoul (IRD)
-                            </p>
-                            <b>
-                                <u>Virtual CityScope Champs-Elysées</u>
-                            </b>
-                            <p>Developed by MIT Media Lab City Science</p>
-                            <p>
-                                Virtual Champs Elysées is a virtual
-                                representation of the physical CityScope
-                                Champs-Elysées deployed at the Pavillon de
-                                l'Arsenal.
-                            </p>
-                            Ariel Noyman, Arnaud Grignard, Nicolas Ayoub, Luis
-                            Alonso, Tri Nguyen-Huu, Kent Larson
+                            <Box p={3} />
                         </Typography>
                     </Paper>
                 </Dialog>

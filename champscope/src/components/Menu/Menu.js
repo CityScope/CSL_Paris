@@ -270,6 +270,22 @@ function Menu(props) {
                                         />
 
                                         <FormControlLabel
+                                            value="radarCamera"
+                                            control={
+                                                <Radio
+                                                    classes={{
+                                                        root: classes.radio,
+                                                    }}
+                                                />
+                                            }
+                                            label={
+                                                <Typography>
+                                                    Urban Metrics
+                                                </Typography>
+                                            }
+                                        />
+
+                                        <FormControlLabel
                                             value="Triomphe"
                                             control={
                                                 <Radio

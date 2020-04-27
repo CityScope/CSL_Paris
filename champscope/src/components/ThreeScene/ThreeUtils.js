@@ -153,8 +153,6 @@ export const _addMetricsObject = async () => {
 
     const metricsMesh = new THREE.Mesh(cubeGeo, materialArray);
     metricsMesh.position.set(0, 1.8, 0);
-    console.log(metricsMesh);
-
     metricsMesh.Y_Value = 1.8;
     metricsMesh.castShadow = false;
     metricsMesh.receiveShadow = false;

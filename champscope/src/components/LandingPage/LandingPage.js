@@ -126,21 +126,22 @@ function LandingPage(props) {
                         <Typography variant="subtitle1">
                             <b>
                                 Virtual CityScope Champs-Élysées is an
-                                interactive and immersive way to explore the
-                                future of Paris most important street.{" "}
+                                interactive and immersive platform to explore
+                                the future of Paris’ most important street.{" "}
                             </b>
-                            CityScope Champs-Élysées is a Tangible User
-                            Interface for urban planning and decision-making. It
-                            was designed as part of an exhibition in the
-                            Pavillon de l'Arsenal, Paris. Composed by
-                            PCA-STREAM, this exhibition explored new plans and
-                            future interventions for the Champs Élysées Avenue.
-                            These include reduced traffic, encouraged
-                            walkability, cycling and pedestrian movement, as
-                            well as improved access to cultural landmarks and
-                            amenities along the Avenue. Due to COVID-19 and the
-                            forced shutdown of the exhibition, we have decided
-                            to move this exhibition online.
+                            CityScope Champs-Élysées is a tangible user
+                            interface for urban planning and decision-making. It
+                            was designed as part of an exhibition at the
+                            Pavillon de l'Arsenal in Paris, France. The
+                            exhibition, curated by PCA-STREAM, explores new
+                            plans and future interventions for the Champs
+                            Élysées Avenue. These plans include options for
+                            reduced traffic, encouraged walkability, improved
+                            cycling and pedestrian mobility, and improved access
+                            to cultural landmarks and amenities along the
+                            avenue. Due to COVID-19 and the forced shutdown of
+                            the exhibition, we have decided to move this
+                            exhibition online.
                         </Typography>
                         <Box p={3} />
 
