@@ -40,19 +40,19 @@ function LandingPage(props) {
             h2: {
                 fontFamily: ["Cormorant Garamond", "cursive"].join(","),
                 fontWeight: 400,
-                fontSize: "5em",
+                fontSize: "4.5em",
             },
             subtitle1: {
-                fontFamily: '"Cormorant Garamond", "sans-serif"',
+                fontFamily: '"Roboto", "Cormorant Garamond", "sans-serif"',
                 fontWeight: 400,
-                fontSize: "1.8em",
+                fontSize: "1.5em",
             },
             subtitle2: {
                 fontFamily: '"Cormorant Garamond", "sans-serif"',
             },
             caption: {
-                fontFamily: '"Cormorant Garamond", "sans-serif"',
-                fontSize: "1.3em",
+                fontFamily: '"Roboto","Cormorant Garamond", "sans-serif"',
+                fontSize: "1em",
             },
             h6: {
                 fontSize: "2em",
@@ -107,9 +107,15 @@ function LandingPage(props) {
                         <Box p={1.5}></Box>
                         <Typography variant="h2">CITYSCOPE</Typography>
                         <Typography variant="h2">Champs-Élysées </Typography>
-                        <Box p={2}></Box>
+                        <Box p={3} />
+
                         {props.readyState ? (
-                            <LoadingSprite />
+                            <React.Fragment>
+                                <LoadingSprite />
+                                <Typography variant="caption">
+                                    Loading CityScope...
+                                </Typography>
+                            </React.Fragment>
                         ) : (
                             <div onClick={_enterButtonEvent}>
                                 <EnterButton />
@@ -118,6 +124,11 @@ function LandingPage(props) {
                         <Box p={3} />
 
                         <Typography variant="subtitle1">
+                            <b>
+                                Virtual CityScope Champs-Élysées is an
+                                interactive and immersive way to explore the
+                                future of Paris most important street.{" "}
+                            </b>
                             CityScope Champs-Élysées is a Tangible User
                             Interface for urban planning and decision-making. It
                             was designed as part of an exhibition in the
@@ -129,12 +140,7 @@ function LandingPage(props) {
                             well as improved access to cultural landmarks and
                             amenities along the Avenue. Due to COVID-19 and the
                             forced shutdown of the exhibition, we have decided
-                            to move this exhibition online.{" "}
-                            <b>
-                                Virtual CityScope Champs-Élysées presents an
-                                interactive and immersive way to explore the
-                                future of Paris most important street.
-                            </b>
+                            to move this exhibition online.
                         </Typography>
                         <Box p={3} />
 

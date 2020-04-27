@@ -41,6 +41,7 @@ export const _objectDisplay = (object, bool) => {
     if (object) {
         if (bool) {
             _visability(object, bool);
+
             object.position.y = object.Y_Value * 2;
             new TWEEN.Tween(object.position)
                 .to(
@@ -149,9 +150,12 @@ export const _addMetricsObject = async () => {
     // fix scaling issue
     radarBeforeText.minFilter = THREE.LinearFilter;
     const cubeGeo = new THREE.BoxBufferGeometry(1.57, 1.57, 0.002);
-    cubeGeo.translate(0, 1.8, 0);
-    const metricsMesh = new THREE.Mesh(cubeGeo, materialArray);
 
+    const metricsMesh = new THREE.Mesh(cubeGeo, materialArray);
+    metricsMesh.position.set(0, 1.8, 0);
+    console.log(metricsMesh);
+
+    metricsMesh.Y_Value = 1.8;
     metricsMesh.castShadow = false;
     metricsMesh.receiveShadow = false;
     metricsMesh.name = "metricsObj";
