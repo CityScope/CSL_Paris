@@ -298,8 +298,7 @@ export const _setupAgents = async () => {
     agentsWrapper.position.set(
         -(Math.cos(0.4625123) * 822) / 2000 - 1.57 / 2,
         0,
-        (Math.sin(0.4625123) * 822) / 2000 - 0.92 / 2
-    );
+        (Math.sin(0.4625123) * 822) / 2000 - 0.92 / 2 + 0.0095);
     agentsWrapper.rotation.set(0, 0.4625123, 0);
     return agentsWrapper;
 };
