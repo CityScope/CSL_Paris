@@ -4,6 +4,7 @@ import Menu from "./components/Menu/Menu";
 import ThreeScene from "./components/ThreeScene/ThreeScene";
 import { connect } from "react-redux";
 import ReactGA from "react-ga";
+import { Helmet } from "react-helmet";
 
 /**
  * 
@@ -23,7 +24,7 @@ import ReactGA from "react-ga";
 class App extends Component {
     componentDidMount() {
         ReactGA.initialize("UA-164555260-1", {
-            debug: true,
+            debug: false,
             siteSpeedSampleRate: 100,
         });
         ReactGA.pageview(window.location.pathname + window.location.search);
@@ -32,33 +33,33 @@ class App extends Component {
     render() {
         return (
             <React.Fragment>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>"CityScope Champs-Élysées"</title>
+                    <meta
+                        name="description"
+                        content="Virtual CityScope Champs-Élysées is an interactive and immersive platform to explore the future of Paris’ most important street."
+                    />
+                    <meta
+                        name="og:url"
+                        content="http://rechamp.media.mit.edu/"
+                    />
+                    <meta name="og:title" content="CityScope Champs-Élysées" />
+                    <meta
+                        name="og:description"
+                        content="Virtual CityScope Champs-Élysées is an interactive and immersive platform to explore the future of Paris’ most important street."
+                    />
+                    <meta
+                        name="og:image"
+                        content="https://raw.githubusercontent.com/CityScope/CSL_Paris/master/champscope/header.jpg"
+                    />
+                    <meta name="og:type" content="website" />
+                </Helmet>
+
                 <ThreeScene menuInteraction={this.props.menuInteraction} />
                 {this.props.showMenu ? <Menu /> : null}
-                {/* <Menu /> */}
                 <LandingPage />
-                {/* <div
-                    style={{
-                        pointerEvents: "none",
-                        position: "fixed",
-                        left: "50%",
-                        top: "50%",
-                        transform: "translate(-50%, -50%)",
-                        backgroundColor: "transparent",
-                        opacity: 0.2,
-                    }}
-                >
-                    <h1
-                        style={{
-                            fontSize: "15em",
-                            backgroundColor: "rgba(0,0,0,0)",
-
-                            textShadow:
-                                "-3px -3px 0 #FFF, 3px -3px 0 #FFF, -3px 3px 0 #FFF, 3px 3px 0 #FFF",
-                        }}
-                    >
-                        DRAFT
-                    </h1>
-                </div> */}
+                {/* <Menu /> */}
             </React.Fragment>
         );
     }
