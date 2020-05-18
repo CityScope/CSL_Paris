@@ -203,6 +203,10 @@ class ThreeScene extends Component {
         );
         this.bloomComposer = postEffect.bloomComposer;
         this.finalComposer = postEffect.finalComposer;
+
+        // create users holder object
+        this.socketUsersContainer = new THREE.Object3D();
+        this.scene.add(this.socketUsersContainer);
     };
 
     _animateAgents = () => {
@@ -546,40 +550,76 @@ class ThreeScene extends Component {
     };
 
     _displayUsers = () => {
-        this.ioClient.on("users", (usersList) => {
-            for (const user in usersList) {
+        this.ioClient.on("users", (visitorsList) => {
+            for (const visitor in visitorsList) {
                 // if this is not this user
-                if (user !== this.ioClient.id) {
+                if (visitor !== this.ioClient.id) {
                     // try to get the mesh from scene
-                    let userMesh = this.scene.getObjectByName(user);
+                    let userMesh = this.scene.getObjectByName(visitor);
                     // if mesh exist, and is not deleted on server
-                    if (userMesh && usersList[user] !== "delete") {
-                        let p = usersList[user];
+                    if (userMesh) {
+                        let p = visitorsList[visitor];
                         // set its position
-                        userMesh.position.set(p.x, p.y, p.z);
-                        // else, if mesh exit but removed from server
-                    } else if (userMesh && usersList[user] === "delete") {
-                        console.log("remove user", user);
+                        // userMesh.position.set(p.x, p.y, p.z);
 
-                        // remove it from scene
-                        this.scene.remove(userMesh);
-                        userMesh.geometry.dispose();
-                        userMesh.material.dispose();
-                        userMesh = undefined;
+                        new TWEEN.Tween(userMesh.position)
+                            .to(
+                                {
+                                    x: p.x,
+                                    y: p.y,
+                                    z: p.z,
+                                },
+                                100
+                            )
+                            .easing(TWEEN.Easing.Quadratic.Out)
+                            .start();
+
                         // otherwise, make this mesh
                     } else {
-                        let color = new THREE.Color(0xffffff);
-                        color.setHex(Math.random() * 0xffffff);
-                        var geometry = new THREE.BoxGeometry(0.25, 0.25, 0.25);
-                        var material = new THREE.MeshBasicMaterial({
-                            color: color,
+                        let color = new THREE.Color();
+                        color.setHSL(Math.random(), Math.random(), 0.5);
+
+                        let textLoader = new THREE.TextureLoader();
+                        let spriteText = textLoader.load(
+                            "./resources/textures/agent.png"
+                        );
+                        spriteText.minFilter = THREE.LinearFilter;
+                        var spriteMaterial = new THREE.SpriteMaterial({
+                            map: spriteText,
+                            transparent: true,
                         });
-                        var cube = new THREE.Mesh(geometry, material);
-                        cube.name = user;
-                        this.scene.add(cube);
+                        var sprite = new THREE.Sprite(spriteMaterial);
+                        sprite.material.color = color;
+                        sprite.material.blending = THREE.AdditiveBlending;
+                        sprite.material.transparent = true;
+                        sprite.scale.set(1, 1, 1);
+                        sprite.name = visitor;
+                        this.socketUsersContainer.add(sprite);
                     }
                 }
             }
+
+            // //  if mesh exit but removed from server
+            // if (
+            //     this.socketUsersContainer.children.length >
+            //     Object.keys(usersList).length
+            // ) {
+            //     for (
+            //         let i = 0;
+            //         i < this.socketUsersContainer.children.length;
+            //         i++
+            //     ) {
+            //         let userMeshObj = this.socketUsersContainer.children[i];
+
+            //         if (!(userMeshObj.name in usersList)) {
+            //             // remove it from scene
+            //             this.scene.remove(userMeshObj);
+            //             userMeshObj.geometry.dispose();
+            //             userMeshObj.material.dispose();
+            //             userMeshObj = undefined;
+            //         }
+            //     }
+            // }
         });
     };
 
