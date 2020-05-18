@@ -577,7 +577,7 @@ class ThreeScene extends Component {
                         // otherwise, make this mesh
                     } else {
                         let color = new THREE.Color();
-                        color.setHSL(Math.random(), Math.random(), 0.5);
+                        color.setHSL(0, 0, 1);
 
                         let textLoader = new THREE.TextureLoader();
                         let spriteText = textLoader.load(
@@ -592,7 +592,7 @@ class ThreeScene extends Component {
                         sprite.material.color = color;
                         sprite.material.blending = THREE.AdditiveBlending;
                         sprite.material.transparent = true;
-                        sprite.scale.set(1, 1, 1);
+                        sprite.scale.set(0.5, 0.5, 0.5);
                         sprite.name = visitor;
                         this.socketUsersContainer.add(sprite);
                     }
@@ -657,8 +657,9 @@ class ThreeScene extends Component {
     }
 
     render() {
-        let displayTHREEscene = true;
-        // this.props.startScene;
+        let displayTHREEscene =
+            // true;
+            this.props.startScene;
 
         return (
             <React.Fragment>
