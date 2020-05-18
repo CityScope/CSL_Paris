@@ -58,8 +58,8 @@ class App extends Component {
 
                 <ThreeScene menuInteraction={this.props.menuInteraction} />
                 {this.props.showMenu ? <Menu /> : null}
-                <LandingPage />
-                {/* <Menu /> */}
+                {/* <LandingPage /> */}
+                <Menu />
             </React.Fragment>
         );
     }

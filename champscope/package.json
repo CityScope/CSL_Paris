@@ -11,7 +11,7 @@
         "@testing-library/user-event": "^7.2.1",
         "@tweenjs/tween.js": "^18.5.0",
         "gh-pages": "^2.2.0",
-        "node-sass": "^4.13.1",
+        "node-sass": "^4.14.1",
         "postprocessing": "^6.13.3",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
@@ -21,6 +21,7 @@
         "react-redux": "^7.2.0",
         "react-scripts": "3.4.1",
         "redux": "^4.0.5",
+        "socket.io-client": "^2.3.0",
         "three": "^0.114.0",
         "three-orbitcontrols": "^2.110.3"
     },

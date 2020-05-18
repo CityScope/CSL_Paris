@@ -31,10 +31,13 @@ import {
 import OrbitControls from "three-orbitcontrols";
 import * as settings from "../../settings.json";
 
+const io = require("socket.io-client");
+
 class ThreeScene extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            socket: false,
             loading: true,
             timeCounter: 0,
             simSpeed: 1,
@@ -53,6 +56,7 @@ class ThreeScene extends Component {
         this.width = this.mountingDiv.clientWidth;
         this.height = this.mountingDiv.clientHeight;
         window.addEventListener("resize", this.handleWindowResize);
+
         // start the app setup
         setTimeout(() => {
             this._init();
@@ -65,6 +69,12 @@ class ThreeScene extends Component {
     }
 
     _init = async () => {
+        this.ioClient = io.connect("http://18.27.79.192:8080/");
+        this.ioClient.on("welcome", (socket) => {
+            console.log(socket);
+            this.setState({ socket: true });
+        });
+
         this.shpContainer = new THREE.Object3D();
         this._sceneSetup()
             .then(
@@ -527,9 +537,55 @@ class ThreeScene extends Component {
             // force camera lookAt
             _blockCamera(this.camera);
         }
+
+        // if socket is connected
+        if (this.state.socket) {
+            // send this camera pos to socket
+            this.ioClient.emit("position", this.camera.position);
+        }
+    };
+
+    _displayUsers = () => {
+        this.ioClient.on("users", (usersList) => {
+            for (const user in usersList) {
+                // if this is not this user
+                if (user !== this.ioClient.id) {
+                    // try to get the mesh from scene
+                    let userMesh = this.scene.getObjectByName(user);
+                    // if mesh exist, and is not deleted on server
+                    if (userMesh && usersList[user] !== "delete") {
+                        let p = usersList[user];
+                        // set its position
+                        userMesh.position.set(p.x, p.y, p.z);
+                        // else, if mesh exit but removed from server
+                    } else if (userMesh && usersList[user] === "delete") {
+                        console.log("remove user", user);
+
+                        // remove it from scene
+                        this.scene.remove(userMesh);
+                        userMesh.geometry.dispose();
+                        userMesh.material.dispose();
+                        userMesh = undefined;
+                        // otherwise, make this mesh
+                    } else {
+                        let color = new THREE.Color(0xffffff);
+                        color.setHex(Math.random() * 0xffffff);
+                        var geometry = new THREE.BoxGeometry(0.25, 0.25, 0.25);
+                        var material = new THREE.MeshBasicMaterial({
+                            color: color,
+                        });
+                        var cube = new THREE.Mesh(geometry, material);
+                        cube.name = user;
+                        this.scene.add(cube);
+                    }
+                }
+            }
+        });
     };
 
     startAnimationLoop = () => {
+        this._displayUsers();
+
         this._cameraState();
 
         // control TWEEN event
@@ -561,9 +617,8 @@ class ThreeScene extends Component {
     }
 
     render() {
-        let displayTHREEscene =
-            // true;
-            this.props.startScene;
+        let displayTHREEscene = true;
+        // this.props.startScene;
 
         return (
             <React.Fragment>
