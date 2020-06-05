@@ -9,7 +9,7 @@ const Video = () => {
         <div className="video-background">
             <div className="video-foreground">
                 <ReactPlayer
-                    url={"https://vimeo.com/390936231"}
+                    url={"https://www.youtube.com/watch?v=CaLbs2E2P38"}
                     playing={true}
                     controls={false}
                     muted

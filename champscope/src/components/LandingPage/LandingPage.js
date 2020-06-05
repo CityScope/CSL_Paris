@@ -148,6 +148,19 @@ function LandingPage(props) {
                         <Grid container spacing={5}>
                             <Grid item xs={12} md={6} lg={6}>
                                 <Typography variant="h6">
+                                    Virtual CityScope
+                                </Typography>
+
+                                <Box p={1} />
+                                <Typography variant="caption">
+                                    Ariel Noyman, Arnaud Grignard, Nicolas
+                                    Ayoub, Tri Nguyen-Huu, Luis Alonso, Kent
+                                    Larson
+                                </Typography>
+                            </Grid>
+
+                            <Grid item xs={12} md={6} lg={6}>
+                                <Typography variant="h6">
                                     CityScope Champs-Elysées
                                 </Typography>
                                 <Typography variant="caption">
@@ -169,26 +182,13 @@ function LandingPage(props) {
                                     </Typography>
                                 </div>
                             </Grid>
-
-                            <Grid item xs={12} md={6} lg={6}>
-                                <Typography variant="h6">
-                                    Virtual CityScope
-                                </Typography>
-
-                                <Box p={1} />
-                                <Typography variant="caption">
-                                    Ariel Noyman, Arnaud Grignard, Nicolas
-                                    Ayoub, Tri Nguyen-Huu, Luis Alonso, Kent
-                                    Larson
-                                </Typography>
-                            </Grid>
                         </Grid>
 
                         <Box p={2} />
                         <Logo />
                     </Box>
                 </MuiThemeProvider>
-                <Video youtubeId={"MVhauHKiEPA"} />
+                <Video />
             </React.Fragment>
         );
     } else {
